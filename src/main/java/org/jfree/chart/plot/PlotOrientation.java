@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -51,30 +51,32 @@ package org.jfree.chart.plot;
  */
 public enum PlotOrientation {
 
-    /** For a plot where the range axis is horizontal. */
+    /**
+     * For a plot where the range axis is horizontal.
+     */
     HORIZONTAL,
 
-    /** For a plot where the range axis is vertical. */
+    /**
+     * For a plot where the range axis is vertical.
+     */
     VERTICAL;
 
     /**
      * Returns {@code true} if this orientation is {@code HORIZONTAL},
-     * and {@code false} otherwise.  
-     * 
+     * and {@code false} otherwise.
+     *
      * @return A boolean.
-     * 
      * @since 1.0.18
      */
     public boolean isHorizontal() {
         return this.equals(PlotOrientation.HORIZONTAL);
     }
-    
+
     /**
      * Returns {@code true} if this orientation is {@code VERTICAL},
      * and {@code false} otherwise.
-     * 
+     *
      * @return A boolean.
-     * 
      * @since 1.0.18
      */
     public boolean isVertical() {

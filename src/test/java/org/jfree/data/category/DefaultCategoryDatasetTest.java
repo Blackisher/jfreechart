@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------------
@@ -46,17 +46,16 @@ package org.jfree.data.category;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.UnknownKeyException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertFalse;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DefaultCategoryDataset} class.
  */
 public class DefaultCategoryDatasetTest {
+
+    private static final double EPSILON = 0.0000000001;
 
     /**
      * Some checks for the getValue() method.
@@ -69,8 +68,7 @@ public class DefaultCategoryDatasetTest {
         boolean pass = false;
         try {
             d.getValue("XX", "C1");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -78,8 +76,7 @@ public class DefaultCategoryDatasetTest {
         pass = false;
         try {
             d.getValue("R1", "XX");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -93,9 +90,9 @@ public class DefaultCategoryDatasetTest {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         boolean pass = false;
         try {
-            /* Number n =*/ d.getValue(0, 0);
-        }
-        catch (IndexOutOfBoundsException e) {
+            /* Number n =*/
+            d.getValue(0, 0);
+        } catch (IndexOutOfBoundsException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -120,8 +117,7 @@ public class DefaultCategoryDatasetTest {
         boolean pass = false;
         try {
             d.incrementValue(1.0, "XX", "C1");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -130,8 +126,7 @@ public class DefaultCategoryDatasetTest {
         pass = false;
         try {
             d.incrementValue(1.0, "R1", "XX");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -211,7 +206,7 @@ public class DefaultCategoryDatasetTest {
     public void testSerialization() {
         DefaultCategoryDataset d1 = new DefaultCategoryDataset();
         d1.setValue(23.4, "R1", "C1");
-        DefaultCategoryDataset d2 = (DefaultCategoryDataset) 
+        DefaultCategoryDataset d2 = (DefaultCategoryDataset)
                 TestUtils.serialised(d1);
         assertEquals(d1, d2);
     }
@@ -230,8 +225,7 @@ public class DefaultCategoryDatasetTest {
         boolean pass = false;
         try {
             d1.addValue(new Double(1.1), null, "C2");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -257,8 +251,7 @@ public class DefaultCategoryDatasetTest {
         boolean pass = false;
         try {
             d.removeValue(null, "C1");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -266,8 +259,7 @@ public class DefaultCategoryDatasetTest {
         pass = false;
         try {
             d.removeValue("R1", null);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -310,8 +302,6 @@ public class DefaultCategoryDatasetTest {
         assertTrue(d instanceof PublicCloneable);
     }
 
-    private static final double EPSILON = 0.0000000001;
-
     /**
      * A test for bug 1835955.
      */
@@ -340,8 +330,7 @@ public class DefaultCategoryDatasetTest {
         boolean pass = false;
         try {
             d.removeColumn("XXX");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -349,8 +338,7 @@ public class DefaultCategoryDatasetTest {
         pass = false;
         try {
             d.removeColumn(null);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -371,8 +359,7 @@ public class DefaultCategoryDatasetTest {
         boolean pass = false;
         try {
             d.removeRow("XXX");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -380,8 +367,7 @@ public class DefaultCategoryDatasetTest {
         pass = false;
         try {
             d.removeRow(null);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             pass = true;
         }
         assertTrue(pass);

@@ -83,20 +83,6 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Collections;
-import java.util.LinkedList;
-
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
@@ -109,12 +95,18 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtils;
-import org.jfree.chart.util.ShapeUtils;
+import org.jfree.chart.util.*;
 import org.jfree.data.xy.XYDataset;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Collections;
+import java.util.LinkedList;
 
 /**
  * A renderer for an {@link XYPlot} that highlights the differences between two
@@ -128,19 +120,29 @@ import org.jfree.data.xy.XYDataset;
 public class XYDifferenceRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, PublicCloneable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -8447915602375584857L;
 
-    /** The paint used to highlight positive differences (y(0) > y(1)). */
+    /**
+     * The paint used to highlight positive differences (y(0) > y(1)).
+     */
     private transient Paint positivePaint;
 
-    /** The paint used to highlight negative differences (y(0) < y(1)). */
+    /**
+     * The paint used to highlight negative differences (y(0) < y(1)).
+     */
     private transient Paint negativePaint;
 
-    /** Display shapes at each point? */
+    /**
+     * Display shapes at each point?
+     */
     private boolean shapesVisible;
 
-    /** The shape to display in the legend item. */
+    /**
+     * The shape to display in the legend item.
+     */
     private transient Shape legendLine;
 
     /**
@@ -164,11 +166,11 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
     /**
      * Creates a new renderer.
      *
-     * @param positivePaint  the highlight color for positive differences
-     *                       ({@code null} not permitted).
-     * @param negativePaint  the highlight color for negative differences
-     *                       ({@code null} not permitted).
-     * @param shapes  draw shapes?
+     * @param positivePaint the highlight color for positive differences
+     *                      ({@code null} not permitted).
+     * @param negativePaint the highlight color for negative differences
+     *                      ({@code null} not permitted).
+     * @param shapes        draw shapes?
      */
     public XYDifferenceRenderer(Paint positivePaint, Paint negativePaint,
                                 boolean shapes) {
@@ -185,7 +187,6 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Returns the paint used to highlight positive differences.
      *
      * @return The paint (never {@code null}).
-     *
      * @see #setPositivePaint(Paint)
      */
     public Paint getPositivePaint() {
@@ -196,8 +197,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Sets the paint used to highlight positive differences and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getPositivePaint()
      */
     public void setPositivePaint(Paint paint) {
@@ -210,7 +210,6 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Returns the paint used to highlight negative differences.
      *
      * @return The paint (never {@code null}).
-     *
      * @see #setNegativePaint(Paint)
      */
     public Paint getNegativePaint() {
@@ -220,8 +219,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
     /**
      * Sets the paint used to highlight negative differences.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getNegativePaint()
      */
     public void setNegativePaint(Paint paint) {
@@ -235,7 +233,6 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * data value.
      *
      * @return A boolean.
-     *
      * @see #setShapesVisible(boolean)
      */
     public boolean getShapesVisible() {
@@ -247,8 +244,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * data value, and sends a {@link RendererChangeEvent} to all registered
      * listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getShapesVisible()
      */
     public void setShapesVisible(boolean flag) {
@@ -260,7 +256,6 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Returns the shape used to represent a line in the legend.
      *
      * @return The legend line (never {@code null}).
-     *
      * @see #setLegendLine(Shape)
      */
     public Shape getLegendLine() {
@@ -271,8 +266,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Sets the shape used as a line in each legend item and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param line  the line ({@code null} not permitted).
-     *
+     * @param line the line ({@code null} not permitted).
      * @see #getLegendLine()
      */
     public void setLegendLine(Shape line) {
@@ -286,10 +280,8 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Java2D space) are rounded to integer values.
      *
      * @return The flag.
-     *
-     * @since 1.0.4
-     *
      * @see #setRoundXCoordinates(boolean)
+     * @since 1.0.4
      */
     public boolean getRoundXCoordinates() {
         return this.roundXCoordinates;
@@ -300,11 +292,9 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Java2D space) are rounded to integer values, and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param round  the new flag value.
-     *
-     * @since 1.0.4
-     *
+     * @param round the new flag value.
      * @see #getRoundXCoordinates()
+     * @since 1.0.4
      */
     public void setRoundXCoordinates(boolean round) {
         this.roundXCoordinates = round;
@@ -318,18 +308,17 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * opportunity to initialise any state information it wants to maintain.
      * The renderer can do nothing if it chooses.
      *
-     * @param g2  the graphics device.
-     * @param dataArea  the area inside the axes.
-     * @param plot  the plot.
-     * @param data  the data.
-     * @param info  an optional info collection object to return data back to
-     *              the caller.
-     *
+     * @param g2       the graphics device.
+     * @param dataArea the area inside the axes.
+     * @param plot     the plot.
+     * @param data     the data.
+     * @param info     an optional info collection object to return data back to
+     *                 the caller.
      * @return A state object.
      */
     @Override
     public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
-            XYPlot plot, XYDataset data, PlotRenderingInfo info) {
+                                          XYPlot plot, XYDataset data, PlotRenderingInfo info) {
         XYItemRendererState state = super.initialise(g2, dataArea, plot, data,
                 info);
         state.setProcessVisibleItemsOnly(false);
@@ -350,32 +339,31 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
     /**
      * Draws the visual representation of a single data item.
      *
-     * @param g2  the graphics device.
-     * @param state  the renderer state.
-     * @param dataArea  the area within which the data is being drawn.
-     * @param info  collects information about the drawing.
-     * @param plot  the plot (can be used to obtain standard color
-     *              information etc).
-     * @param domainAxis  the domain (horizontal) axis.
-     * @param rangeAxis  the range (vertical) axis.
-     * @param dataset  the dataset.
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     * @param crosshairState  crosshair information for the plot
-     *                        ({@code null} permitted).
-     * @param pass  the pass index.
+     * @param g2             the graphics device.
+     * @param state          the renderer state.
+     * @param dataArea       the area within which the data is being drawn.
+     * @param info           collects information about the drawing.
+     * @param plot           the plot (can be used to obtain standard color
+     *                       information etc).
+     * @param domainAxis     the domain (horizontal) axis.
+     * @param rangeAxis      the range (vertical) axis.
+     * @param dataset        the dataset.
+     * @param series         the series index (zero-based).
+     * @param item           the item index (zero-based).
+     * @param crosshairState crosshair information for the plot
+     *                       ({@code null} permitted).
+     * @param pass           the pass index.
      */
     @Override
     public void drawItem(Graphics2D g2, XYItemRendererState state,
-            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
-            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
-            int series, int item, CrosshairState crosshairState, int pass) {
+                         Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+                         ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+                         int series, int item, CrosshairState crosshairState, int pass) {
 
         if (pass == 0) {
             drawItemPass0(g2, dataArea, info, plot, domainAxis, rangeAxis,
                     dataset, series, item, crosshairState);
-        }
-        else if (pass == 1) {
+        } else if (pass == 1) {
             drawItemPass1(g2, dataArea, info, plot, domainAxis, rangeAxis,
                     dataset, series, item, crosshairState);
         }
@@ -385,18 +373,18 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
     /**
      * Draws the visual representation of a single data item, first pass.
      *
-     * @param x_graphics  the graphics device.
-     * @param x_dataArea  the area within which the data is being drawn.
-     * @param x_info  collects information about the drawing.
-     * @param x_plot  the plot (can be used to obtain standard color
-     *                information etc).
-     * @param x_domainAxis  the domain (horizontal) axis.
-     * @param x_rangeAxis  the range (vertical) axis.
-     * @param x_dataset  the dataset.
-     * @param x_series  the series index (zero-based).
-     * @param x_item  the item index (zero-based).
-     * @param x_crosshairState  crosshair information for the plot
-     *                          ({@code null} permitted).
+     * @param x_graphics       the graphics device.
+     * @param x_dataArea       the area within which the data is being drawn.
+     * @param x_info           collects information about the drawing.
+     * @param x_plot           the plot (can be used to obtain standard color
+     *                         information etc).
+     * @param x_domainAxis     the domain (horizontal) axis.
+     * @param x_rangeAxis      the range (vertical) axis.
+     * @param x_dataset        the dataset.
+     * @param x_series         the series index (zero-based).
+     * @param x_item           the item index (zero-based).
+     * @param x_crosshairState crosshair information for the plot
+     *                         ({@code null} permitted).
      */
     protected void drawItemPass0(Graphics2D x_graphics,
                                  Rectangle2D x_dataArea,
@@ -426,60 +414,59 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         }
 
         // polygon definitions
-        LinkedList l_minuendXs    = new LinkedList();
-        LinkedList l_minuendYs    = new LinkedList();
+        LinkedList l_minuendXs = new LinkedList();
+        LinkedList l_minuendYs = new LinkedList();
         LinkedList l_subtrahendXs = new LinkedList();
         LinkedList l_subtrahendYs = new LinkedList();
-        LinkedList l_polygonXs    = new LinkedList();
-        LinkedList l_polygonYs    = new LinkedList();
+        LinkedList l_polygonXs = new LinkedList();
+        LinkedList l_polygonYs = new LinkedList();
 
         // state
-        int l_minuendItem      = 0;
+        int l_minuendItem = 0;
         int l_minuendItemCount = x_dataset.getItemCount(0);
-        Double l_minuendCurX   = null;
-        Double l_minuendNextX  = null;
-        Double l_minuendCurY   = null;
-        Double l_minuendNextY  = null;
-        double l_minuendMaxY   = Double.NEGATIVE_INFINITY;
-        double l_minuendMinY   = Double.POSITIVE_INFINITY;
+        Double l_minuendCurX = null;
+        Double l_minuendNextX = null;
+        Double l_minuendCurY = null;
+        Double l_minuendNextY = null;
+        double l_minuendMaxY = Double.NEGATIVE_INFINITY;
+        double l_minuendMinY = Double.POSITIVE_INFINITY;
 
-        int l_subtrahendItem      = 0;
+        int l_subtrahendItem = 0;
         int l_subtrahendItemCount = 0; // actual value set below
-        Double l_subtrahendCurX   = null;
-        Double l_subtrahendNextX  = null;
-        Double l_subtrahendCurY   = null;
-        Double l_subtrahendNextY  = null;
-        double l_subtrahendMaxY   = Double.NEGATIVE_INFINITY;
-        double l_subtrahendMinY   = Double.POSITIVE_INFINITY;
+        Double l_subtrahendCurX = null;
+        Double l_subtrahendNextX = null;
+        Double l_subtrahendCurY = null;
+        Double l_subtrahendNextY = null;
+        double l_subtrahendMaxY = Double.NEGATIVE_INFINITY;
+        double l_subtrahendMinY = Double.POSITIVE_INFINITY;
 
         // if a subtrahend is not specified, assume it is zero
         if (b_impliedZeroSubtrahend) {
-            l_subtrahendItem      = 0;
+            l_subtrahendItem = 0;
             l_subtrahendItemCount = 2;
-            l_subtrahendCurX      = new Double(x_dataset.getXValue(0, 0));
-            l_subtrahendNextX     = new Double(x_dataset.getXValue(0,
+            l_subtrahendCurX = new Double(x_dataset.getXValue(0, 0));
+            l_subtrahendNextX = new Double(x_dataset.getXValue(0,
                     (l_minuendItemCount - 1)));
-            l_subtrahendCurY      = new Double(0.0);
-            l_subtrahendNextY     = new Double(0.0);
-            l_subtrahendMaxY      = 0.0;
-            l_subtrahendMinY      = 0.0;
+            l_subtrahendCurY = new Double(0.0);
+            l_subtrahendNextY = new Double(0.0);
+            l_subtrahendMaxY = 0.0;
+            l_subtrahendMinY = 0.0;
 
             l_subtrahendXs.add(l_subtrahendCurX);
             l_subtrahendYs.add(l_subtrahendCurY);
-        }
-        else {
+        } else {
             l_subtrahendItemCount = x_dataset.getItemCount(1);
         }
 
-        boolean b_minuendDone           = false;
-        boolean b_minuendAdvanced       = true;
-        boolean b_minuendAtIntersect    = false;
-        boolean b_minuendFastForward    = false;
-        boolean b_subtrahendDone        = false;
-        boolean b_subtrahendAdvanced    = true;
+        boolean b_minuendDone = false;
+        boolean b_minuendAdvanced = true;
+        boolean b_minuendAtIntersect = false;
+        boolean b_minuendFastForward = false;
+        boolean b_subtrahendDone = false;
+        boolean b_subtrahendAdvanced = true;
         boolean b_subtrahendAtIntersect = false;
         boolean b_subtrahendFastForward = false;
-        boolean b_colinear              = false;
+        boolean b_colinear = false;
 
         boolean b_positive;
 
@@ -498,8 +485,8 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             l_x2 = x_dataset.getXValue(0, l_minuendItem + 1);
             l_y2 = x_dataset.getYValue(0, l_minuendItem + 1);
 
-            l_minuendCurX  = new Double(l_x1);
-            l_minuendCurY  = new Double(l_y1);
+            l_minuendCurX = new Double(l_x1);
+            l_minuendCurY = new Double(l_y1);
             l_minuendNextX = new Double(l_x2);
             l_minuendNextY = new Double(l_y2);
 
@@ -508,15 +495,14 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                 l_y3 = l_subtrahendCurY.doubleValue();
                 l_x4 = l_subtrahendNextX.doubleValue();
                 l_y4 = l_subtrahendNextY.doubleValue();
-            }
-            else {
+            } else {
                 l_x3 = x_dataset.getXValue(1, l_subtrahendItem);
                 l_y3 = x_dataset.getYValue(1, l_subtrahendItem);
                 l_x4 = x_dataset.getXValue(1, l_subtrahendItem + 1);
                 l_y4 = x_dataset.getYValue(1, l_subtrahendItem + 1);
 
-                l_subtrahendCurX  = new Double(l_x3);
-                l_subtrahendCurY  = new Double(l_y3);
+                l_subtrahendCurX = new Double(l_x3);
+                l_subtrahendCurY = new Double(l_y3);
                 l_subtrahendNextX = new Double(l_x4);
                 l_subtrahendNextY = new Double(l_y4);
             }
@@ -538,7 +524,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             // check if initial polygon needs to be clipped
             if ((l_x3 < l_x1) && (l_x1 < l_x4)) {
                 // project onto subtrahend
-                double l_slope   = (l_y4 - l_y3) / (l_x4 - l_x3);
+                double l_slope = (l_y4 - l_y3) / (l_x4 - l_x3);
                 l_subtrahendCurX = l_minuendCurX;
                 l_subtrahendCurY = new Double((l_slope * l_x1)
                         + (l_y3 - (l_slope * l_x3)));
@@ -550,16 +536,16 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             if ((l_x1 < l_x3) && (l_x3 < l_x2)) {
                 // project onto minuend
                 double l_slope = (l_y2 - l_y1) / (l_x2 - l_x1);
-                l_minuendCurX  = l_subtrahendCurX;
-                l_minuendCurY  = new Double((l_slope * l_x3)
+                l_minuendCurX = l_subtrahendCurX;
+                l_minuendCurY = new Double((l_slope * l_x3)
                         + (l_y1 - (l_slope * l_x1)));
 
                 l_minuendXs.add(l_minuendCurX);
                 l_minuendYs.add(l_minuendCurY);
             }
 
-            l_minuendMaxY    = l_minuendCurY.doubleValue();
-            l_minuendMinY    = l_minuendCurY.doubleValue();
+            l_minuendMaxY = l_minuendCurY.doubleValue();
+            l_minuendMinY = l_minuendCurY.doubleValue();
             l_subtrahendMaxY = l_subtrahendCurY.doubleValue();
             l_subtrahendMinY = l_subtrahendCurY.doubleValue();
 
@@ -611,14 +597,14 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             }
 
             // deassert b_*FastForward (only matters for 1st time through loop)
-            b_minuendFastForward    = false;
+            b_minuendFastForward = false;
             b_subtrahendFastForward = false;
 
             Double l_intersectX = null;
             Double l_intersectY = null;
             boolean b_intersect = false;
 
-            b_minuendAtIntersect    = false;
+            b_minuendAtIntersect = false;
             b_subtrahendAtIntersect = false;
 
             // check for intersect
@@ -626,19 +612,17 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                 // check if line segments are colinear
                 if ((l_x1 == l_x3) && (l_y1 == l_y3)) {
                     b_colinear = true;
-                }
-                else {
+                } else {
                     // the intersect is at the next point for both the minuend
                     // and subtrahend
                     l_intersectX = new Double(l_x2);
                     l_intersectY = new Double(l_y2);
 
-                    b_intersect             = true;
-                    b_minuendAtIntersect    = true;
+                    b_intersect = true;
+                    b_minuendAtIntersect = true;
                     b_subtrahendAtIntersect = true;
-                 }
-            }
-            else {
+                }
+            } else {
                 // compute common denominator
                 double l_denominator = ((l_y4 - l_y3) * (l_x2 - l_x1))
                         - ((l_x4 - l_x3) * (l_y2 - l_y1));
@@ -657,8 +641,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                 if ((0 == l_numeratorA) && (0 == l_numeratorB)
                         && (0 == l_denominator)) {
                     b_colinear = true;
-                }
-                else {
+                } else {
                     // check if previously colinear
                     if (b_colinear) {
                         // clear colinear points and flag
@@ -690,32 +673,31 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
 
                 // check if the line segments intersect
                 if (((0 < l_slopeA) && (l_slopeA <= 1) && (0 < l_slopeB)
-                        && (l_slopeB <= 1))|| b_vertical) {
+                        && (l_slopeB <= 1)) || b_vertical) {
 
                     // compute the point of intersection
                     double l_xi;
                     double l_yi;
-                    if(b_vertical){
+                    if (b_vertical) {
                         b_colinear = false;
                         l_xi = l_x2;
                         l_yi = l_x4;
-                    }
-                    else{
+                    } else {
                         l_xi = l_x1 + (l_slopeA * (l_x2 - l_x1));
                         l_yi = l_y1 + (l_slopeA * (l_y2 - l_y1));
                     }
 
-                    l_intersectX            = new Double(l_xi);
-                    l_intersectY            = new Double(l_yi);
-                    b_intersect             = true;
-                    b_minuendAtIntersect    = ((l_xi == l_x2)
+                    l_intersectX = new Double(l_xi);
+                    l_intersectY = new Double(l_yi);
+                    b_intersect = true;
+                    b_minuendAtIntersect = ((l_xi == l_x2)
                             && (l_yi == l_y2));
                     b_subtrahendAtIntersect = ((l_xi == l_x4)
                             && (l_yi == l_y4));
 
                     // advance minuend and subtrahend to intesect
-                    l_minuendCurX    = l_intersectX;
-                    l_minuendCurY    = l_intersectY;
+                    l_minuendCurX = l_intersectX;
+                    l_minuendCurY = l_intersectY;
                     l_subtrahendCurX = l_intersectX;
                     l_subtrahendCurY = l_intersectY;
                 }
@@ -752,10 +734,10 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                 l_polygonYs.clear();
 
                 // set the maxY and minY values to intersect y-value
-                double l_y       = l_intersectY.doubleValue();
-                l_minuendMaxY    = l_y;
+                double l_y = l_intersectY.doubleValue();
+                l_minuendMaxY = l_y;
                 l_subtrahendMaxY = l_y;
-                l_minuendMinY    = l_y;
+                l_minuendMinY = l_y;
                 l_subtrahendMinY = l_y;
 
                 // add interection point to new polygon
@@ -767,8 +749,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             if (l_x2 <= l_x4) {
                 l_minuendItem++;
                 b_minuendAdvanced = true;
-            }
-            else {
+            } else {
                 b_minuendAdvanced = false;
             }
 
@@ -776,12 +757,11 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             if (l_x4 <= l_x2) {
                 l_subtrahendItem++;
                 b_subtrahendAdvanced = true;
-            }
-            else {
+            } else {
                 b_subtrahendAdvanced = false;
             }
 
-            b_minuendDone    = (l_minuendItem == (l_minuendItemCount - 1));
+            b_minuendDone = (l_minuendItem == (l_minuendItemCount - 1));
             b_subtrahendDone = (l_subtrahendItem == (l_subtrahendItemCount
                     - 1));
         }
@@ -789,7 +769,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         // check if the final polygon needs to be clipped
         if (b_minuendDone && (l_x3 < l_x2) && (l_x2 < l_x4)) {
             // project onto subtrahend
-            double l_slope    = (l_y4 - l_y3) / (l_x4 - l_x3);
+            double l_slope = (l_y4 - l_y3) / (l_x4 - l_x3);
             l_subtrahendNextX = l_minuendNextX;
             l_subtrahendNextY = new Double((l_slope * l_x2)
                     + (l_y3 - (l_slope * l_x3)));
@@ -805,11 +785,11 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
 
         // consider last point of minuend and subtrahend for determining
         // positivity
-        l_minuendMaxY    = Math.max(l_minuendMaxY,
+        l_minuendMaxY = Math.max(l_minuendMaxY,
                 l_minuendNextY.doubleValue());
         l_subtrahendMaxY = Math.max(l_subtrahendMaxY,
                 l_subtrahendNextY.doubleValue());
-        l_minuendMinY    = Math.min(l_minuendMinY,
+        l_minuendMinY = Math.min(l_minuendMinY,
                 l_minuendNextY.doubleValue());
         l_subtrahendMinY = Math.min(l_subtrahendMinY,
                 l_subtrahendNextY.doubleValue());
@@ -843,18 +823,18 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * the second pass, the renderer draws the lines and shapes for the
      * individual points in the two series.
      *
-     * @param x_graphics  the graphics device.
-     * @param x_dataArea  the area within which the data is being drawn.
-     * @param x_info  collects information about the drawing.
-     * @param x_plot  the plot (can be used to obtain standard color
-     *         information etc).
-     * @param x_domainAxis  the domain (horizontal) axis.
-     * @param x_rangeAxis  the range (vertical) axis.
-     * @param x_dataset  the dataset.
-     * @param x_series  the series index (zero-based).
-     * @param x_item  the item index (zero-based).
-     * @param x_crosshairState  crosshair information for the plot
-     *                          ({@code null} permitted).
+     * @param x_graphics       the graphics device.
+     * @param x_dataArea       the area within which the data is being drawn.
+     * @param x_info           collects information about the drawing.
+     * @param x_plot           the plot (can be used to obtain standard color
+     *                         information etc).
+     * @param x_domainAxis     the domain (horizontal) axis.
+     * @param x_rangeAxis      the range (vertical) axis.
+     * @param x_dataset        the dataset.
+     * @param x_series         the series index (zero-based).
+     * @param x_item           the item index (zero-based).
+     * @param x_crosshairState crosshair information for the plot
+     *                         ({@code null} permitted).
      */
     protected void drawItemPass1(Graphics2D x_graphics,
                                  Rectangle2D x_dataArea,
@@ -873,14 +853,14 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             l_entities = x_info.getOwner().getEntityCollection();
         }
 
-        Paint l_seriesPaint   = getItemPaint(x_series, x_item);
+        Paint l_seriesPaint = getItemPaint(x_series, x_item);
         Stroke l_seriesStroke = getItemStroke(x_series, x_item);
         x_graphics.setPaint(l_seriesPaint);
         x_graphics.setStroke(l_seriesStroke);
 
-        PlotOrientation l_orientation      = x_plot.getOrientation();
+        PlotOrientation l_orientation = x_plot.getOrientation();
         RectangleEdge l_domainAxisLocation = x_plot.getDomainAxisEdge();
-        RectangleEdge l_rangeAxisLocation  = x_plot.getRangeAxisEdge();
+        RectangleEdge l_rangeAxisLocation = x_plot.getRangeAxisEdge();
 
         double l_x0 = x_dataset.getXValue(x_series, x_item);
         double l_y0 = x_dataset.getYValue(x_series, x_item);
@@ -894,8 +874,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             if (l_orientation == PlotOrientation.HORIZONTAL) {
                 l_shape = ShapeUtils.createTranslatedShape(l_shape,
                         l_y1, l_x1);
-            }
-            else {
+            } else {
                 l_shape = ShapeUtils.createTranslatedShape(l_shape,
                         l_x1, l_y1);
             }
@@ -933,12 +912,12 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         // draw the item label if there is one...
         if (isItemLabelVisible(x_series, x_item)) {
             drawItemLabel(x_graphics, l_orientation, x_dataset, x_series,
-                          x_item, l_x1, l_y1, (l_y1 < 0.0));
+                    x_item, l_x1, l_y1, (l_y1 < 0.0));
         }
 
         int datasetIndex = x_plot.indexOf(x_dataset);
         updateCrosshairValues(x_crosshairState, l_x0, l_y0, datasetIndex,
-                              l_x1, l_y1, l_orientation);
+                l_x1, l_y1, l_orientation);
 
         if (0 == x_item) {
             return;
@@ -952,8 +931,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         Line2D l_line = null;
         if (PlotOrientation.HORIZONTAL == l_orientation) {
             l_line = new Line2D.Double(l_y1, l_x1, l_y2, l_x2);
-        }
-        else if (PlotOrientation.VERTICAL == l_orientation) {
+        } else if (PlotOrientation.VERTICAL == l_orientation) {
             l_line = new Line2D.Double(l_x1, l_y1, l_x2, l_y2);
         }
 
@@ -968,13 +946,12 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Determines if a dataset is degenerate.  A degenerate dataset is a
      * dataset where either series has less than two (2) points.
      *
-     * @param x_dataset  the dataset.
-     * @param x_impliedZeroSubtrahend  if false, do not check the subtrahend
-     *
+     * @param x_dataset               the dataset.
+     * @param x_impliedZeroSubtrahend if false, do not check the subtrahend
      * @return true if the dataset is degenerate.
      */
     private boolean isEitherSeriesDegenerate(XYDataset x_dataset,
-            boolean x_impliedZeroSubtrahend) {
+                                             boolean x_impliedZeroSubtrahend) {
 
         if (x_impliedZeroSubtrahend) {
             return (x_dataset.getItemCount(0) < 2);
@@ -988,19 +965,18 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Determines if the two (2) series are disjoint.
      * Disjoint series do not overlap in the domain space.
      *
-     * @param x_dataset  the dataset.
-     *
+     * @param x_dataset the dataset.
      * @return true if the dataset is degenerate.
      */
     private boolean areSeriesDisjoint(XYDataset x_dataset) {
 
         int l_minuendItemCount = x_dataset.getItemCount(0);
-        double l_minuendFirst  = x_dataset.getXValue(0, 0);
-        double l_minuendLast   = x_dataset.getXValue(0, l_minuendItemCount - 1);
+        double l_minuendFirst = x_dataset.getXValue(0, 0);
+        double l_minuendLast = x_dataset.getXValue(0, l_minuendItemCount - 1);
 
         int l_subtrahendItemCount = x_dataset.getItemCount(1);
-        double l_subtrahendFirst  = x_dataset.getXValue(1, 0);
-        double l_subtrahendLast   = x_dataset.getXValue(1,
+        double l_subtrahendFirst = x_dataset.getXValue(1, 0);
+        double l_subtrahendLast = x_dataset.getXValue(1,
                 l_subtrahendItemCount - 1);
 
         return ((l_minuendLast < l_subtrahendFirst)
@@ -1010,31 +986,31 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
     /**
      * Draws the visual representation of a polygon
      *
-     * @param x_graphics  the graphics device.
-     * @param x_dataArea  the area within which the data is being drawn.
-     * @param x_plot  the plot (can be used to obtain standard color
-     *                information etc).
-     * @param x_domainAxis  the domain (horizontal) axis.
+     * @param x_graphics   the graphics device.
+     * @param x_dataArea   the area within which the data is being drawn.
+     * @param x_plot       the plot (can be used to obtain standard color
+     *                     information etc).
+     * @param x_domainAxis the domain (horizontal) axis.
      * @param x_rangeAxis  the range (vertical) axis.
-     * @param x_positive  indicates if the polygon is positive (true) or
-     *                    negative (false).
-     * @param x_xValues  a linked list of the x values (expects values to be
-     *                   of type Double).
-     * @param x_yValues  a linked list of the y values (expects values to be
-     *                   of type Double).
+     * @param x_positive   indicates if the polygon is positive (true) or
+     *                     negative (false).
+     * @param x_xValues    a linked list of the x values (expects values to be
+     *                     of type Double).
+     * @param x_yValues    a linked list of the y values (expects values to be
+     *                     of type Double).
      */
-    private void createPolygon (Graphics2D x_graphics,
-                                Rectangle2D x_dataArea,
-                                XYPlot x_plot,
-                                ValueAxis x_domainAxis,
-                                ValueAxis x_rangeAxis,
-                                boolean x_positive,
-                                LinkedList x_xValues,
-                                LinkedList x_yValues) {
+    private void createPolygon(Graphics2D x_graphics,
+                               Rectangle2D x_dataArea,
+                               XYPlot x_plot,
+                               ValueAxis x_domainAxis,
+                               ValueAxis x_rangeAxis,
+                               boolean x_positive,
+                               LinkedList x_xValues,
+                               LinkedList x_yValues) {
 
-        PlotOrientation l_orientation      = x_plot.getOrientation();
+        PlotOrientation l_orientation = x_plot.getOrientation();
         RectangleEdge l_domainAxisLocation = x_plot.getDomainAxisEdge();
-        RectangleEdge l_rangeAxisLocation  = x_plot.getRangeAxisEdge();
+        RectangleEdge l_rangeAxisLocation = x_plot.getRangeAxisEdge();
 
         Object[] l_xValues = x_xValues.toArray();
         Object[] l_yValues = x_yValues.toArray();
@@ -1043,55 +1019,54 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
 
         if (PlotOrientation.VERTICAL == l_orientation) {
             double l_x = x_domainAxis.valueToJava2D((
-                    (Double) l_xValues[0]).doubleValue(), x_dataArea,
+                            (Double) l_xValues[0]).doubleValue(), x_dataArea,
                     l_domainAxisLocation);
             if (this.roundXCoordinates) {
                 l_x = Math.rint(l_x);
             }
 
             double l_y = x_rangeAxis.valueToJava2D((
-                    (Double) l_yValues[0]).doubleValue(), x_dataArea,
+                            (Double) l_yValues[0]).doubleValue(), x_dataArea,
                     l_rangeAxisLocation);
 
             l_path.moveTo((float) l_x, (float) l_y);
             for (int i = 1; i < l_xValues.length; i++) {
                 l_x = x_domainAxis.valueToJava2D((
-                        (Double) l_xValues[i]).doubleValue(), x_dataArea,
+                                (Double) l_xValues[i]).doubleValue(), x_dataArea,
                         l_domainAxisLocation);
                 if (this.roundXCoordinates) {
                     l_x = Math.rint(l_x);
                 }
 
                 l_y = x_rangeAxis.valueToJava2D((
-                        (Double) l_yValues[i]).doubleValue(), x_dataArea,
+                                (Double) l_yValues[i]).doubleValue(), x_dataArea,
                         l_rangeAxisLocation);
                 l_path.lineTo((float) l_x, (float) l_y);
             }
             l_path.closePath();
-        }
-        else {
+        } else {
             double l_x = x_domainAxis.valueToJava2D((
-                    (Double) l_xValues[0]).doubleValue(), x_dataArea,
+                            (Double) l_xValues[0]).doubleValue(), x_dataArea,
                     l_domainAxisLocation);
             if (this.roundXCoordinates) {
                 l_x = Math.rint(l_x);
             }
 
             double l_y = x_rangeAxis.valueToJava2D((
-                    (Double) l_yValues[0]).doubleValue(), x_dataArea,
+                            (Double) l_yValues[0]).doubleValue(), x_dataArea,
                     l_rangeAxisLocation);
 
             l_path.moveTo((float) l_y, (float) l_x);
             for (int i = 1; i < l_xValues.length; i++) {
                 l_x = x_domainAxis.valueToJava2D((
-                        (Double) l_xValues[i]).doubleValue(), x_dataArea,
+                                (Double) l_xValues[i]).doubleValue(), x_dataArea,
                         l_domainAxisLocation);
                 if (this.roundXCoordinates) {
                     l_x = Math.rint(l_x);
                 }
 
                 l_y = x_rangeAxis.valueToJava2D((
-                        (Double) l_yValues[i]).doubleValue(), x_dataArea,
+                                (Double) l_yValues[i]).doubleValue(), x_dataArea,
                         l_rangeAxisLocation);
                 l_path.lineTo((float) l_y, (float) l_x);
             }
@@ -1109,9 +1084,8 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Returns a default legend item for the specified series.  Subclasses
      * should override this method to generate customised items.
      *
-     * @param datasetIndex  the dataset index (zero-based).
-     * @param series  the series index (zero-based).
-     *
+     * @param datasetIndex the dataset index (zero-based).
+     * @param series       the series index (zero-based).
      * @return A legend item for the series.
      */
     @Override
@@ -1128,8 +1102,8 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                     String toolTipText = null;
                     if (getLegendItemToolTipGenerator() != null) {
                         toolTipText
-                            = getLegendItemToolTipGenerator().generateLabel(
-                                    dataset, series);
+                                = getLegendItemToolTipGenerator().generateLabel(
+                                dataset, series);
                     }
                     String urlText = null;
                     if (getLegendItemURLGenerator() != null) {
@@ -1162,8 +1136,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
     /**
      * Tests this renderer for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -1200,8 +1173,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Returns a clone of the renderer.
      *
      * @return A clone.
-     *
-     * @throws CloneNotSupportedException  if the renderer cannot be cloned.
+     * @throws CloneNotSupportedException if the renderer cannot be cloned.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -1213,9 +1185,8 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -1227,13 +1198,12 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.positivePaint = SerialUtils.readPaint(stream);
         this.negativePaint = SerialUtils.readPaint(stream);

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -40,8 +40,9 @@
 
 package org.jfree.data.statistics;
 
-import java.io.Serializable;
 import org.jfree.chart.util.PublicCloneable;
+
+import java.io.Serializable;
 
 /**
  * A bin for the {@link SimpleHistogramDataset}.
@@ -49,13 +50,19 @@ import org.jfree.chart.util.PublicCloneable;
 public class SimpleHistogramBin implements Comparable,
         Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 3480862537505941742L;
 
-    /** The lower bound for the bin. */
+    /**
+     * The lower bound for the bin.
+     */
     private double lowerBound;
 
-    /** The upper bound for the bin. */
+    /**
+     * The upper bound for the bin.
+     */
     private double upperBound;
 
     /**
@@ -70,14 +77,16 @@ public class SimpleHistogramBin implements Comparable,
      */
     private boolean includeUpperBound;
 
-    /** The item count. */
+    /**
+     * The item count.
+     */
     private int itemCount;
 
     /**
      * Creates a new bin.
      *
-     * @param lowerBound  the lower bound (inclusive).
-     * @param upperBound  the upper bound (inclusive);
+     * @param lowerBound the lower bound (inclusive).
+     * @param upperBound the upper bound (inclusive);
      */
     public SimpleHistogramBin(double lowerBound, double upperBound) {
         this(lowerBound, upperBound, true, true);
@@ -86,10 +95,10 @@ public class SimpleHistogramBin implements Comparable,
     /**
      * Creates a new bin.
      *
-     * @param lowerBound  the lower bound.
-     * @param upperBound  the upper bound.
-     * @param includeLowerBound  include the lower bound?
-     * @param includeUpperBound  include the upper bound?
+     * @param lowerBound        the lower bound.
+     * @param upperBound        the upper bound.
+     * @param includeLowerBound include the lower bound?
+     * @param includeUpperBound include the upper bound?
      */
     public SimpleHistogramBin(double lowerBound, double upperBound,
                               boolean includeLowerBound,
@@ -134,7 +143,7 @@ public class SimpleHistogramBin implements Comparable,
     /**
      * Sets the item count.
      *
-     * @param count  the item count.
+     * @param count the item count.
      */
     public void setItemCount(int count) {
         this.itemCount = count;
@@ -144,8 +153,7 @@ public class SimpleHistogramBin implements Comparable,
      * Returns {@code true} if the specified value belongs in the bin,
      * and {@code false} otherwise.
      *
-     * @param value  the value.
-     *
+     * @param value the value.
      * @return A boolean.
      */
     public boolean accepts(double value) {
@@ -171,8 +179,7 @@ public class SimpleHistogramBin implements Comparable,
      * Returns {@code true} if this bin overlaps with the specified bin,
      * and {@code false} otherwise.
      *
-     * @param bin  the other bin ({@code null} not permitted).
-     *
+     * @param bin the other bin ({@code null} not permitted).
      * @return A boolean.
      */
     public boolean overlapsWith(SimpleHistogramBin bin) {
@@ -195,10 +202,9 @@ public class SimpleHistogramBin implements Comparable,
      * Compares the bin to an arbitrary object and returns the relative
      * ordering.
      *
-     * @param obj  the object.
-     *
+     * @param obj the object.
      * @return An integer indicating the relative ordering of the this bin and
-     *         the given object.
+     * the given object.
      */
     @Override
     public int compareTo(Object obj) {
@@ -225,8 +231,7 @@ public class SimpleHistogramBin implements Comparable,
     /**
      * Tests this bin for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -257,7 +262,6 @@ public class SimpleHistogramBin implements Comparable,
      * Returns a clone of the bin.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException not thrown by this class.
      */
     @Override

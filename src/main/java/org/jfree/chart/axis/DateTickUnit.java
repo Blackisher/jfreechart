@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -56,13 +56,14 @@
 
 package org.jfree.chart.axis;
 
+import org.jfree.chart.util.Args;
+import org.jfree.chart.util.ObjectUtils;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.Args;
 
 /**
  * A tick unit for use by subclasses of {@link DateAxis}.  Instances of this
@@ -70,7 +71,9 @@ import org.jfree.chart.util.Args;
  */
 public class DateTickUnit extends TickUnit implements Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -7289292157229621901L;
 
     /**
@@ -80,7 +83,9 @@ public class DateTickUnit extends TickUnit implements Serializable {
      */
     private DateTickUnitType unitType;
 
-    /** The unit count. */
+    /**
+     * The unit count.
+     */
     private int count;
 
     /**
@@ -90,18 +95,21 @@ public class DateTickUnit extends TickUnit implements Serializable {
      */
     private DateTickUnitType rollUnitType;
 
-    /** The roll count. */
+    /**
+     * The roll count.
+     */
     private int rollCount;
 
-    /** The date formatter. */
+    /**
+     * The date formatter.
+     */
     private DateFormat formatter;
 
     /**
      * Creates a new date tick unit.
      *
-     * @param unitType  the unit type ({@code null} not permitted).
-     * @param multiple  the multiple (of the unit type, must be &gt; 0).
-     *
+     * @param unitType the unit type ({@code null} not permitted).
+     * @param multiple the multiple (of the unit type, must be &gt; 0).
      * @since 1.0.13
      */
     public DateTickUnit(DateTickUnitType unitType, int multiple) {
@@ -113,31 +121,29 @@ public class DateTickUnit extends TickUnit implements Serializable {
      *
      * @param unitType  the unit type ({@code null} not permitted).
      * @param multiple  the multiple (of the unit type, must be &gt; 0).
-     * @param formatter  the date formatter ({@code null} not permitted).
-     *
+     * @param formatter the date formatter ({@code null} not permitted).
      * @since 1.0.13
      */
     public DateTickUnit(DateTickUnitType unitType, int multiple,
-            DateFormat formatter) {
+                        DateFormat formatter) {
         this(unitType, multiple, unitType, multiple, formatter);
     }
 
     /**
      * Creates a new unit.
-     *
+     * <p>
      * The {@code rollUnitType} and {@code rollCount} are intended to roll the date forward when it falls on a "hidden" part of the DateAxis. For example, if the tick size is 1 week (7 days), but Saturday and Sunday are hidden, if the ticks happen to fall on Saturday, none of them will be visible. A sensible {@code rollUnitType}/{@code rollCount} would be 1 day, so that the date would roll forward to the following Monday, which is visible.
      *
-     * @param unitType  the unit.
-     * @param multiple  the multiple.
-     * @param rollUnitType  the roll unit.
-     * @param rollMultiple  the roll multiple.
-     * @param formatter  the date formatter ({@code null} not permitted).
-     *
+     * @param unitType     the unit.
+     * @param multiple     the multiple.
+     * @param rollUnitType the roll unit.
+     * @param rollMultiple the roll multiple.
+     * @param formatter    the date formatter ({@code null} not permitted).
      * @since 1.0.13
      */
     public DateTickUnit(DateTickUnitType unitType, int multiple,
-            DateTickUnitType rollUnitType, int rollMultiple,
-            DateFormat formatter) {
+                        DateTickUnitType rollUnitType, int rollMultiple,
+                        DateFormat formatter) {
         super(DateTickUnit.getMillisecondCount(unitType, multiple));
         Args.nullNotPermitted(formatter, "formatter");
         if (multiple <= 0) {
@@ -154,10 +160,44 @@ public class DateTickUnit extends TickUnit implements Serializable {
     }
 
     /**
+     * Returns the (approximate) number of milliseconds for the given unit and
+     * unit count.
+     * <p>
+     * This value is an approximation some of the time (e.g. months are
+     * assumed to have 31 days) but this shouldn't matter.
+     *
+     * @param unit  the unit.
+     * @param count the unit count.
+     * @return The number of milliseconds.
+     * @since 1.0.13
+     */
+    private static long getMillisecondCount(DateTickUnitType unit, int count) {
+
+        if (unit.equals(DateTickUnitType.YEAR)) {
+            return (365L * 24L * 60L * 60L * 1000L) * count;
+        } else if (unit.equals(DateTickUnitType.MONTH)) {
+            return (31L * 24L * 60L * 60L * 1000L) * count;
+        } else if (unit.equals(DateTickUnitType.DAY)) {
+            return (24L * 60L * 60L * 1000L) * count;
+        } else if (unit.equals(DateTickUnitType.HOUR)) {
+            return (60L * 60L * 1000L) * count;
+        } else if (unit.equals(DateTickUnitType.MINUTE)) {
+            return (60L * 1000L) * count;
+        } else if (unit.equals(DateTickUnitType.SECOND)) {
+            return 1000L * count;
+        } else if (unit.equals(DateTickUnitType.MILLISECOND)) {
+            return count;
+        } else {
+            throw new IllegalArgumentException("The 'unit' argument has a "
+                    + "value that is not recognised.");
+        }
+
+    }
+
+    /**
      * Returns the unit type.
      *
      * @return The unit type (never {@code null}).
-     *
      * @since 1.0.13
      */
     public DateTickUnitType getUnitType() {
@@ -177,7 +217,6 @@ public class DateTickUnit extends TickUnit implements Serializable {
      * Returns the roll unit type.
      *
      * @return The roll unit type (never {@code null}).
-     *
      * @since 1.0.13
      */
     public DateTickUnitType getRollUnitType() {
@@ -188,7 +227,6 @@ public class DateTickUnit extends TickUnit implements Serializable {
      * Returns the roll unit multiple.
      *
      * @return The roll unit multiple.
-     *
      * @since 1.0.13
      */
     public int getRollMultiple() {
@@ -198,8 +236,7 @@ public class DateTickUnit extends TickUnit implements Serializable {
     /**
      * Formats a value.
      *
-     * @param milliseconds  date in milliseconds since 01-01-1970.
-     *
+     * @param milliseconds date in milliseconds since 01-01-1970.
      * @return The formatted date.
      */
     @Override
@@ -210,8 +247,7 @@ public class DateTickUnit extends TickUnit implements Serializable {
     /**
      * Formats a date using the tick unit's formatter.
      *
-     * @param date  the date.
-     *
+     * @param date the date.
      * @return The formatted date.
      */
     public String dateToString(Date date) {
@@ -221,11 +257,9 @@ public class DateTickUnit extends TickUnit implements Serializable {
     /**
      * Calculates a new date by adding this unit to the base date.
      *
-     * @param base  the base date.
-     * @param zone  the time zone for the date calculation.
-     *
+     * @param base the base date.
+     * @param zone the time zone for the date calculation.
      * @return A new date one unit after the base date.
-     *
      * @since 1.0.6
      */
     public Date addToDate(Date base, TimeZone zone) {
@@ -243,10 +277,8 @@ public class DateTickUnit extends TickUnit implements Serializable {
      * Rolls the date forward by the amount specified by the roll unit and
      * count.
      *
-     * @param base  the base date.
-
+     * @param base the base date.
      * @return The rolled date.
-     *
      * @see #rollDate(Date, TimeZone)
      */
     public Date rollDate(Date base) {
@@ -257,11 +289,9 @@ public class DateTickUnit extends TickUnit implements Serializable {
      * Rolls the date forward by the amount specified by the roll unit and
      * count.
      *
-     * @param base  the base date.
-     * @param zone  the time zone.
-     *
+     * @param base the base date.
+     * @param zone the time zone.
      * @return The rolled date.
-     *
      * @since 1.0.6
      */
     public Date rollDate(Date base, TimeZone zone) {
@@ -286,54 +316,9 @@ public class DateTickUnit extends TickUnit implements Serializable {
     }
 
     /**
-     * Returns the (approximate) number of milliseconds for the given unit and
-     * unit count.
-     * <P>
-     * This value is an approximation some of the time (e.g. months are
-     * assumed to have 31 days) but this shouldn't matter.
-     *
-     * @param unit  the unit.
-     * @param count  the unit count.
-     *
-     * @return The number of milliseconds.
-     *
-     * @since 1.0.13
-     */
-    private static long getMillisecondCount(DateTickUnitType unit, int count) {
-
-        if (unit.equals(DateTickUnitType.YEAR)) {
-            return (365L * 24L * 60L * 60L * 1000L) * count;
-        }
-        else if (unit.equals(DateTickUnitType.MONTH)) {
-            return (31L * 24L * 60L * 60L * 1000L) * count;
-        }
-        else if (unit.equals(DateTickUnitType.DAY)) {
-            return (24L * 60L * 60L * 1000L) * count;
-        }
-        else if (unit.equals(DateTickUnitType.HOUR)) {
-            return (60L * 60L * 1000L) * count;
-        }
-        else if (unit.equals(DateTickUnitType.MINUTE)) {
-            return (60L * 1000L) * count;
-        }
-        else if (unit.equals(DateTickUnitType.SECOND)) {
-            return 1000L * count;
-        }
-        else if (unit.equals(DateTickUnitType.MILLISECOND)) {
-            return count;
-        }
-        else {
-            throw new IllegalArgumentException("The 'unit' argument has a " 
-                    + "value that is not recognised.");
-        }
-
-    }
-
-    /**
      * Tests this unit for equality with another object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return {@code true} or {@code false}.
      */
     @Override

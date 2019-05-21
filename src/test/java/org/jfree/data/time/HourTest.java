@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -46,21 +46,13 @@
 
 package org.jfree.data.time;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.date.MonthConstants;
-
 import org.junit.Test;
+
+import java.util.*;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link Hour} class.
@@ -69,7 +61,7 @@ public class HourTest {
 
     /**
      * Check that an Hour instance is equal to itself.
-     *
+     * <p>
      * SourceForge Bug ID: 558850.
      */
     @Test
@@ -117,7 +109,7 @@ public class HourTest {
         Calendar cal = Calendar.getInstance(zone);
         Locale locale = Locale.getDefault();  // locale should not matter here
         Hour h1 = new Hour(new Date(1014267599999L), zone, locale);
-        Hour h2 = new Hour (new Date(1014267600000L), zone, locale);
+        Hour h2 = new Hour(new Date(1014267600000L), zone, locale);
 
         assertEquals(15, h1.getHour());
         assertEquals(1014267599999L, h1.getLastMillisecond(cal));
@@ -243,8 +235,7 @@ public class HourTest {
         boolean pass = false;
         try {
             h.getFirstMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -264,8 +255,7 @@ public class HourTest {
         boolean pass = false;
         try {
             h.getFirstMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -300,8 +290,7 @@ public class HourTest {
         boolean pass = false;
         try {
             h.getLastMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -321,8 +310,7 @@ public class HourTest {
         boolean pass = false;
         try {
             h.getLastMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);

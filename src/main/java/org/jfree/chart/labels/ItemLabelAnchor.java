@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -51,78 +51,128 @@ package org.jfree.chart.labels;
  */
 public enum ItemLabelAnchor {
 
-    /** CENTER. */
+    /**
+     * CENTER.
+     */
     CENTER,
 
-    /** INSIDE1. */
+    /**
+     * INSIDE1.
+     */
     INSIDE1,
 
-    /** INSIDE2. */
+    /**
+     * INSIDE2.
+     */
     INSIDE2,
 
-    /** INSIDE3. */
+    /**
+     * INSIDE3.
+     */
     INSIDE3,
 
-    /** INSIDE4. */
+    /**
+     * INSIDE4.
+     */
     INSIDE4,
 
-    /** INSIDE5. */
+    /**
+     * INSIDE5.
+     */
     INSIDE5,
 
-    /** INSIDE6. */
+    /**
+     * INSIDE6.
+     */
     INSIDE6,
 
-    /** INSIDE7. */
+    /**
+     * INSIDE7.
+     */
     INSIDE7,
 
-    /** INSIDE8. */
+    /**
+     * INSIDE8.
+     */
     INSIDE8,
 
-    /** INSIDE9. */
+    /**
+     * INSIDE9.
+     */
     INSIDE9,
 
-    /** INSIDE10. */
+    /**
+     * INSIDE10.
+     */
     INSIDE10,
 
-    /** INSIDE11. */
+    /**
+     * INSIDE11.
+     */
     INSIDE11,
 
-    /** INSIDE12. */
+    /**
+     * INSIDE12.
+     */
     INSIDE12,
 
-    /** OUTSIDE1. */
+    /**
+     * OUTSIDE1.
+     */
     OUTSIDE1,
 
-    /** OUTSIDE2. */
+    /**
+     * OUTSIDE2.
+     */
     OUTSIDE2,
 
-    /** OUTSIDE3. */
+    /**
+     * OUTSIDE3.
+     */
     OUTSIDE3,
 
-    /** OUTSIDE4. */
+    /**
+     * OUTSIDE4.
+     */
     OUTSIDE4,
 
-    /** OUTSIDE5. */
+    /**
+     * OUTSIDE5.
+     */
     OUTSIDE5,
 
-    /** OUTSIDE6. */
+    /**
+     * OUTSIDE6.
+     */
     OUTSIDE6,
 
-    /** OUTSIDE7. */
+    /**
+     * OUTSIDE7.
+     */
     OUTSIDE7,
 
-    /** OUTSIDE8. */
+    /**
+     * OUTSIDE8.
+     */
     OUTSIDE8,
 
-    /** OUTSIDE9. */
+    /**
+     * OUTSIDE9.
+     */
     OUTSIDE9,
 
-    /** OUTSIDE10. */
+    /**
+     * OUTSIDE10.
+     */
     OUTSIDE10,
 
-    /** OUTSIDE11. */
+    /**
+     * OUTSIDE11.
+     */
     OUTSIDE11,
 
-    /** OUTSIDE12. */
+    /**
+     * OUTSIDE12.
+     */
     OUTSIDE12
 }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------------
@@ -57,12 +57,12 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.general.PieDataset;
+
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Locale;
-import org.jfree.chart.util.PublicCloneable;
-
-import org.jfree.data.general.PieDataset;
 
 /**
  * A standard item label generator for plots that use data from a
@@ -75,13 +75,16 @@ import org.jfree.data.general.PieDataset;
  */
 public class StandardPieToolTipGenerator extends AbstractPieItemLabelGenerator
         implements PieToolTipGenerator, Cloneable, PublicCloneable,
-            Serializable {
+        Serializable {
 
-    /** For serialization. */
-    private static final long serialVersionUID = 2995304200445733779L;
-
-    /** The default tooltip format. */
+    /**
+     * The default tooltip format.
+     */
     public static final String DEFAULT_TOOLTIP_FORMAT = "{0}: ({1}, {2})";
+    /**
+     * For serialization.
+     */
+    private static final long serialVersionUID = 2995304200445733779L;
 
     /**
      * Creates an item label generator using default number formatters.
@@ -94,8 +97,7 @@ public class StandardPieToolTipGenerator extends AbstractPieItemLabelGenerator
      * Creates a pie tool tip generator for the specified locale, using the
      * default format string.
      *
-     * @param locale  the locale ({@code null} not permitted).
-     *
+     * @param locale the locale ({@code null} not permitted).
      * @since 1.0.7
      */
     public StandardPieToolTipGenerator(Locale locale) {
@@ -105,7 +107,7 @@ public class StandardPieToolTipGenerator extends AbstractPieItemLabelGenerator
     /**
      * Creates a pie tool tip generator for the default locale.
      *
-     * @param labelFormat  the label format ({@code null} not permitted).
+     * @param labelFormat the label format ({@code null} not permitted).
      */
     public StandardPieToolTipGenerator(String labelFormat) {
         this(labelFormat, Locale.getDefault());
@@ -114,9 +116,8 @@ public class StandardPieToolTipGenerator extends AbstractPieItemLabelGenerator
     /**
      * Creates a pie tool tip generator for the specified locale.
      *
-     * @param labelFormat  the label format ({@code null} not permitted).
-     * @param locale  the locale ({@code null} not permitted).
-     *
+     * @param labelFormat the label format ({@code null} not permitted).
+     * @param locale      the locale ({@code null} not permitted).
      * @since 1.0.7
      */
     public StandardPieToolTipGenerator(String labelFormat, Locale locale) {
@@ -127,24 +128,23 @@ public class StandardPieToolTipGenerator extends AbstractPieItemLabelGenerator
     /**
      * Creates an item label generator using the specified number formatters.
      *
-     * @param labelFormat  the label format string ({@code null} not
-     *                     permitted).
+     * @param labelFormat   the label format string ({@code null} not
+     *                      permitted).
      * @param numberFormat  the format object for the values ({@code null}
      *                      not permitted).
-     * @param percentFormat  the format object for the percentages
-     *                       ({@code null} not permitted).
+     * @param percentFormat the format object for the percentages
+     *                      ({@code null} not permitted).
      */
     public StandardPieToolTipGenerator(String labelFormat,
-            NumberFormat numberFormat, NumberFormat percentFormat) {
+                                       NumberFormat numberFormat, NumberFormat percentFormat) {
         super(labelFormat, numberFormat, percentFormat);
     }
 
     /**
      * Generates a tool tip text item for one section in a pie chart.
      *
-     * @param dataset  the dataset ({@code null} not permitted).
-     * @param key  the section key ({@code null} not permitted).
-     *
+     * @param dataset the dataset ({@code null} not permitted).
+     * @param key     the section key ({@code null} not permitted).
      * @return The tool tip text (possibly {@code null}).
      */
     @Override
@@ -156,8 +156,7 @@ public class StandardPieToolTipGenerator extends AbstractPieItemLabelGenerator
      * Returns an independent copy of the generator.
      *
      * @return A clone.
-     *
-     * @throws CloneNotSupportedException  should not happen.
+     * @throws CloneNotSupportedException should not happen.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

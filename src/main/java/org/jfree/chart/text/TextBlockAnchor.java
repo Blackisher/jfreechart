@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * Changes
  * -------
  * 08-Jul-2018 : Made TextBlockAnchor an enum (TH);
- * 
+ *
  */
 
 package org.jfree.chart.text;
@@ -37,31 +37,49 @@ package org.jfree.chart.text;
  */
 public enum TextBlockAnchor {
 
-    /** Top/left. */
+    /**
+     * Top/left.
+     */
     TOP_LEFT,
 
-    /** Top/center. */
+    /**
+     * Top/center.
+     */
     TOP_CENTER,
 
-    /** Top/right. */
+    /**
+     * Top/right.
+     */
     TOP_RIGHT,
 
-    /** Middle/left. */
+    /**
+     * Middle/left.
+     */
     CENTER_LEFT,
 
-    /** Middle/center. */
+    /**
+     * Middle/center.
+     */
     CENTER,
 
-    /** Middle/right. */
+    /**
+     * Middle/right.
+     */
     CENTER_RIGHT,
 
-    /** Bottom/left. */
+    /**
+     * Bottom/left.
+     */
     BOTTOM_LEFT,
 
-    /** Bottom/center. */
+    /**
+     * Bottom/center.
+     */
     BOTTOM_CENTER,
 
-    /** Bottom/right. */
+    /**
+     * Bottom/right.
+     */
     BOTTOM_RIGHT
 }
 

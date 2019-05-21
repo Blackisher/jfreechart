@@ -21,55 +21,113 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.ui;
 
+import org.jfree.chart.util.Args;
+
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import org.jfree.chart.util.Args;
 
 /**
  * Used to indicate an anchor point for a rectangle.
  */
 public enum RectangleAnchor {
 
-    /** Center. */
+    /**
+     * Center.
+     */
     CENTER,
 
-    /** Top. */
+    /**
+     * Top.
+     */
     TOP,
 
-    /** Top-Left. */
+    /**
+     * Top-Left.
+     */
     TOP_LEFT,
 
-    /** Top-Right. */
+    /**
+     * Top-Right.
+     */
     TOP_RIGHT,
 
-    /** Bottom. */
+    /**
+     * Bottom.
+     */
     BOTTOM,
 
-    /** Bottom-Left. */
+    /**
+     * Bottom-Left.
+     */
     BOTTOM_LEFT,
 
-    /** Bottom-Right. */
+    /**
+     * Bottom-Right.
+     */
     BOTTOM_RIGHT,
 
-    /** Left. */
+    /**
+     * Left.
+     */
     LEFT,
 
-    /** Right. */
+    /**
+     * Right.
+     */
     RIGHT;
 
     /**
+     * Creates a new rectangle with the specified dimensions that is aligned to
+     * the given anchor point {@code (anchorX, anchorY)}.
+     *
+     * @param dimensions the dimensions ({@code null} not permitted).
+     * @param anchorX    the x-anchor.
+     * @param anchorY    the y-anchor.
+     * @param anchor     the anchor ({@code null} not permitted).
+     * @return A rectangle.
+     */
+    public static Rectangle2D createRectangle(Size2D dimensions,
+                                              double anchorX, double anchorY, RectangleAnchor anchor) {
+        Rectangle2D result = null;
+        double w = dimensions.getWidth();
+        double h = dimensions.getHeight();
+        if (anchor == RectangleAnchor.CENTER) {
+            result = new Rectangle2D.Double(anchorX - w / 2.0,
+                    anchorY - h / 2.0, w, h);
+        } else if (anchor == RectangleAnchor.TOP) {
+            result = new Rectangle2D.Double(anchorX - w / 2.0, anchorY, w, h);
+        } else if (anchor == RectangleAnchor.BOTTOM) {
+            result = new Rectangle2D.Double(anchorX - w / 2.0, anchorY - h,
+                    w, h);
+        } else if (anchor == RectangleAnchor.LEFT) {
+            result = new Rectangle2D.Double(anchorX, anchorY - h / 2.0, w, h);
+        } else if (anchor == RectangleAnchor.RIGHT) {
+            result = new Rectangle2D.Double(anchorX - w, anchorY - h / 2.0,
+                    w, h);
+        } else if (anchor == RectangleAnchor.TOP_LEFT) {
+            result = new Rectangle2D.Double(anchorX, anchorY, w, h);
+        } else if (anchor == RectangleAnchor.TOP_RIGHT) {
+            result = new Rectangle2D.Double(anchorX - w, anchorY, w, h);
+        } else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
+            result = new Rectangle2D.Double(anchorX, anchorY - h, w, h);
+        } else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
+            result = new Rectangle2D.Double(anchorX - w, anchorY - h, w, h);
+        }
+        return result;
+    }
+
+    /**
      * Returns the anchor point relative to the specified rectangle.
-     * 
-     * @param rectangle  the rectangle (<code>null</code> not permitted).
-     * 
-     * @return The anchor point (never <code>null</code>). 
+     *
+     * @param rectangle the rectangle (<code>null</code> not permitted).
+     * @return The anchor point (never <code>null</code>).
      */
     public Point2D getAnchorPoint(Rectangle2D rectangle) {
         Args.nullNotPermitted(rectangle, "rectangle");
@@ -95,46 +153,5 @@ public enum RectangleAnchor {
         }
         return result;
     }
-    
-    /**
-     * Creates a new rectangle with the specified dimensions that is aligned to
-     * the given anchor point {@code (anchorX, anchorY)}.
-     * 
-     * @param dimensions  the dimensions ({@code null} not permitted).
-     * @param anchorX  the x-anchor.
-     * @param anchorY  the y-anchor.
-     * @param anchor  the anchor ({@code null} not permitted).
-     * 
-     * @return A rectangle.
-     */
-    public static Rectangle2D createRectangle(Size2D dimensions, 
-            double anchorX, double anchorY, RectangleAnchor anchor) {
-        Rectangle2D result = null;
-        double w = dimensions.getWidth();
-        double h = dimensions.getHeight();
-        if (anchor == RectangleAnchor.CENTER) {
-            result = new Rectangle2D.Double(anchorX - w / 2.0, 
-                    anchorY - h / 2.0, w, h);
-        } else if (anchor == RectangleAnchor.TOP) {
-            result = new Rectangle2D.Double(anchorX - w / 2.0, anchorY, w, h);
-        } else if (anchor == RectangleAnchor.BOTTOM) {
-            result = new Rectangle2D.Double(anchorX - w / 2.0, anchorY - h, 
-                    w, h);
-        } else if (anchor == RectangleAnchor.LEFT) {
-            result = new Rectangle2D.Double(anchorX, anchorY - h / 2.0, w, h);
-        } else if (anchor == RectangleAnchor.RIGHT) {
-            result = new Rectangle2D.Double(anchorX - w, anchorY - h / 2.0, 
-                    w, h);
-        } else if (anchor == RectangleAnchor.TOP_LEFT) {
-            result = new Rectangle2D.Double(anchorX, anchorY, w, h);
-        } else if (anchor == RectangleAnchor.TOP_RIGHT) {
-            result = new Rectangle2D.Double(anchorX - w, anchorY, w, h);
-        } else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
-            result = new Rectangle2D.Double(anchorX, anchorY - h, w, h);
-        } else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
-            result = new Rectangle2D.Double(anchorX - w, anchorY - h, w, h);
-        }
-        return result;
-    }
-    
+
 }

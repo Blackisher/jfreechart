@@ -21,32 +21,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.Window;
-import java.lang.reflect.Method;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import java.awt.*;
 
 /**
  * A collection of utility methods relating to user interfaces.
@@ -59,7 +44,7 @@ public class UIUtils {
     /**
      * Positions the specified frame in the middle of the screen.
      *
-     * @param frame  the frame to be centered on the screen.
+     * @param frame the frame to be centered on the screen.
      */
     public static void centerFrameOnScreen(Window frame) {
         positionFrameOnScreen(frame, 0.5, 0.5);
@@ -69,14 +54,14 @@ public class UIUtils {
      * Positions the specified frame at a relative position in the screen, where 50% is considered
      * to be the center of the screen.
      *
-     * @param frame  the frame.
-     * @param horizontalPercent  the relative horizontal position of the frame (0.0 to 1.0,
-     *                           where 0.5 is the center of the screen).
-     * @param verticalPercent  the relative vertical position of the frame (0.0 to 1.0, where
-     *                         0.5 is the center of the screen).
+     * @param frame             the frame.
+     * @param horizontalPercent the relative horizontal position of the frame (0.0 to 1.0,
+     *                          where 0.5 is the center of the screen).
+     * @param verticalPercent   the relative vertical position of the frame (0.0 to 1.0, where
+     *                          0.5 is the center of the screen).
      */
-    public static void positionFrameOnScreen(Window frame, 
-            double horizontalPercent, double verticalPercent) {
+    public static void positionFrameOnScreen(Window frame,
+                                             double horizontalPercent, double verticalPercent) {
 
         Rectangle s = frame.getGraphicsConfiguration().getBounds();
         Dimension f = frame.getSize();
@@ -92,7 +77,7 @@ public class UIUtils {
      * Positions the specified frame at a random location on the screen while ensuring that the
      * entire frame is visible (provided that the frame is smaller than the screen).
      *
-     * @param frame  the frame.
+     * @param frame the frame.
      */
     public static void positionFrameRandomly(Window frame) {
         positionFrameOnScreen(frame, Math.random(), Math.random());
@@ -101,7 +86,7 @@ public class UIUtils {
     /**
      * Positions the specified dialog within its parent.
      *
-     * @param dialog  the dialog to be positioned on the screen.
+     * @param dialog the dialog to be positioned on the screen.
      */
     public static void centerDialogInParent(Dialog dialog) {
         positionDialogRelativeToParent(dialog, 0.5, 0.5);
@@ -110,12 +95,12 @@ public class UIUtils {
     /**
      * Positions the specified dialog at a position relative to its parent.
      *
-     * @param dialog  the dialog to be positioned.
-     * @param horizontalPercent  the relative location.
-     * @param verticalPercent  the relative location.
+     * @param dialog            the dialog to be positioned.
+     * @param horizontalPercent the relative location.
+     * @param verticalPercent   the relative location.
      */
     public static void positionDialogRelativeToParent(Dialog dialog,
-            double horizontalPercent, double verticalPercent) {
+                                                      double horizontalPercent, double verticalPercent) {
         Container parent = dialog.getParent();
         if (parent == null) {
             centerFrameOnScreen(dialog);
@@ -140,8 +125,7 @@ public class UIUtils {
     /**
      * Creates a panel that contains a table based on the specified table model.
      *
-     * @param model  the table model to use when constructing the table.
-     *
+     * @param model the table model to use when constructing the table.
      * @return The panel.
      */
     public static JPanel createTablePanel(TableModel model) {
@@ -163,9 +147,8 @@ public class UIUtils {
     /**
      * Creates a label with a specific font.
      *
-     * @param text  the text for the label.
-     * @param font  the font.
-     *
+     * @param text the text for the label.
+     * @param font the font.
      * @return The label.
      */
     public static JLabel createJLabel(String text, Font font) {
@@ -179,8 +162,7 @@ public class UIUtils {
      *
      * @param text  the text for the label.
      * @param font  the font.
-     * @param color  the color.
-     *
+     * @param color the color.
      * @return The label.
      */
     public static JLabel createJLabel(String text, Font font, Color color) {
@@ -193,9 +175,8 @@ public class UIUtils {
     /**
      * Creates a {@link JButton}.
      *
-     * @param label  the label.
+     * @param label the label.
      * @param font  the font.
-     *
      * @return The button.
      */
     public static JButton createJButton(String label, Font font) {

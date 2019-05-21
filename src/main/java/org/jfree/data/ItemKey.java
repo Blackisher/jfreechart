@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------
@@ -42,14 +42,14 @@ package org.jfree.data;
 
 /**
  * A key that references a single data item in a dataset.
- * 
+ *
  * @since 1.0.20
  */
 public interface ItemKey {
 
     /**
      * Returns a JSON formatted string representing the key.
-     * 
+     *
      * @return A JSON formatted string.
      */
     String toJSONString();

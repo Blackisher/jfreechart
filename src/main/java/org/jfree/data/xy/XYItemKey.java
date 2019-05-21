@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -40,65 +40,69 @@
 
 package org.jfree.data.xy;
 
-import java.io.Serializable;
-import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.Args;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.ItemKey;
 
+import java.io.Serializable;
+
 /**
- * An object that references one data item in an {@link XYZDataset}.  This is 
+ * An object that references one data item in an {@link XYZDataset}.  This is
  * used internally to track the data item that a 3D object is related to, if
  * any (and later that link is used for chart interaction).  Instances of
  * this class are immutable.
- * 
+ *
  * @param <S> the series key type.
  * @since 1.0.20
  */
-public class XYItemKey<S extends Comparable<S>> implements ItemKey, 
+public class XYItemKey<S extends Comparable<S>> implements ItemKey,
         Comparable<XYItemKey<S>>, Serializable {
-    
-    /** A key identifying a series in the dataset. */
+
+    /**
+     * A key identifying a series in the dataset.
+     */
     private final S seriesKey;
-    
-    /** The index of an item within a series. */
+
+    /**
+     * The index of an item within a series.
+     */
     private final int itemIndex;
-    
+
     /**
      * Creates a new instance.
-     * 
-     * @param seriesKey  the series key.
-     * @param itemIndex  the item index.
+     *
+     * @param seriesKey the series key.
+     * @param itemIndex the item index.
      */
     public XYItemKey(S seriesKey, int itemIndex) {
         Args.nullNotPermitted(seriesKey, "seriesKey");
         this.seriesKey = seriesKey;
         this.itemIndex = itemIndex;
     }
-    
+
     /**
      * Returns the series key.
-     * 
-     * @return The series key (never {@code null}). 
+     *
+     * @return The series key (never {@code null}).
      */
     public S getSeriesKey() {
         return this.seriesKey;
     }
-    
+
     /**
      * Returns the item index.
-     * 
+     *
      * @return The item index.
      */
     public int getItemIndex() {
         return this.itemIndex;
     }
-    
+
     /**
      * Tests this instance for equality with an arbitrary object.
-     * 
-     * @param obj  the object to test ({@code null} permitted).
-     * 
-     * @return A boolean. 
+     *
+     * @param obj the object to test ({@code null} permitted).
+     * @return A boolean.
      */
     @Override
     public boolean equals(Object obj) {

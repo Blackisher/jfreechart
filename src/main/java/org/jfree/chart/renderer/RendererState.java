@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------
@@ -51,10 +51,12 @@ import org.jfree.chart.plot.PlotRenderingInfo;
  */
 public class RendererState {
 
-    /** The plot rendering info. */
+    /**
+     * The plot rendering info.
+     */
     private PlotRenderingInfo info;
-    
-    /** 
+
+    /**
      * A flag that indicates whether or not rendering hints should be added to
      * identify chart elements.  It is initialised from the corresponding flag
      * in the JFreeChart instance.
@@ -64,30 +66,28 @@ public class RendererState {
     /**
      * Creates a new state object.
      *
-     * @param info  the plot rendering info.
+     * @param info the plot rendering info.
      */
     public RendererState(PlotRenderingInfo info) {
         this.info = info;
         this.elementHinting = false;
     }
-    
+
     /**
-     * Returns the flag that controls whether or not the renderer should 
+     * Returns the flag that controls whether or not the renderer should
      * add rendering hints to the output that identify chart elements.
-     * 
+     *
      * @return A boolean.
-     * 
      * @since 1.0.20
      */
     public boolean getElementHinting() {
         return this.elementHinting;
     }
-    
+
     /**
      * Sets the elementHinting flag.
-     * 
-     * @param hinting  the new flag value.
-     * 
+     *
+     * @param hinting the new flag value.
      * @since 1.0.20
      */
     public void setElementHinting(boolean hinting) {

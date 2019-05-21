@@ -21,14 +21,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.util;
 
-import java.awt.Stroke;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -49,7 +49,6 @@ public class StrokeList extends AbstractObjectList {
      * Returns a {@link Stroke} object from the list.
      *
      * @param index the index (zero-based).
-     *
      * @return The object.
      */
     public Stroke getStroke(int index) {
@@ -60,7 +59,7 @@ public class StrokeList extends AbstractObjectList {
      * Sets the {@link Stroke} for an item in the list.  The list is expanded if necessary.
      *
      * @param index  the index (zero-based).
-     * @param stroke  the {@link Stroke}.
+     * @param stroke the {@link Stroke}.
      */
     public void setStroke(int index, Stroke stroke) {
         set(index, stroke);
@@ -68,20 +67,18 @@ public class StrokeList extends AbstractObjectList {
 
     /**
      * Returns an independent copy of the list.
-     * 
+     *
      * @return A clone.
-     * 
      * @throws CloneNotSupportedException if an item in the list cannot be cloned.
      */
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-    
+
     /**
      * Tests the list for equality with another object (typically also a list).
      *
-     * @param o  the other object.
-     *
+     * @param o the other object.
      * @return A boolean.
      */
     @Override
@@ -90,11 +87,11 @@ public class StrokeList extends AbstractObjectList {
         if (o == null) {
             return false;
         }
-        
+
         if (o == this) {
             return true;
         }
-        
+
         if (o instanceof StrokeList) {
             return super.equals(o);
         }
@@ -102,7 +99,7 @@ public class StrokeList extends AbstractObjectList {
         return false;
 
     }
-    
+
     /**
      * Returns a hash code value for the object.
      *
@@ -115,9 +112,8 @@ public class StrokeList extends AbstractObjectList {
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
 
@@ -129,21 +125,19 @@ public class StrokeList extends AbstractObjectList {
             if (stroke != null) {
                 stream.writeInt(i);
                 SerialUtils.writeStroke(stroke, stream);
-            }
-            else {
+            } else {
                 stream.writeInt(-1);
             }
         }
 
     }
-    
+
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 
@@ -155,7 +149,7 @@ public class StrokeList extends AbstractObjectList {
                 setStroke(index, SerialUtils.readStroke(stream));
             }
         }
-        
+
     }
 
 }

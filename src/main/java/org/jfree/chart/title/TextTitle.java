@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -85,16 +85,6 @@
 
 package org.jfree.chart.title;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 import org.jfree.chart.block.BlockResult;
 import org.jfree.chart.block.EntityBlockParams;
 import org.jfree.chart.block.LengthConstraintType;
@@ -108,57 +98,75 @@ import org.jfree.chart.text.G2TextMeasurer;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
 import org.jfree.chart.text.TextUtils;
-import org.jfree.chart.ui.HorizontalAlignment;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.ui.VerticalAlignment;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtils;
+import org.jfree.chart.ui.*;
+import org.jfree.chart.util.*;
 import org.jfree.data.Range;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * A chart title that displays a text string with automatic wrapping as
  * required.
  */
 public class TextTitle extends Title
-                       implements Serializable, Cloneable, PublicCloneable {
+        implements Serializable, Cloneable, PublicCloneable {
 
-    /** For serialization. */
-    private static final long serialVersionUID = 8372008692127477443L;
-
-    /** The default font. */
+    /**
+     * The default font.
+     */
     public static final Font DEFAULT_FONT = new Font("SansSerif", Font.BOLD,
             12);
-
-    /** The default text color. */
+    /**
+     * The default text color.
+     */
     public static final Paint DEFAULT_TEXT_PAINT = Color.BLACK;
-
-    /** The title text. */
+    /**
+     * For serialization.
+     */
+    private static final long serialVersionUID = 8372008692127477443L;
+    /**
+     * The title text.
+     */
     private String text;
 
-    /** The font used to display the title. */
+    /**
+     * The font used to display the title.
+     */
     private Font font;
 
-    /** The text alignment. */
+    /**
+     * The text alignment.
+     */
     private HorizontalAlignment textAlignment;
 
-    /** The paint used to display the title text. */
+    /**
+     * The paint used to display the title text.
+     */
     private transient Paint paint;
 
-    /** The background paint. */
+    /**
+     * The background paint.
+     */
     private transient Paint backgroundPaint;
 
-    /** The tool tip text (can be {@code null}). */
+    /**
+     * The tool tip text (can be {@code null}).
+     */
     private String toolTipText;
 
-    /** The URL text (can be {@code null}). */
+    /**
+     * The URL text (can be {@code null}).
+     */
     private String urlText;
 
-    /** The content. */
+    /**
+     * The content.
+     */
     private TextBlock content;
 
     /**
@@ -184,7 +192,7 @@ public class TextTitle extends Title
     /**
      * Creates a new title, using default attributes where necessary.
      *
-     * @param text  the title text ({@code null} not permitted).
+     * @param text the title text ({@code null} not permitted).
      */
     public TextTitle(String text) {
         this(text, TextTitle.DEFAULT_FONT, TextTitle.DEFAULT_TEXT_PAINT,
@@ -195,8 +203,8 @@ public class TextTitle extends Title
     /**
      * Creates a new title, using default attributes where necessary.
      *
-     * @param text  the title text ({@code null} not permitted).
-     * @param font  the title font ({@code null} not permitted).
+     * @param text the title text ({@code null} not permitted).
+     * @param font the title font ({@code null} not permitted).
      */
     public TextTitle(String text, Font font) {
         this(text, font, TextTitle.DEFAULT_TEXT_PAINT, Title.DEFAULT_POSITION,
@@ -207,15 +215,15 @@ public class TextTitle extends Title
     /**
      * Creates a new title.
      *
-     * @param text  the text for the title ({@code null} not permitted).
-     * @param font  the title font ({@code null} not permitted).
-     * @param paint  the title paint ({@code null} not permitted).
-     * @param position  the title position ({@code null} not permitted).
-     * @param horizontalAlignment  the horizontal alignment ({@code null}
-     *                             not permitted).
-     * @param verticalAlignment  the vertical alignment ({@code null} not
-     *                           permitted).
-     * @param padding  the space to leave around the outside of the title.
+     * @param text                the text for the title ({@code null} not permitted).
+     * @param font                the title font ({@code null} not permitted).
+     * @param paint               the title paint ({@code null} not permitted).
+     * @param position            the title position ({@code null} not permitted).
+     * @param horizontalAlignment the horizontal alignment ({@code null}
+     *                            not permitted).
+     * @param verticalAlignment   the vertical alignment ({@code null} not
+     *                            permitted).
+     * @param padding             the space to leave around the outside of the title.
      */
     public TextTitle(String text, Font font, Paint paint,
                      RectangleEdge position,
@@ -252,7 +260,6 @@ public class TextTitle extends Title
      * Returns the title text.
      *
      * @return The text (never {@code null}).
-     *
      * @see #setText(String)
      */
     public String getText() {
@@ -263,7 +270,7 @@ public class TextTitle extends Title
      * Sets the title to the specified text and sends a
      * {@link TitleChangeEvent} to all registered listeners.
      *
-     * @param text  the text ({@code null} not permitted).
+     * @param text the text ({@code null} not permitted).
      */
     public void setText(String text) {
         Args.nullNotPermitted(text, "text");
@@ -289,7 +296,7 @@ public class TextTitle extends Title
      * Sets the text alignment and sends a {@link TitleChangeEvent} to
      * all registered listeners.
      *
-     * @param alignment  the alignment ({@code null} not permitted).
+     * @param alignment the alignment ({@code null} not permitted).
      */
     public void setTextAlignment(HorizontalAlignment alignment) {
         Args.nullNotPermitted(alignment, "alignment");
@@ -301,7 +308,6 @@ public class TextTitle extends Title
      * Returns the font used to display the title string.
      *
      * @return The font (never {@code null}).
-     *
      * @see #setFont(Font)
      */
     public Font getFont() {
@@ -312,8 +318,7 @@ public class TextTitle extends Title
      * Sets the font used to display the title string.  Registered listeners
      * are notified that the title has been modified.
      *
-     * @param font  the new font ({@code null} not permitted).
-     *
+     * @param font the new font ({@code null} not permitted).
      * @see #getFont()
      */
     public void setFont(Font font) {
@@ -328,7 +333,6 @@ public class TextTitle extends Title
      * Returns the paint used to display the title string.
      *
      * @return The paint (never {@code null}).
-     *
      * @see #setPaint(Paint)
      */
     public Paint getPaint() {
@@ -339,8 +343,7 @@ public class TextTitle extends Title
      * Sets the paint used to display the title string.  Registered listeners
      * are notified that the title has been modified.
      *
-     * @param paint  the new paint ({@code null} not permitted).
-     *
+     * @param paint the new paint ({@code null} not permitted).
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
@@ -365,7 +368,7 @@ public class TextTitle extends Title
      * registered listeners.  If you set this attribute to {@code null},
      * no background is painted (which makes the title background transparent).
      *
-     * @param paint  the background paint ({@code null} permitted).
+     * @param paint the background paint ({@code null} permitted).
      */
     public void setBackgroundPaint(Paint paint) {
         this.backgroundPaint = paint;
@@ -385,7 +388,7 @@ public class TextTitle extends Title
      * Sets the tool tip text to the specified text and sends a
      * {@link TitleChangeEvent} to all registered listeners.
      *
-     * @param text  the text ({@code null} permitted).
+     * @param text the text ({@code null} permitted).
      */
     public void setToolTipText(String text) {
         this.toolTipText = text;
@@ -405,7 +408,7 @@ public class TextTitle extends Title
      * Sets the URL text to the specified text and sends a
      * {@link TitleChangeEvent} to all registered listeners.
      *
-     * @param text  the text ({@code null} permitted).
+     * @param text the text ({@code null} permitted).
      */
     public void setURLText(String text) {
         this.urlText = text;
@@ -427,7 +430,7 @@ public class TextTitle extends Title
      * available space, and sends a {@link TitleChangeEvent} to all registered
      * listeners.
      *
-     * @param expand  the flag.
+     * @param expand the flag.
      */
     public void setExpandToFitSpace(boolean expand) {
         this.expandToFitSpace = expand;
@@ -438,10 +441,8 @@ public class TextTitle extends Title
      * Returns the maximum number of lines to display.
      *
      * @return The maximum.
-     *
-     * @since 1.0.10
-     *
      * @see #setMaximumLinesToDisplay(int)
+     * @since 1.0.10
      */
     public int getMaximumLinesToDisplay() {
         return this.maximumLinesToDisplay;
@@ -451,11 +452,9 @@ public class TextTitle extends Title
      * Sets the maximum number of lines to display and sends a
      * {@link TitleChangeEvent} to all registered listeners.
      *
-     * @param max  the maximum.
-     *
-     * @since 1.0.10.
-     *
+     * @param max the maximum.
      * @see #getMaximumLinesToDisplay()
+     * @since 1.0.10.
      */
     public void setMaximumLinesToDisplay(int max) {
         this.maximumLinesToDisplay = max;
@@ -466,9 +465,8 @@ public class TextTitle extends Title
      * Arranges the contents of the block, within the given constraints, and
      * returns the block size.
      *
-     * @param g2  the graphics device.
-     * @param constraint  the constraint ({@code null} not permitted).
-     *
+     * @param g2         the graphics device.
+     * @param constraint the constraint ({@code null} not permitted).
      * @return The block size (in Java2D units, never {@code null}).
      */
     @Override
@@ -480,34 +478,26 @@ public class TextTitle extends Title
         if (w == LengthConstraintType.NONE) {
             if (h == LengthConstraintType.NONE) {
                 contentSize = arrangeNN(g2);
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
+                throw new RuntimeException("Not yet implemented.");
+            } else if (h == LengthConstraintType.FIXED) {
                 throw new RuntimeException("Not yet implemented.");
             }
-            else if (h == LengthConstraintType.FIXED) {
-                throw new RuntimeException("Not yet implemented.");
-            }
-        }
-        else if (w == LengthConstraintType.RANGE) {
+        } else if (w == LengthConstraintType.RANGE) {
             if (h == LengthConstraintType.NONE) {
                 contentSize = arrangeRN(g2, cc.getWidthRange());
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
                 contentSize = arrangeRR(g2, cc.getWidthRange(),
                         cc.getHeightRange());
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
                 throw new RuntimeException("Not yet implemented.");
             }
-        }
-        else if (w == LengthConstraintType.FIXED) {
+        } else if (w == LengthConstraintType.FIXED) {
             if (h == LengthConstraintType.NONE) {
                 contentSize = arrangeFN(g2, cc.getWidth());
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
                 throw new RuntimeException("Not yet implemented.");
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
                 throw new RuntimeException("Not yet implemented.");
             }
         }
@@ -522,10 +512,8 @@ public class TextTitle extends Title
      * fact that a text title positioned on the left or right of a chart will
      * be rotated by 90 degrees.
      *
-     * @param g2  the graphics target.
-     *
+     * @param g2 the graphics target.
      * @return The content size.
-     *
      * @since 1.0.9
      */
     protected Size2D arrangeNN(Graphics2D g2) {
@@ -539,11 +527,9 @@ public class TextTitle extends Title
      * fact that a text title positioned on the left or right of a chart will
      * be rotated by 90 degrees.
      *
-     * @param g2  the graphics target.
+     * @param g2 the graphics target.
      * @param w  the width.
-     *
      * @return The content size.
-     *
      * @since 1.0.9
      */
     protected Size2D arrangeFN(Graphics2D g2, double w) {
@@ -558,12 +544,10 @@ public class TextTitle extends Title
             Size2D contentSize = this.content.calculateDimensions(g2);
             if (this.expandToFitSpace) {
                 return new Size2D(maxWidth, contentSize.getHeight());
-            }
-            else {
+            } else {
                 return contentSize;
             }
-        }
-        else if (position == RectangleEdge.LEFT || position
+        } else if (position == RectangleEdge.LEFT || position
                 == RectangleEdge.RIGHT) {
             float maxWidth = Float.MAX_VALUE;
             g2.setFont(this.font);
@@ -576,12 +560,10 @@ public class TextTitle extends Title
             // transpose the dimensions, because the title is rotated
             if (this.expandToFitSpace) {
                 return new Size2D(contentSize.getHeight(), maxWidth);
-            }
-            else {
+            } else {
                 return new Size2D(contentSize.height, contentSize.width);
             }
-        }
-        else {
+        } else {
             throw new RuntimeException("Unrecognised exception.");
         }
     }
@@ -592,11 +574,9 @@ public class TextTitle extends Title
      * will reflect the fact that a text title positioned on the left or right
      * of a chart will be rotated by 90 degrees.
      *
-     * @param g2  the graphics target.
-     * @param widthRange  the range for the width.
-     *
+     * @param g2         the graphics target.
+     * @param widthRange the range for the width.
      * @return The content size.
-     *
      * @since 1.0.9
      */
     protected Size2D arrangeRN(Graphics2D g2, Range widthRange) {
@@ -613,14 +593,13 @@ public class TextTitle extends Title
      * a text title positioned on the left or right of a chart will be rotated
      * 90 degrees.
      *
-     * @param g2  the graphics device.
+     * @param g2          the graphics device.
      * @param widthRange  the width range.
-     * @param heightRange  the height range.
-     *
+     * @param heightRange the height range.
      * @return The content size.
      */
     protected Size2D arrangeRR(Graphics2D g2, Range widthRange,
-            Range heightRange) {
+                               Range heightRange) {
         RectangleEdge position = getPosition();
         if (position == RectangleEdge.TOP || position == RectangleEdge.BOTTOM) {
             float maxWidth = (float) widthRange.getUpperBound();
@@ -632,12 +611,10 @@ public class TextTitle extends Title
             Size2D contentSize = this.content.calculateDimensions(g2);
             if (this.expandToFitSpace) {
                 return new Size2D(maxWidth, contentSize.getHeight());
-            }
-            else {
+            } else {
                 return contentSize;
             }
-        }
-        else if (position == RectangleEdge.LEFT || position
+        } else if (position == RectangleEdge.LEFT || position
                 == RectangleEdge.RIGHT) {
             float maxWidth = (float) heightRange.getUpperBound();
             g2.setFont(this.font);
@@ -650,12 +627,10 @@ public class TextTitle extends Title
             // transpose the dimensions, because the title is rotated
             if (this.expandToFitSpace) {
                 return new Size2D(contentSize.getHeight(), maxWidth);
-            }
-            else {
+            } else {
                 return new Size2D(contentSize.height, contentSize.width);
             }
-        }
-        else {
+        } else {
             throw new RuntimeException("Unrecognised exception.");
         }
     }
@@ -664,8 +639,8 @@ public class TextTitle extends Title
      * Draws the title on a Java 2D graphics device (such as the screen or a
      * printer).
      *
-     * @param g2  the graphics device.
-     * @param area  the area allocated for the title.
+     * @param g2   the graphics device.
+     * @param area the area allocated for the title.
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area) {
@@ -675,14 +650,13 @@ public class TextTitle extends Title
     /**
      * Draws the block within the specified area.
      *
-     * @param g2  the graphics device.
-     * @param area  the area.
-     * @param params  if this is an instance of {@link EntityBlockParams} it
-     *                is used to determine whether or not an
-     *                {@link EntityCollection} is returned by this method.
-     *
+     * @param g2     the graphics device.
+     * @param area   the area.
+     * @param params if this is an instance of {@link EntityBlockParams} it
+     *               is used to determine whether or not an
+     *               {@link EntityCollection} is returned by this method.
      * @return An {@link EntityCollection} containing a chart entity for the
-     *         title, or {@code null}.
+     * title, or {@code null}.
      */
     @Override
     public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
@@ -711,9 +685,8 @@ public class TextTitle extends Title
         RectangleEdge position = getPosition();
         if (position == RectangleEdge.TOP || position == RectangleEdge.BOTTOM) {
             drawHorizontal(g2, area);
-        }
-        else if (position == RectangleEdge.LEFT
-                 || position == RectangleEdge.RIGHT) {
+        } else if (position == RectangleEdge.LEFT
+                || position == RectangleEdge.RIGHT) {
             drawVertical(g2, area);
         }
         BlockResult result = new BlockResult();
@@ -730,8 +703,8 @@ public class TextTitle extends Title
      * will be called from the {@link #draw(Graphics2D, Rectangle2D) draw}
      * method.
      *
-     * @param g2  the graphics device.
-     * @param area  the area for the title.
+     * @param g2   the graphics device.
+     * @param area the area for the title.
      */
     protected void drawHorizontal(Graphics2D g2, Rectangle2D area) {
         Rectangle2D titleArea = (Rectangle2D) area.clone();
@@ -743,12 +716,10 @@ public class TextTitle extends Title
         if (horizontalAlignment == HorizontalAlignment.LEFT) {
             x = (float) titleArea.getX();
             anchor = TextBlockAnchor.TOP_LEFT;
-        }
-        else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
+        } else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
             x = (float) titleArea.getMaxX();
             anchor = TextBlockAnchor.TOP_RIGHT;
-        }
-        else if (horizontalAlignment == HorizontalAlignment.CENTER) {
+        } else if (horizontalAlignment == HorizontalAlignment.CENTER) {
             x = (float) titleArea.getCenterX();
             anchor = TextBlockAnchor.TOP_CENTER;
         }
@@ -756,16 +727,13 @@ public class TextTitle extends Title
         RectangleEdge position = getPosition();
         if (position == RectangleEdge.TOP) {
             y = (float) titleArea.getY();
-        }
-        else if (position == RectangleEdge.BOTTOM) {
+        } else if (position == RectangleEdge.BOTTOM) {
             y = (float) titleArea.getMaxY();
             if (horizontalAlignment == HorizontalAlignment.LEFT) {
                 anchor = TextBlockAnchor.BOTTOM_LEFT;
-            }
-            else if (horizontalAlignment == HorizontalAlignment.CENTER) {
+            } else if (horizontalAlignment == HorizontalAlignment.CENTER) {
                 anchor = TextBlockAnchor.BOTTOM_CENTER;
-            }
-            else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
+            } else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
                 anchor = TextBlockAnchor.BOTTOM_RIGHT;
             }
         }
@@ -777,8 +745,8 @@ public class TextTitle extends Title
      * will be called from the {@link #draw(Graphics2D, Rectangle2D) draw}
      * method.
      *
-     * @param g2  the graphics device.
-     * @param area  the area for the title.
+     * @param g2   the graphics device.
+     * @param area the area for the title.
      */
     protected void drawVertical(Graphics2D g2, Rectangle2D area) {
         Rectangle2D titleArea = (Rectangle2D) area.clone();
@@ -790,12 +758,10 @@ public class TextTitle extends Title
         if (verticalAlignment == VerticalAlignment.TOP) {
             y = (float) titleArea.getY();
             anchor = TextBlockAnchor.TOP_RIGHT;
-        }
-        else if (verticalAlignment == VerticalAlignment.BOTTOM) {
+        } else if (verticalAlignment == VerticalAlignment.BOTTOM) {
             y = (float) titleArea.getMaxY();
             anchor = TextBlockAnchor.TOP_LEFT;
-        }
-        else if (verticalAlignment == VerticalAlignment.CENTER) {
+        } else if (verticalAlignment == VerticalAlignment.CENTER) {
             y = (float) titleArea.getCenterY();
             anchor = TextBlockAnchor.TOP_CENTER;
         }
@@ -803,16 +769,13 @@ public class TextTitle extends Title
         RectangleEdge position = getPosition();
         if (position == RectangleEdge.LEFT) {
             x = (float) titleArea.getX();
-        }
-        else if (position == RectangleEdge.RIGHT) {
+        } else if (position == RectangleEdge.RIGHT) {
             x = (float) titleArea.getMaxX();
             if (verticalAlignment == VerticalAlignment.TOP) {
                 anchor = TextBlockAnchor.BOTTOM_RIGHT;
-            }
-            else if (verticalAlignment == VerticalAlignment.CENTER) {
+            } else if (verticalAlignment == VerticalAlignment.CENTER) {
                 anchor = TextBlockAnchor.BOTTOM_CENTER;
-            }
-            else if (verticalAlignment == VerticalAlignment.BOTTOM) {
+            } else if (verticalAlignment == VerticalAlignment.BOTTOM) {
                 anchor = TextBlockAnchor.BOTTOM_LEFT;
             }
         }
@@ -822,8 +785,7 @@ public class TextTitle extends Title
     /**
      * Tests this title for equality with another object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return {@code true} or {@code false}.
      */
     @Override
@@ -885,7 +847,6 @@ public class TextTitle extends Title
      * Returns a clone of this object.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException never.
      */
     @Override
@@ -896,9 +857,8 @@ public class TextTitle extends Title
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -909,10 +869,9 @@ public class TextTitle extends Title
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {

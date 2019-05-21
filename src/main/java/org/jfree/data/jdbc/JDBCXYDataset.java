@@ -72,16 +72,6 @@
 
 package org.jfree.data.jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Date;
-
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
 import org.jfree.data.general.Dataset;
@@ -89,34 +79,50 @@ import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.XYDataset;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * This class provides an {@link XYDataset} implementation over a database
  * JDBC result set.  The dataset is populated via a call to executeQuery with
  * the string sql query.  The sql query must return at least two columns.
  * The first column will be the x-axis and remaining columns y-axis values.
  * executeQuery can be called a number of times.
- *
+ * <p>
  * The database connection is read-only and no write back facility exists.
  */
 public class JDBCXYDataset extends AbstractXYDataset
         implements XYDataset, TableXYDataset, RangeInfo {
 
-    /** The database connection. */
+    /**
+     * The database connection.
+     */
     private transient Connection connection;
 
-    /** Column names. */
+    /**
+     * Column names.
+     */
     private String[] columnNames = {};
 
-    /** Rows. */
+    /**
+     * Rows.
+     */
     private ArrayList rows;
 
-    /** The maximum y value of the returned result set */
+    /**
+     * The maximum y value of the returned result set
+     */
     private double maxValue = 0.0;
 
-    /** The minimum y value of the returned result set */
+    /**
+     * The minimum y value of the returned result set
+     */
     private double minValue = 0.0;
 
-    /** Is this dataset a timeseries ? */
+    /**
+     * Is this dataset a timeseries ?
+     */
     private boolean isTimeSeries = false;
 
     /**
@@ -131,19 +137,18 @@ public class JDBCXYDataset extends AbstractXYDataset
      * Creates a new dataset (initially empty) and establishes a new database
      * connection.
      *
-     * @param  url  URL of the database connection.
-     * @param  driverName  the database driver class name.
-     * @param  user  the database user.
-     * @param  password  the database user's password.
-     *
+     * @param url        URL of the database connection.
+     * @param driverName the database driver class name.
+     * @param user       the database user.
+     * @param password   the database user's password.
      * @throws ClassNotFoundException if the driver cannot be found.
-     * @throws SQLException if there is a problem connecting to the database.
+     * @throws SQLException           if there is a problem connecting to the database.
      */
     public JDBCXYDataset(String url,
                          String driverName,
                          String user,
                          String password)
-        throws SQLException, ClassNotFoundException {
+            throws SQLException, ClassNotFoundException {
 
         this();
         Class.forName(driverName);
@@ -154,8 +159,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * Creates a new dataset (initially empty) using the specified database
      * connection.
      *
-     * @param  con  the database connection.
-     *
+     * @param con the database connection.
      * @throws SQLException if there is a problem connecting to the database.
      */
     public JDBCXYDataset(Connection con) throws SQLException {
@@ -167,9 +171,8 @@ public class JDBCXYDataset extends AbstractXYDataset
      * Creates a new dataset using the specified database connection, and
      * populates it using data obtained with the supplied query.
      *
-     * @param con  the connection.
-     * @param query  the SQL query.
-     *
+     * @param con   the connection.
+     * @param query the SQL query.
      * @throws SQLException if there is a problem executing the query.
      */
     public JDBCXYDataset(Connection con, String query) throws SQLException {
@@ -191,7 +194,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * Sets a flag that indicates whether or not the data represents a time
      * series.
      *
-     * @param timeSeries  the new value of the flag.
+     * @param timeSeries the new value of the flag.
      */
     public void setTimeSeries(boolean timeSeries) {
         this.isTimeSeries = timeSeries;
@@ -201,12 +204,11 @@ public class JDBCXYDataset extends AbstractXYDataset
      * ExecuteQuery will attempt execute the query passed to it against the
      * existing database connection.  If no connection exists then no action
      * is taken.
-     *
+     * <p>
      * The results from the query are extracted and cached locally, thus
      * applying an upper limit on how many rows can be retrieved successfully.
      *
-     * @param  query  the query to be executed.
-     *
+     * @param query the query to be executed.
      * @throws SQLException if there is a problem executing the query.
      */
     public void executeQuery(String query) throws SQLException {
@@ -217,21 +219,20 @@ public class JDBCXYDataset extends AbstractXYDataset
      * ExecuteQuery will attempt execute the query passed to it against the
      * provided database connection.  If connection is null then no action is
      * taken.
-     *
+     * <p>
      * The results from the query are extracted and cached locally, thus
      * applying an upper limit on how many rows can be retrieved successfully.
      *
-     * @param  query  the query to be executed.
-     * @param  con  the connection the query is to be executed against.
-     *
+     * @param query the query to be executed.
+     * @param con   the connection the query is to be executed against.
      * @throws SQLException if there is a problem executing the query.
      */
     public void executeQuery(Connection con, String query)
-        throws SQLException {
+            throws SQLException {
 
         if (con == null) {
             throw new SQLException(
-                "There is no database to execute the query."
+                    "There is no database to execute the query."
             );
         }
 
@@ -244,7 +245,7 @@ public class JDBCXYDataset extends AbstractXYDataset
 
             int numberOfColumns = metaData.getColumnCount();
             int numberOfValidColumns = 0;
-            int [] columnTypes = new int[numberOfColumns];
+            int[] columnTypes = new int[numberOfColumns];
             for (int column = 0; column < numberOfColumns; column++) {
                 try {
                     int type = metaData.getColumnType(column + 1);
@@ -269,8 +270,7 @@ public class JDBCXYDataset extends AbstractXYDataset
                             columnTypes[column] = Types.NULL;
                             break;
                     }
-                }
-                catch (SQLException e) {
+                } catch (SQLException e) {
                     columnTypes[column] = Types.NULL;
                     throw e;
                 }
@@ -279,7 +279,7 @@ public class JDBCXYDataset extends AbstractXYDataset
 
             if (numberOfValidColumns <= 1) {
                 throw new SQLException(
-                    "Not enough valid columns where generated by query."
+                        "Not enough valid columns where generated by query."
                 );
             }
 
@@ -290,7 +290,7 @@ public class JDBCXYDataset extends AbstractXYDataset
             for (int column = 1; column < numberOfColumns; column++) {
                 if (columnTypes[column] != Types.NULL) {
                     this.columnNames[currentColumn]
-                        = metaData.getColumnLabel(column + 1);
+                            = metaData.getColumnLabel(column + 1);
                     ++currentColumn;
                 }
             }
@@ -311,7 +311,7 @@ public class JDBCXYDataset extends AbstractXYDataset
                 case Types.TIMESTAMP:
                     this.isTimeSeries = true;
                     break;
-                default :
+                default:
                     this.isTimeSeries = false;
                     break;
             }
@@ -365,8 +365,7 @@ public class JDBCXYDataset extends AbstractXYDataset
             if (this.rows.size() < 1) {
                 this.maxValue = 0.0;
                 this.minValue = 0.0;
-            }
-            else {
+            } else {
                 this.maxValue = Double.NEGATIVE_INFINITY;
                 this.minValue = Double.POSITIVE_INFINITY;
                 for (int rowNum = 0; rowNum < this.rows.size(); ++rowNum) {
@@ -388,21 +387,18 @@ public class JDBCXYDataset extends AbstractXYDataset
             }
 
             fireDatasetChanged(); // Tell the listeners a new table has arrived.
-        }
-        finally {
+        } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     // TODO: is this a good idea?
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     // TODO: is this a good idea?
                 }
             }
@@ -415,11 +411,9 @@ public class JDBCXYDataset extends AbstractXYDataset
      * implementation is responsible for ensuring that the x-values are
      * presented in ascending order.
      *
-     * @param  seriesIndex  the series (zero-based index).
-     * @param  itemIndex  the item (zero-based index).
-     *
+     * @param seriesIndex the series (zero-based index).
+     * @param itemIndex   the item (zero-based index).
      * @return The x-value
-     *
      * @see XYDataset
      */
     @Override
@@ -431,11 +425,9 @@ public class JDBCXYDataset extends AbstractXYDataset
     /**
      * Returns the y-value for the specified series and item.
      *
-     * @param  seriesIndex  the series (zero-based index).
-     * @param  itemIndex  the item (zero-based index).
-     *
+     * @param seriesIndex the series (zero-based index).
+     * @param itemIndex   the item (zero-based index).
      * @return The yValue value
-     *
      * @see XYDataset
      */
     @Override
@@ -447,10 +439,8 @@ public class JDBCXYDataset extends AbstractXYDataset
     /**
      * Returns the number of items in the specified series.
      *
-     * @param  seriesIndex  the series (zero-based index).
-     *
+     * @param seriesIndex the series (zero-based index).
      * @return The itemCount value
-     *
      * @see XYDataset
      */
     @Override
@@ -473,7 +463,6 @@ public class JDBCXYDataset extends AbstractXYDataset
      * Returns the number of series in the dataset.
      *
      * @return The seriesCount value
-     *
      * @see XYDataset
      * @see Dataset
      */
@@ -485,10 +474,8 @@ public class JDBCXYDataset extends AbstractXYDataset
     /**
      * Returns the key for the specified series.
      *
-     * @param seriesIndex  the series (zero-based index).
-     *
+     * @param seriesIndex the series (zero-based index).
      * @return The seriesName value
-     *
      * @see XYDataset
      * @see Dataset
      */
@@ -498,8 +485,7 @@ public class JDBCXYDataset extends AbstractXYDataset
         if ((seriesIndex < this.columnNames.length)
                 && (this.columnNames[seriesIndex] != null)) {
             return this.columnNames[seriesIndex];
-        }
-        else {
+        } else {
             return "";
         }
 
@@ -512,8 +498,7 @@ public class JDBCXYDataset extends AbstractXYDataset
 
         try {
             this.connection.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("JdbcXYDataset: swallowing exception.");
         }
 
@@ -522,9 +507,8 @@ public class JDBCXYDataset extends AbstractXYDataset
     /**
      * Returns the minimum y-value in the dataset.
      *
-     * @param includeInterval  a flag that determines whether or not the
-     *                         y-interval is taken into account.
-     *
+     * @param includeInterval a flag that determines whether or not the
+     *                        y-interval is taken into account.
      * @return The minimum value.
      */
     @Override
@@ -535,9 +519,8 @@ public class JDBCXYDataset extends AbstractXYDataset
     /**
      * Returns the maximum y-value in the dataset.
      *
-     * @param includeInterval  a flag that determines whether or not the
-     *                         y-interval is taken into account.
-     *
+     * @param includeInterval a flag that determines whether or not the
+     *                        y-interval is taken into account.
      * @return The maximum value.
      */
     @Override
@@ -548,9 +531,8 @@ public class JDBCXYDataset extends AbstractXYDataset
     /**
      * Returns the range of the values in this dataset's range.
      *
-     * @param includeInterval  a flag that determines whether or not the
-     *                         y-interval is taken into account.
-     *
+     * @param includeInterval a flag that determines whether or not the
+     *                        y-interval is taken into account.
      * @return The range.
      */
     @Override

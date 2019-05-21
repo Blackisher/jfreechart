@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------
@@ -49,23 +49,15 @@
 
 package org.jfree.data.time;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.jfree.chart.TestUtils;
+import org.jfree.chart.date.MonthConstants;
+import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
-import org.jfree.chart.TestUtils;
-import org.jfree.chart.date.MonthConstants;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link Day} class.
@@ -74,7 +66,7 @@ public class DayTest {
 
     /**
      * Check that a Day instance is equal to itself.
-     *
+     * <p>
      * SourceForge Bug ID: 558850.
      */
     @Test
@@ -273,8 +265,7 @@ public class DayTest {
         boolean pass = false;
         try {
             d.getFirstMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -294,8 +285,7 @@ public class DayTest {
         boolean pass = false;
         try {
             d.getFirstMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -330,8 +320,7 @@ public class DayTest {
         boolean pass = false;
         try {
             d.getLastMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -352,8 +341,7 @@ public class DayTest {
         boolean pass = false;
         try {
             d.getLastMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);

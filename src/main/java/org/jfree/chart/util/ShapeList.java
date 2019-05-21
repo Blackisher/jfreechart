@@ -21,14 +21,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.util;
 
-import java.awt.Shape;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -49,7 +49,6 @@ public class ShapeList extends AbstractObjectList {
      * Returns a {@link Shape} object from the list.
      *
      * @param index the index (zero-based).
-     *
      * @return The object.
      */
     public Shape getShape(int index) {
@@ -60,8 +59,8 @@ public class ShapeList extends AbstractObjectList {
      * Sets the {@link Shape} for an item in the list.  The list is expanded
      * if necessary.
      *
-     * @param index  the index (zero-based).
-     * @param shape  the {@link Shape}.
+     * @param index the index (zero-based).
+     * @param shape the {@link Shape}.
      */
     public void setShape(int index, Shape shape) {
         set(index, shape);
@@ -71,9 +70,8 @@ public class ShapeList extends AbstractObjectList {
      * Returns an independent copy of the list.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if an item in the list does not
-     *         support cloning.
+     *                                    support cloning.
      */
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
@@ -82,8 +80,7 @@ public class ShapeList extends AbstractObjectList {
     /**
      * Tests the list for equality with another object (typically also a list).
      *
-     * @param obj  the other object ({@code null} permitted).
-     *
+     * @param obj the other object ({@code null} permitted).
      * @return A boolean.
      */
     public boolean equals(Object obj) {
@@ -97,9 +94,9 @@ public class ShapeList extends AbstractObjectList {
         ShapeList that = (ShapeList) obj;
         int listSize = size();
         for (int i = 0; i < listSize; i++) {
-           if (!ShapeUtils.equal((Shape) get(i), (Shape) that.get(i))) {
-               return false;
-           }
+            if (!ShapeUtils.equal((Shape) get(i), (Shape) that.get(i))) {
+                return false;
+            }
         }
         return true;
 
@@ -118,9 +115,8 @@ public class ShapeList extends AbstractObjectList {
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
 
@@ -132,8 +128,7 @@ public class ShapeList extends AbstractObjectList {
             if (shape != null) {
                 stream.writeInt(i);
                 SerialUtils.writeShape(shape, stream);
-            }
-            else {
+            } else {
                 stream.writeInt(-1);
             }
         }
@@ -143,10 +138,9 @@ public class ShapeList extends AbstractObjectList {
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 

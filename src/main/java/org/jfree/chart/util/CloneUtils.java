@@ -21,9 +21,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
- * 
+ *
  * ---------------
  * CloneUtils.java
  * ---------------
@@ -45,24 +45,22 @@ import java.util.Map;
 
 /**
  * Utilities for cloning.
- * 
+ *
  * @since 1.0.18
  */
 public class CloneUtils {
-    
+
     /**
      * Returns a clone of the specified object, if it can be cloned, otherwise
-     * throws a {@code CloneNotSupportedException}.  If the object is 
+     * throws a {@code CloneNotSupportedException}.  If the object is
      * {@code null} this method returns {@code null}.
      *
      * @param object the object to clone ({@code null} permitted).
-     * 
      * @return A clone of the specified object, or {@code null}.
-     * 
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
     public static Object clone(Object object)
-        throws CloneNotSupportedException {
+            throws CloneNotSupportedException {
         if (object == null) {
             return null;
         }
@@ -90,15 +88,14 @@ public class CloneUtils {
     /**
      * Returns a list containing cloned copies of the items in the source
      * list.
-     * 
-     * @param source  the source list ({@code null} not permitted).
-     * 
-     * @return A new list. 
+     *
+     * @param source the source list ({@code null} not permitted).
+     * @return A new list.
      */
     public static List<?> cloneList(List<?> source) {
         Args.nullNotPermitted(source, "source");
         List result = new ArrayList();
-        for (Object obj: source) {
+        for (Object obj : source) {
             try {
                 result.add(CloneUtils.clone(obj));
             } catch (CloneNotSupportedException ex) {
@@ -107,15 +104,13 @@ public class CloneUtils {
         }
         return result;
     }
-    
+
     /**
      * Returns a new map that contains the same keys and cloned copied of the
      * values.
-     * 
-     * @param source  the source map ({@code null} not permitted).
-     * 
-     * @return A new map. 
-     * 
+     *
+     * @param source the source map ({@code null} not permitted).
+     * @return A new map.
      * @since 1.0.18
      */
     public static Map cloneMapValues(Map source) {
@@ -135,5 +130,5 @@ public class CloneUtils {
         }
         return result;
     }
-   
+
 }

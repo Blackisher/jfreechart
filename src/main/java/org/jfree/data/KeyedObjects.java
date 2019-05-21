@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -44,21 +44,26 @@
 
 package org.jfree.data;
 
+import org.jfree.chart.util.Args;
+import org.jfree.chart.util.PublicCloneable;
+
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A collection of (key, object) pairs.
  */
 public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 1321582394193530984L;
 
-    /** Storage for the data. */
+    /**
+     * Storage for the data.
+     */
     private List data;
 
     /**
@@ -80,10 +85,8 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
     /**
      * Returns an object from the list.
      *
-     * @param item  the item index (zero-based).
-     *
+     * @param item the item index (zero-based).
      * @return The object (possibly {@code null}).
-     *
      * @throws IndexOutOfBoundsException if {@code item} is out of bounds.
      */
     public Object getObject(int item) {
@@ -98,12 +101,9 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
     /**
      * Returns the key at the specified position in the list.
      *
-     * @param index  the item index (zero-based).
-     *
+     * @param index the item index (zero-based).
      * @return The row key.
-     *
      * @throws IndexOutOfBoundsException if {@code item} is out of bounds.
-     *
      * @see #getIndex(Comparable)
      */
     public Comparable getKey(int index) {
@@ -118,10 +118,8 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
     /**
      * Returns the index for a given key, or {@code -1}.
      *
-     * @param key  the key ({@code null} not permitted).
-     *
+     * @param key the key ({@code null} not permitted).
      * @return The index, or {@code -1} if the key is unrecognised.
-     *
      * @see #getKey(int)
      */
     public int getIndex(Comparable key) {
@@ -157,10 +155,8 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
      * Returns the object for a given key. If the key is not recognised, the
      * method should return {@code null}.
      *
-     * @param key  the key.
-     *
+     * @param key the key.
      * @return The object (possibly {@code null}).
-     *
      * @see #addObject(Comparable, Object)
      */
     public Object getObject(Comparable key) {
@@ -176,9 +172,8 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
      * Adds a new object to the collection, or overwrites an existing object.
      * This is the same as the {@link #setObject(Comparable, Object)} method.
      *
-     * @param key  the key.
-     * @param object  the object.
-     *
+     * @param key    the key.
+     * @param object the object.
      * @see #getObject(Comparable)
      */
     public void addObject(Comparable key, Object object) {
@@ -190,9 +185,8 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
      * This is the same as the {@link #addObject(Comparable, Object)}
      * method.
      *
-     * @param key  the key ({@code null} not permitted).
-     * @param object  the object.
-     *
+     * @param key    the key ({@code null} not permitted).
+     * @param object the object.
      * @see #getObject(Comparable)
      */
     public void setObject(Comparable key, Object object) {
@@ -200,8 +194,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
         if (keyIndex >= 0) {
             KeyedObject ko = (KeyedObject) this.data.get(keyIndex);
             ko.setObject(object);
-        }
-        else {
+        } else {
             KeyedObject ko = new KeyedObject(key, object);
             this.data.add(ko);
         }
@@ -212,11 +205,10 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
      * there is an existing item with the specified key, updates the value
      * for that item and moves it to the specified position.
      *
-     * @param position  the position (in the range {@code 0} to
-     *                  {@code getItemCount()}).
-     * @param key  the key ({@code null} not permitted).
-     * @param value  the value ({@code null} permitted).
-     *
+     * @param position the position (in the range {@code 0} to
+     *                 {@code getItemCount()}).
+     * @param key      the key ({@code null} not permitted).
+     * @param value    the value ({@code null} permitted).
      * @since 1.0.7
      */
     public void insertValue(int position, Comparable key, Object value) {
@@ -231,8 +223,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
         KeyedObject item = new KeyedObject(key, value);
         if (position <= this.data.size()) {
             this.data.add(position, item);
-        }
-        else {
+        } else {
             this.data.add(item);
         }
     }
@@ -240,8 +231,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
     /**
      * Removes a value from the collection.
      *
-     * @param index  the index of the item to remove.
-     *
+     * @param index the index of the item to remove.
      * @see #removeValue(Comparable)
      */
     public void removeValue(int index) {
@@ -251,11 +241,9 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
     /**
      * Removes a value from the collection.
      *
-     * @param key  the key ({@code null} not permitted).
-     *
-     * @see #removeValue(int)
-     *
+     * @param key the key ({@code null} not permitted).
      * @throws UnknownKeyException if the key is not recognised.
+     * @see #removeValue(int)
      */
     public void removeValue(Comparable key) {
         // defer argument checking
@@ -282,7 +270,6 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
      * implement {@link PublicCloneable}.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
@@ -300,8 +287,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
     /**
      * Tests this object for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -331,8 +317,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
                 if (o2 != null) {
                     return false;
                 }
-            }
-            else {
+            } else {
                 if (!o1.equals(o2)) {
                     return false;
                 }

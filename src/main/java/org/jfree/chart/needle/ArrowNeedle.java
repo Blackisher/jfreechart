@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -45,23 +45,24 @@
 
 package org.jfree.chart.needle;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import org.jfree.chart.HashUtils;
+
+import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtils;
-
 /**
  * A needle in the shape of an arrow.
  */
-public class ArrowNeedle extends MeterNeedle implements Cloneable, 
+public class ArrowNeedle extends MeterNeedle implements Cloneable,
         Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -5334056511213782357L;
 
     /**
@@ -73,8 +74,8 @@ public class ArrowNeedle extends MeterNeedle implements Cloneable,
     /**
      * Constructs a new arrow needle.
      *
-     * @param isArrowAtTop  a flag that controls whether or not there is an
-     *     arrow at the top of the needle.
+     * @param isArrowAtTop a flag that controls whether or not there is an
+     *                     arrow at the top of the needle.
      */
     public ArrowNeedle(boolean isArrowAtTop) {
         this.isArrowAtTop = isArrowAtTop;
@@ -83,14 +84,14 @@ public class ArrowNeedle extends MeterNeedle implements Cloneable,
     /**
      * Draws the needle.
      *
-     * @param g2  the graphics device.
-     * @param plotArea  the plot area.
-     * @param rotate  the rotation point.
-     * @param angle  the angle.
+     * @param g2       the graphics device.
+     * @param plotArea the plot area.
+     * @param rotate   the rotation point.
+     * @param angle    the angle.
      */
     @Override
     protected void drawNeedle(Graphics2D g2, Rectangle2D plotArea,
-            Point2D rotate, double angle) {
+                              Point2D rotate, double angle) {
 
         Line2D shape = new Line2D.Float();
         Shape d;
@@ -132,8 +133,7 @@ public class ArrowNeedle extends MeterNeedle implements Cloneable,
     /**
      * Tests another object for equality with this object.
      *
-     * @param obj  the object to test ({@code null} permitted).
-     *
+     * @param obj the object to test ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -170,9 +170,8 @@ public class ArrowNeedle extends MeterNeedle implements Cloneable,
      * Returns a clone of this needle.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if the {@code ArrowNeedle}
-     *     cannot be cloned (in theory, this should not happen).
+     *                                    cannot be cloned (in theory, this should not happen).
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

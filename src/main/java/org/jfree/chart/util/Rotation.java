@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
@@ -29,15 +29,19 @@
 package org.jfree.chart.util;
 
 /**
- * Represents a direction of rotation ({@code CLOCKWISE} or 
+ * Represents a direction of rotation ({@code CLOCKWISE} or
  * {@code ANTICLOCKWISE}).
  */
 public enum Rotation {
 
-    /** Clockwise. */
+    /**
+     * Clockwise.
+     */
     CLOCKWISE(-1.0),
 
-    /** The reverse order renders the primary dataset first. */
+    /**
+     * The reverse order renders the primary dataset first.
+     */
     ANTICLOCKWISE(1.0);
 
     /**
@@ -49,7 +53,7 @@ public enum Rotation {
     /**
      * Private constructor.
      *
-     * @param factor  the rotation factor.
+     * @param factor the rotation factor.
      */
     Rotation(double factor) {
         this.factor = factor;

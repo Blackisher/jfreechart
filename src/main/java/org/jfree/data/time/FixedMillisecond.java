@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -62,10 +62,14 @@ import java.util.Date;
 public class FixedMillisecond extends RegularTimePeriod
         implements Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 7867521484545646931L;
 
-    /** The millisecond. */
+    /**
+     * The millisecond.
+     */
     private final long time;
 
     /**
@@ -78,7 +82,7 @@ public class FixedMillisecond extends RegularTimePeriod
     /**
      * Constructs a millisecond.
      *
-     * @param millisecond  the millisecond (same encoding as java.util.Date).
+     * @param millisecond the millisecond (same encoding as java.util.Date).
      */
     public FixedMillisecond(long millisecond) {
         this.time = millisecond;
@@ -87,14 +91,14 @@ public class FixedMillisecond extends RegularTimePeriod
     /**
      * Constructs a millisecond.
      *
-     * @param time  the time ({@code null} not permitted).
+     * @param time the time ({@code null} not permitted).
      */
     public FixedMillisecond(Date time) {
         this(time.getTime());
     }
 
     /**
-     * Returns the date/time (creates a new {@code Date} instance each time 
+     * Returns the date/time (creates a new {@code Date} instance each time
      * this method is called).
      *
      * @return The date/time.
@@ -106,8 +110,7 @@ public class FixedMillisecond extends RegularTimePeriod
     /**
      * This method is overridden to do nothing.
      *
-     * @param calendar  ignored
-     *
+     * @param calendar ignored
      * @since 1.0.3
      */
     @Override
@@ -148,8 +151,7 @@ public class FixedMillisecond extends RegularTimePeriod
     /**
      * Tests the equality of this object against an arbitrary Object.
      *
-     * @param object  the object to compare
-     *
+     * @param object the object to compare
      * @return A boolean.
      */
     @Override
@@ -157,8 +159,7 @@ public class FixedMillisecond extends RegularTimePeriod
         if (object instanceof FixedMillisecond) {
             FixedMillisecond m = (FixedMillisecond) object;
             return this.time == m.getFirstMillisecond();
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -179,8 +180,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * relative to the specified
      * object: negative == before, zero == same, positive == after.
      *
-     * @param o1    the object to compare.
-     *
+     * @param o1 the object to compare.
      * @return negative == before, zero == same, positive == after.
      */
     @Override
@@ -196,12 +196,10 @@ public class FixedMillisecond extends RegularTimePeriod
             difference = this.time - t1.time;
             if (difference > 0) {
                 result = 1;
-            }
-            else {
+            } else {
                 if (difference < 0) {
-                   result = -1;
-                }
-                else {
+                    result = -1;
+                } else {
                     result = 0;
                 }
             }
@@ -239,8 +237,7 @@ public class FixedMillisecond extends RegularTimePeriod
     /**
      * Returns the first millisecond of the time period.
      *
-     * @param calendar  the calendar.
-     *
+     * @param calendar the calendar.
      * @return The first millisecond of the time period.
      */
     @Override
@@ -261,8 +258,7 @@ public class FixedMillisecond extends RegularTimePeriod
     /**
      * Returns the last millisecond of the time period.
      *
-     * @param calendar  the calendar.
-     *
+     * @param calendar the calendar.
      * @return The last millisecond of the time period.
      */
     @Override
@@ -283,8 +279,7 @@ public class FixedMillisecond extends RegularTimePeriod
     /**
      * Returns the millisecond closest to the middle of the time period.
      *
-     * @param calendar  the calendar.
-     *
+     * @param calendar the calendar.
      * @return The millisecond closest to the middle of the time period.
      */
     @Override

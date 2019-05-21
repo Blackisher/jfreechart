@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -51,21 +51,10 @@
  * 31-Aug-2009 : Added new test for createCopy() method (DG);
  * 03-Dec-2011 : Added testBug3446965() (DG);
  * 06-Sep-2015 : Added test for findRangeBounds() (DG);
- * 
+ *
  */
 
 package org.jfree.data.time;
-
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.date.MonthConstants;
@@ -73,25 +62,37 @@ import org.jfree.data.Range;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.general.SeriesException;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import static org.junit.Assert.*;
 
 /**
  * A collection of test cases for the {@link TimeSeries} class.
  */
 public class TimeSeriesTest implements SeriesChangeListener {
 
-    /** A time series. */
+    private static final double EPSILON = 0.0000000001;
+    /**
+     * A time series.
+     */
     private TimeSeries seriesA;
-
-    /** A time series. */
+    /**
+     * A time series.
+     */
     private TimeSeries seriesB;
-
-    /** A time series. */
+    /**
+     * A time series.
+     */
     private TimeSeries seriesC;
-
-    /** A flag that indicates whether or not a change event was fired. */
+    /**
+     * A flag that indicates whether or not a change event was fired.
+     */
     private boolean gotSeriesChangeEvent = false;
 
     /**
@@ -122,7 +123,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
      * Sets the flag to indicate that a {@link SeriesChangeEvent} has been
      * received.
      *
-     * @param event  the event.
+     * @param event the event.
      */
     @Override
     public void seriesChanged(SeriesChangeEvent event) {
@@ -228,8 +229,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
         try {
             s1.delete(null);
             fail("Expected IllegalArgumentException.");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             // expected
         }
     }
@@ -427,8 +427,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
                     new Month(MonthConstants.JANUARY, 2004),
                     new Month(MonthConstants.MARCH, 2004));
             assertEquals(0, result14.getItemCount());
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             assertTrue(false);
         }
     }
@@ -468,20 +467,18 @@ public class TimeSeriesTest implements SeriesChangeListener {
             // copy the last item...
             result1 = series.createCopy(4, 4);
             assertEquals(new Month(12, 2003), result1.getTimePeriod(0));
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             assertTrue(false);
         }
 
         // check negative first argument
         boolean pass = false;
         try {
-            /* TimeSeries result = */ series.createCopy(-1, 1);
-        }
-        catch (IllegalArgumentException e) {
+            /* TimeSeries result = */
+            series.createCopy(-1, 1);
+        } catch (IllegalArgumentException e) {
             pass = true;
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             pass = false;
         }
         assertTrue(pass);
@@ -489,12 +486,11 @@ public class TimeSeriesTest implements SeriesChangeListener {
         // check second argument less than first argument
         pass = false;
         try {
-            /* TimeSeries result = */ series.createCopy(1, 0);
-        }
-        catch (IllegalArgumentException e) {
+            /* TimeSeries result = */
+            series.createCopy(1, 0);
+        } catch (IllegalArgumentException e) {
             pass = true;
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             pass = false;
         }
         assertTrue(pass);
@@ -503,8 +499,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
         try {
             TimeSeries series3 = series2.createCopy(99, 999);
             assertEquals(0, series3.getItemCount());
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             assertTrue(false);
         }
     }
@@ -523,7 +518,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
         s1.add(new Year(2011), 102.0);
         assertEquals(100.0, s1.getMinY(), EPSILON);
         assertEquals(102.0, s1.getMaxY(), EPSILON);
-        
+
         TimeSeries s2 = s1.createCopy(0, 1);
         assertEquals(100.0, s2.getMinY(), EPSILON);
         assertEquals(101.0, s2.getMaxY(), EPSILON);
@@ -600,8 +595,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
         boolean pass = false;
         try {
             s1.addOrUpdate(new Month(1, 2009), 0.0);
-        }
-        catch (SeriesException e) {
+        } catch (SeriesException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -643,8 +637,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
         ts2.add(new FixedMillisecond(0L), 1.0);
         try {
             ts.addAndOrUpdate(ts2);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             fail("No exceptions should be thrown.");
         }
         assertEquals(1, ts.getItemCount());
@@ -697,9 +690,9 @@ public class TimeSeriesTest implements SeriesChangeListener {
         // can't get anything yet...just an exception
         boolean pass = false;
         try {
-            /*TimeSeriesDataItem item =*/ series.getDataItem(0);
-        }
-        catch (IndexOutOfBoundsException e) {
+            /*TimeSeriesDataItem item =*/
+            series.getDataItem(0);
+        } catch (IndexOutOfBoundsException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -709,18 +702,18 @@ public class TimeSeriesTest implements SeriesChangeListener {
         assertEquals(new Year(2006), item.getPeriod());
         pass = false;
         try {
-            /*item = */series.getDataItem(-1);
-        }
-        catch (IndexOutOfBoundsException e) {
+            /*item = */
+            series.getDataItem(-1);
+        } catch (IndexOutOfBoundsException e) {
             pass = true;
         }
         assertTrue(pass);
 
         pass = false;
         try {
-            /*item = */series.getDataItem(1);
-        }
-        catch (IndexOutOfBoundsException e) {
+            /*item = */
+            series.getDataItem(1);
+        } catch (IndexOutOfBoundsException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -737,9 +730,9 @@ public class TimeSeriesTest implements SeriesChangeListener {
         // try a null argument
         boolean pass = false;
         try {
-            /* TimeSeriesDataItem item = */ series.getDataItem(null);
-        }
-        catch (IllegalArgumentException e) {
+            /* TimeSeriesDataItem item = */
+            series.getDataItem(null);
+        } catch (IllegalArgumentException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -837,8 +830,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
         boolean pass = true;
         try {
             s.removeAgedItems(0L, true);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             pass = false;
         }
         assertTrue(pass);
@@ -921,8 +913,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
         boolean pass = true;
         try {
             s.createCopy(new Day(1, 12, 2005), new Day(18, 1, 2006));
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             pass = false;
         }
         assertTrue(pass);
@@ -941,8 +932,6 @@ public class TimeSeriesTest implements SeriesChangeListener {
         assertEquals(100.0, s.getMinY(), EPSILON);
         assertEquals(250.0, s.getMaxY(), EPSILON);
     }
-
-    private static final double EPSILON = 0.0000000001;
 
     /**
      * Some checks for the getMinY() method.
@@ -969,26 +958,26 @@ public class TimeSeriesTest implements SeriesChangeListener {
 
         s1.addOrUpdate(new Year(2002), null);
         assertEquals(1.1, s1.getMinY(), EPSILON);
-   }
+    }
 
     @Test
     public void testGetMinY2() {
         TimeSeries ts = new TimeSeries("Time Series");
         assertTrue(Double.isNaN(ts.getMinY()));
-        
+
         ts.add(new Year(2014), 1.0);
         assertEquals(1.0, ts.getMinY(), EPSILON);
-        
+
         ts.addOrUpdate(new Year(2014), null);
         assertTrue(Double.isNaN(ts.getMinY()));
-        
+
         ts.addOrUpdate(new Year(2014), 1.0);
         assertEquals(1.0, ts.getMinY(), EPSILON);
 
         ts.clear();
         assertTrue(Double.isNaN(ts.getMinY()));
     }
-    
+
     /**
      * Some checks for the getMaxY() method.
      */
@@ -1020,13 +1009,13 @@ public class TimeSeriesTest implements SeriesChangeListener {
     public void testGetMaxY2() {
         TimeSeries ts = new TimeSeries("Time Series");
         assertTrue(Double.isNaN(ts.getMaxY()));
-        
+
         ts.add(new Year(2014), 1.0);
         assertEquals(1.0, ts.getMaxY(), EPSILON);
-        
+
         ts.addOrUpdate(new Year(2014), null);
         assertTrue(Double.isNaN(ts.getMaxY()));
-        
+
         ts.addOrUpdate(new Year(2014), 1.0);
         assertEquals(1.0, ts.getMaxY(), EPSILON);
 
@@ -1099,34 +1088,34 @@ public class TimeSeriesTest implements SeriesChangeListener {
         item.setValue(new Double(99.9));
         assertFalse(item.equals(series.getDataItem(0)));
     }
-    
+
     @Test
     public void testSetKey() {
         TimeSeries s1 = new TimeSeries("S");
         s1.setKey("S1");
         assertEquals("S1", s1.getKey());
-        
+
         TimeSeriesCollection c = new TimeSeriesCollection();
         c.addSeries(s1);
         TimeSeries s2 = new TimeSeries("S2");
         c.addSeries(s2);
-        
+
         // now we should be allowed to change s1's key to anything but "S2"
         s1.setKey("OK");
         assertEquals("OK", s1.getKey());
-        
+
         try {
             s1.setKey("S2");
             fail("Expect an exception here.");
         } catch (IllegalArgumentException e) {
             // OK
         }
-        
+
         // after s1 is removed from the collection, we should be able to set
         // the key to anything we want...
         c.removeSeries(s1);
         s1.setKey("S2");
-                
+
         // check that removing by index also works
         s1.setKey("S1");
         c.addSeries(s1);
@@ -1138,27 +1127,27 @@ public class TimeSeriesTest implements SeriesChangeListener {
     public void testFindValueRange() {
         TimeSeries ts = new TimeSeries("Time Series");
         assertNull(ts.findValueRange());
-        
+
         ts.add(new Year(2014), 1.0);
         assertEquals(new Range(1.0, 1.0), ts.findValueRange());
-        
+
         ts.add(new Year(2015), 2.0);
         assertEquals(new Range(1.0, 2.0), ts.findValueRange());
 
         // null items are ignored
         ts.add(new Year(2016), null);
         assertEquals(new Range(1.0, 2.0), ts.findValueRange());
-        
+
         // Double.NaN values are also ignored
         ts.add(new Year(2017), Double.NaN);
         assertEquals(new Range(1.0, 2.0), ts.findValueRange());
-        
+
         ts.clear();
         assertNull(ts.findValueRange());
-        
+
         // if there are only null items, we get a NaNRange
         ts.add(new Year(2014), null);
-        assertTrue(ts.findValueRange().isNaNRange()); 
+        assertTrue(ts.findValueRange().isNaNRange());
     }
 
     /**
@@ -1176,34 +1165,34 @@ public class TimeSeriesTest implements SeriesChangeListener {
         calendar.set(2014, Calendar.FEBRUARY, 24, 18, 0);
         long end = calendar.getTimeInMillis();
         Range range = new Range(start, end);
-        
+
         TimeSeries ts = new TimeSeries("Time Series");
         assertNull(ts.findValueRange(range, TimePeriodAnchor.START, tzone));
         assertNull(ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone));
         assertNull(ts.findValueRange(range, TimePeriodAnchor.END, tzone));
-        
+
         ts.add(new Day(23, 2, 2014), 5.0);
         assertTrue(ts.findValueRange(range, TimePeriodAnchor.START, tzone).isNaNRange());
-        assertEquals(new Range(5.0, 5.0), 
+        assertEquals(new Range(5.0, 5.0),
                 ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone));
-        assertEquals(new Range(5.0, 5.0), 
+        assertEquals(new Range(5.0, 5.0),
                 ts.findValueRange(range, TimePeriodAnchor.END, tzone));
-        
+
         ts.add(new Day(24, 2, 2014), 6.0);
-        assertEquals(new Range(6.0, 6.0), 
+        assertEquals(new Range(6.0, 6.0),
                 ts.findValueRange(range, TimePeriodAnchor.START, tzone));
-        assertEquals(new Range(5.0, 6.0), 
+        assertEquals(new Range(5.0, 6.0),
                 ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone));
-        assertEquals(new Range(5.0, 5.0), 
+        assertEquals(new Range(5.0, 5.0),
                 ts.findValueRange(range, TimePeriodAnchor.END, tzone));
-        
+
         ts.clear();
         ts.add(new Day(24, 2, 2014), null);
         assertTrue(ts.findValueRange(range, TimePeriodAnchor.START, tzone).isNaNRange());
         assertTrue(ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone).isNaNRange());
         assertTrue(ts.findValueRange(range, TimePeriodAnchor.END, tzone).isNaNRange());
     }
-    
+
     /**
      * Test findValueRange() method when there are Double.NaN values present.
      */
@@ -1218,29 +1207,29 @@ public class TimeSeriesTest implements SeriesChangeListener {
         calendar.set(2015, Calendar.SEPTEMBER, 30, 18, 0);
         long end = calendar.getTimeInMillis();
         Range range = new Range(start, end);
-        
+
         TimeSeries ts = new TimeSeries("Time Series");
         assertNull(ts.findValueRange(range, TimePeriodAnchor.START, tzone));
         assertNull(ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone));
         assertNull(ts.findValueRange(range, TimePeriodAnchor.END, tzone));
-        
+
         ts.add(new Day(1, 9, 2015), 1.0);
         ts.add(new Day(2, 9, 2015), 99.0);
         ts.add(new Day(30, 9, 2015), 2.0);
 
-        assertEquals(new Range(2.0, 99.0), 
+        assertEquals(new Range(2.0, 99.0),
                 ts.findValueRange(range, TimePeriodAnchor.START, tzone));
-        assertEquals(new Range(1.0, 99.0), 
+        assertEquals(new Range(1.0, 99.0),
                 ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone));
-        assertEquals(new Range(1.0, 99.0), 
+        assertEquals(new Range(1.0, 99.0),
                 ts.findValueRange(range, TimePeriodAnchor.END, tzone));
-        
+
         ts.add(new Day(10, 9, 2015), Double.NaN);
-        assertEquals(new Range(2.0, 99.0), 
+        assertEquals(new Range(2.0, 99.0),
                 ts.findValueRange(range, TimePeriodAnchor.START, tzone));
-        assertEquals(new Range(1.0, 99.0), 
+        assertEquals(new Range(1.0, 99.0),
                 ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone));
-        assertEquals(new Range(1.0, 99.0), 
+        assertEquals(new Range(1.0, 99.0),
                 ts.findValueRange(range, TimePeriodAnchor.END, tzone));
 
     }

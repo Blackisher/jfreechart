@@ -21,20 +21,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Stroke;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
 
 /**
  * A component for choosing a stroke from a list of available strokes.  This
@@ -42,15 +39,17 @@ import javax.swing.JPanel;
  */
 public class StrokeChooserPanel extends JPanel {
 
-    /** A combo for selecting the stroke. */
+    /**
+     * A combo for selecting the stroke.
+     */
     private JComboBox selector;
 
     /**
      * Creates a panel containing a combo-box that allows the user to select
      * one stroke from a list of available strokes.
      *
-     * @param current  the current stroke sample.
-     * @param available  an array of 'available' stroke samples.
+     * @param current   the current stroke sample.
+     * @param available an array of 'available' stroke samples.
      */
     public StrokeChooserPanel(StrokeSample current, StrokeSample[] available) {
         setLayout(new BorderLayout());

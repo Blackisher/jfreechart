@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -45,7 +45,7 @@
 
 package org.jfree.chart.needle;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
@@ -57,20 +57,22 @@ import java.io.Serializable;
  */
 public class PlumNeedle extends MeterNeedle implements Cloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -3082660488660600718L;
 
     /**
      * Draws the needle.
      *
-     * @param g2  the graphics device.
-     * @param plotArea  the plot area.
-     * @param rotate  the rotation point.
-     * @param angle  the angle.
+     * @param g2       the graphics device.
+     * @param plotArea the plot area.
+     * @param rotate   the rotation point.
+     * @param angle    the angle.
      */
     @Override
     protected void drawNeedle(Graphics2D g2, Rectangle2D plotArea,
-            Point2D rotate, double angle) {
+                              Point2D rotate, double angle) {
 
         Arc2D shape = new Arc2D.Double(Arc2D.PIE);
         double radius = plotArea.getHeight();
@@ -78,8 +80,8 @@ public class PlumNeedle extends MeterNeedle implements Cloneable, Serializable {
         double diameter = 2 * radius;
 
         shape.setFrame(plotArea.getMinX() + halfX - radius,
-                       plotArea.getMinY() - radius,
-                       diameter, diameter);
+                plotArea.getMinY() - radius,
+                diameter, diameter);
         radius = Math.toDegrees(Math.asin(halfX / radius));
         shape.setAngleStart(270 - radius);
         shape.setAngleExtent(2 * radius);
@@ -98,8 +100,7 @@ public class PlumNeedle extends MeterNeedle implements Cloneable, Serializable {
     /**
      * Tests another object for equality with this object.
      *
-     * @param obj  the object to test ({@code null} permitted).
-     *
+     * @param obj the object to test ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -130,9 +131,8 @@ public class PlumNeedle extends MeterNeedle implements Cloneable, Serializable {
      * Returns a clone of this needle.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if the {@code PlumNeedle}
-     *     cannot be cloned (in theory, this should not happen).
+     *                                    cannot be cloned (in theory, this should not happen).
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

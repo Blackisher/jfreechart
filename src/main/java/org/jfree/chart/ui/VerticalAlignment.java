@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * Changes:
@@ -33,19 +33,25 @@
 package org.jfree.chart.ui;
 
 /**
- * An enumeration of the vertical alignment types ({@code TOP}, 
+ * An enumeration of the vertical alignment types ({@code TOP},
  * {@code BOTTOM} and {@code CENTER}).
  */
 public enum VerticalAlignment {
 
-    /** Top alignment. */
+    /**
+     * Top alignment.
+     */
     TOP,
 
-    /** Bottom alignment. */
+    /**
+     * Bottom alignment.
+     */
     BOTTOM,
 
-    /** Center alignment. */
+    /**
+     * Center alignment.
+     */
     CENTER
-    
+
 }
 

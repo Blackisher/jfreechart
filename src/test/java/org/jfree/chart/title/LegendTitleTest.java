@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -41,22 +41,17 @@
 
 package org.jfree.chart.title;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.geom.Rectangle2D;
-
 import org.jfree.chart.TestUtils;
-
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.SortOrder;
 import org.junit.Test;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
+import static org.junit.Assert.*;
 
 /**
  * Some tests for the {@link LegendTitle} class.
@@ -74,11 +69,11 @@ public class LegendTitleTest {
         assertEquals(t1, t2);
 
         t1.setBackgroundPaint(
-            new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, Color.YELLOW)
+                new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, Color.YELLOW)
         );
         assertFalse(t1.equals(t2));
         t2.setBackgroundPaint(
-            new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, Color.YELLOW)
+                new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, Color.YELLOW)
         );
         assertTrue(t1.equals(t2));
 

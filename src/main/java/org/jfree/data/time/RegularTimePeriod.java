@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -49,24 +49,25 @@
  *               added new peg() method (DG);
  * 16-Sep-2008 : Deprecated DEFAULT_TIME_ZONE (DG);
  * 23-Feb-2014 : Added getMillisecond() method (DG);
- * 
+ *
  */
 
 package org.jfree.data.time;
+
+import org.jfree.chart.date.MonthConstants;
 
 import java.lang.reflect.Constructor;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-import org.jfree.chart.date.MonthConstants;
 
 /**
  * An abstract class representing a unit of time.  Convenient methods are
  * provided for calculating the next and previous time periods.  Conversion
  * methods are defined that return the first and last milliseconds of the time
  * period.  The results from these methods are timezone dependent.
- * <P>
+ * <p>
  * This class is immutable, and all subclasses should be immutable also.
  */
 public abstract class RegularTimePeriod implements TimePeriod, Comparable,
@@ -76,23 +77,21 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * Creates a time period that includes the specified millisecond, assuming
      * the given time zone.
      *
-     * @param c  the time period class.
-     * @param millisecond  the time.
-     * @param zone  the time zone.
-     * @param locale  the locale.
-     *
+     * @param c           the time period class.
+     * @param millisecond the time.
+     * @param zone        the time zone.
+     * @param locale      the locale.
      * @return The time period.
      */
     public static RegularTimePeriod createInstance(Class c, Date millisecond,
-            TimeZone zone, Locale locale) {
+                                                   TimeZone zone, Locale locale) {
         RegularTimePeriod result = null;
         try {
             Constructor constructor = c.getDeclaredConstructor(
-                    new Class[] {Date.class, TimeZone.class, Locale.class});
+                    new Class[]{Date.class, TimeZone.class, Locale.class});
             result = (RegularTimePeriod) constructor.newInstance(
-                    new Object[] {millisecond, zone, locale});
-        }
-        catch (Exception e) {
+                    new Object[]{millisecond, zone, locale});
+        } catch (Exception e) {
             // do nothing, so null is returned
         }
         return result;
@@ -102,33 +101,25 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * Returns a subclass of {@link RegularTimePeriod} that is smaller than
      * the specified class.
      *
-     * @param c  a subclass of {@link RegularTimePeriod}.
-     *
+     * @param c a subclass of {@link RegularTimePeriod}.
      * @return A class.
      */
     public static Class downsize(Class c) {
         if (c.equals(Year.class)) {
             return Quarter.class;
-        }
-        else if (c.equals(Quarter.class)) {
+        } else if (c.equals(Quarter.class)) {
             return Month.class;
-        }
-        else if (c.equals(Month.class)) {
+        } else if (c.equals(Month.class)) {
             return Day.class;
-        }
-        else if (c.equals(Day.class)) {
+        } else if (c.equals(Day.class)) {
             return Hour.class;
-        }
-        else if (c.equals(Hour.class)) {
+        } else if (c.equals(Hour.class)) {
             return Minute.class;
-        }
-        else if (c.equals(Minute.class)) {
+        } else if (c.equals(Minute.class)) {
             return Second.class;
-        }
-        else if (c.equals(Second.class)) {
+        } else if (c.equals(Second.class)) {
             return Millisecond.class;
-        }
-        else {
+        } else {
             return Millisecond.class;
         }
     }
@@ -162,8 +153,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * Recalculates the start date/time and end date/time for this time period
      * relative to the supplied calendar (which incorporates a time zone).
      *
-     * @param calendar  the calendar ({@code null} not permitted).
-     *
+     * @param calendar the calendar ({@code null} not permitted).
      * @since 1.0.3
      */
     public abstract void peg(Calendar calendar);
@@ -173,7 +163,6 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * method returns a new {@code Date} instance every time it is called.
      *
      * @return The start date/time.
-     *
      * @see #getFirstMillisecond()
      */
     @Override
@@ -186,7 +175,6 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * method returns a new {@code Date} instance every time it is called.
      *
      * @return The end date/time.
-     *
      * @see #getLastMillisecond()
      */
     @Override
@@ -201,7 +189,6 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * {@link #peg(Calendar)} method.
      *
      * @return The first millisecond of the time period.
-     *
      * @see #getLastMillisecond()
      */
     public abstract long getFirstMillisecond();
@@ -210,12 +197,9 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * Returns the first millisecond of the time period, evaluated using the
      * supplied calendar (which incorporates a timezone).
      *
-     * @param calendar  the calendar ({@code null} not permitted).
-     *
+     * @param calendar the calendar ({@code null} not permitted).
      * @return The first millisecond of the time period.
-     *
      * @throws NullPointerException if {@code calendar} is {@code null}.
-     *
      * @see #getLastMillisecond(Calendar)
      */
     public abstract long getFirstMillisecond(Calendar calendar);
@@ -227,7 +211,6 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * {@link #peg(Calendar)} method.
      *
      * @return The last millisecond of the time period.
-     *
      * @see #getFirstMillisecond()
      */
     public abstract long getLastMillisecond();
@@ -236,10 +219,8 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * Returns the last millisecond of the time period, evaluated using the
      * supplied calendar (which incorporates a timezone).
      *
-     * @param calendar  the calendar ({@code null} not permitted).
-     *
+     * @param calendar the calendar ({@code null} not permitted).
      * @return The last millisecond of the time period.
-     *
      * @see #getFirstMillisecond(Calendar)
      */
     public abstract long getLastMillisecond(Calendar calendar);
@@ -259,8 +240,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      * Returns the millisecond closest to the middle of the time period,
      * evaluated using the supplied calendar (which incorporates a timezone).
      *
-     * @param calendar  the calendar.
-     *
+     * @param calendar the calendar.
      * @return The middle millisecond.
      */
     public long getMiddleMillisecond(Calendar calendar) {
@@ -270,15 +250,13 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
     }
 
     /**
-     * Returns the millisecond (relative to the epoch) corresponding to the 
-     * specified {@code anchor} using the supplied {@code calendar} 
+     * Returns the millisecond (relative to the epoch) corresponding to the
+     * specified {@code anchor} using the supplied {@code calendar}
      * (which incorporates a time zone).
-     * 
-     * @param anchor  the anchor ({@code null} not permitted).
-     * @param calendar  the calendar ({@code null} not permitted).
-     * 
+     *
+     * @param anchor   the anchor ({@code null} not permitted).
+     * @param calendar the calendar ({@code null} not permitted).
      * @return Milliseconds since the epoch.
-     * 
      * @since 1.0.18
      */
     public long getMillisecond(TimePeriodAnchor anchor, Calendar calendar) {
@@ -292,7 +270,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
             throw new IllegalStateException("Unrecognised anchor: " + anchor);
         }
     }
-    
+
     /**
      * Returns a string representation of the time period.
      *

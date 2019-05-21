@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -40,38 +40,40 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
 import org.jfree.chart.util.Args;
 
+import java.io.Serializable;
+
 public class KeyedValuesItemKey implements ItemKey, Serializable {
-    
-    /** The key for the item. */
+
+    /**
+     * The key for the item.
+     */
     Comparable<? extends Object> key;
-    
+
     /**
      * Creates a new instance.
-     * 
-     * @param key  the key ({@code null} not permitted).
+     *
+     * @param key the key ({@code null} not permitted).
      */
     public KeyedValuesItemKey(Comparable<? extends Object> key) {
         Args.nullNotPermitted(key, "key");
         this.key = key;
     }
-    
+
     /**
      * Returns the key.
-     * 
-     * @return The key (never {@code null}). 
+     *
+     * @return The key (never {@code null}).
      */
     public Comparable<?> getKey() {
         return this.key;
     }
-    
+
     /**
      * Tests this instance for equality with an arbitrary object.
-     * 
-     * @param obj  the object ({@code null} not permitted).
-     * 
+     *
+     * @param obj the object ({@code null} not permitted).
      * @return A boolean.
      */
     @Override
@@ -88,7 +90,7 @@ public class KeyedValuesItemKey implements ItemKey, Serializable {
         }
         return true;
     }
-    
+
     @Override
     public String toJSONString() {
         StringBuilder sb = new StringBuilder();

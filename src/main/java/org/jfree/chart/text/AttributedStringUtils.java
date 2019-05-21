@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
@@ -46,13 +46,12 @@ public class AttributedStringUtils {
 
     /**
      * Tests two attributed strings for equality.
-     * 
-     * @param s1  string 1 ({@code null} permitted).
-     * @param s2  string 2 ({@code null} permitted).
-     * 
+     *
+     * @param s1 string 1 ({@code null} permitted).
+     * @param s2 string 2 ({@code null} permitted).
      * @return {@code true} if {@code s1} and {@code s2} are
-     *         equal or both {@code null}, and {@code false} 
-     *         otherwise.
+     * equal or both {@code null}, and {@code false}
+     * otherwise.
      */
     public static boolean equal(AttributedString s1, AttributedString s2) {
         if (s1 == null) {
@@ -90,5 +89,5 @@ public class AttributedStringUtils {
         }
         return c2 == CharacterIterator.DONE;
     }
-    
+
 }

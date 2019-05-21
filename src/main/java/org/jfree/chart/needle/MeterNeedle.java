@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -48,12 +48,12 @@
 
 package org.jfree.chart.needle;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.util.SerialUtils;
+
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -62,43 +62,48 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtils;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.SerialUtils;
-
 /**
  * The base class used to represent the needle on a
  * {@link org.jfree.chart.plot.CompassPlot}.
  */
 public abstract class MeterNeedle implements Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 5203064851510951052L;
-
-    /** The outline paint. */
-    private transient Paint outlinePaint = Color.BLACK;
-
-    /** The outline stroke. */
-    private transient Stroke outlineStroke = new BasicStroke(2);
-
-    /** The fill paint. */
-    private transient Paint fillPaint = null;
-
-    /** The highlight paint. */
-    private transient Paint highlightPaint = null;
-
-    /** The size. */
-    private int size = 5;
-
-    /** Scalar to apply to locate the rotation x point. */
-    private double rotateX = 0.5;
-
-    /** Scalar to apply to locate the rotation y point. */
-    private double rotateY = 0.5;
-
-    /** A transform. */
+    /**
+     * A transform.
+     */
     protected static AffineTransform transform = new AffineTransform();
+    /**
+     * The outline paint.
+     */
+    private transient Paint outlinePaint = Color.BLACK;
+    /**
+     * The outline stroke.
+     */
+    private transient Stroke outlineStroke = new BasicStroke(2);
+    /**
+     * The fill paint.
+     */
+    private transient Paint fillPaint = null;
+    /**
+     * The highlight paint.
+     */
+    private transient Paint highlightPaint = null;
+    /**
+     * The size.
+     */
+    private int size = 5;
+    /**
+     * Scalar to apply to locate the rotation x point.
+     */
+    private double rotateX = 0.5;
+    /**
+     * Scalar to apply to locate the rotation y point.
+     */
+    private double rotateY = 0.5;
 
     /**
      * Creates a new needle.
@@ -110,9 +115,9 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Creates a new needle.
      *
-     * @param outline  the outline paint ({@code null} permitted).
-     * @param fill  the fill paint ({@code null} permitted).
-     * @param highlight  the highlight paint ({@code null} permitted).
+     * @param outline   the outline paint ({@code null} permitted).
+     * @param fill      the fill paint ({@code null} permitted).
+     * @param highlight the highlight paint ({@code null} permitted).
      */
     public MeterNeedle(Paint outline, Paint fill, Paint highlight) {
         this.fillPaint = fill;
@@ -132,7 +137,7 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Sets the outline paint.
      *
-     * @param p  the new paint.
+     * @param p the new paint.
      */
     public void setOutlinePaint(Paint p) {
         if (p != null) {
@@ -152,7 +157,7 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Sets the outline stroke.
      *
-     * @param s  the new stroke.
+     * @param s the new stroke.
      */
     public void setOutlineStroke(Stroke s) {
         if (s != null) {
@@ -172,7 +177,7 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Sets the fill paint.
      *
-     * @param p  the fill paint.
+     * @param p the fill paint.
      */
     public void setFillPaint(Paint p) {
         if (p != null) {
@@ -192,7 +197,7 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Sets the highlight paint.
      *
-     * @param p  the highlight paint.
+     * @param p the highlight paint.
      */
     public void setHighlightPaint(Paint p) {
         if (p != null) {
@@ -212,19 +217,10 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Sets the rotateX value.
      *
-     * @param x  the new value.
+     * @param x the new value.
      */
     public void setRotateX(double x) {
         this.rotateX = x;
-    }
-
-    /**
-     * Sets the rotateY value.
-     *
-     * @param y  the new value.
-     */
-    public void setRotateY(double y) {
-        this.rotateY = y;
     }
 
     /**
@@ -237,10 +233,19 @@ public abstract class MeterNeedle implements Serializable {
     }
 
     /**
+     * Sets the rotateY value.
+     *
+     * @param y the new value.
+     */
+    public void setRotateY(double y) {
+        this.rotateY = y;
+    }
+
+    /**
      * Draws the needle.
      *
-     * @param g2  the graphics device.
-     * @param plotArea  the plot area.
+     * @param g2       the graphics device.
+     * @param plotArea the plot area.
      */
     public void draw(Graphics2D g2, Rectangle2D plotArea) {
         draw(g2, plotArea, 0);
@@ -249,9 +254,9 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Draws the needle.
      *
-     * @param g2  the graphics device.
-     * @param plotArea  the plot area.
-     * @param angle  the angle.
+     * @param g2       the graphics device.
+     * @param plotArea the plot area.
+     * @param angle    the angle.
      */
     public void draw(Graphics2D g2, Rectangle2D plotArea, double angle) {
         Point2D.Double pt = new Point2D.Double();
@@ -263,13 +268,13 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Draws the needle.
      *
-     * @param g2  the graphics device.
-     * @param plotArea  the plot area.
-     * @param rotate  the rotation point.
-     * @param angle  the angle.
+     * @param g2       the graphics device.
+     * @param plotArea the plot area.
+     * @param rotate   the rotation point.
+     * @param angle    the angle.
      */
     public void draw(Graphics2D g2, Rectangle2D plotArea, Point2D rotate,
-            double angle) {
+                     double angle) {
 
         Paint savePaint = g2.getColor();
         Stroke saveStroke = g2.getStroke();
@@ -283,19 +288,19 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Draws the needle.
      *
-     * @param g2  the graphics device.
-     * @param plotArea  the plot area.
-     * @param rotate  the rotation point.
-     * @param angle  the angle.
+     * @param g2       the graphics device.
+     * @param plotArea the plot area.
+     * @param rotate   the rotation point.
+     * @param angle    the angle.
      */
-    protected abstract void drawNeedle(Graphics2D g2, Rectangle2D plotArea, 
-            Point2D rotate, double angle);
+    protected abstract void drawNeedle(Graphics2D g2, Rectangle2D plotArea,
+                                       Point2D rotate, double angle);
 
     /**
      * Displays a shape.
      *
-     * @param g2  the graphics device.
-     * @param shape  the shape.
+     * @param g2    the graphics device.
+     * @param shape the shape.
      */
     protected void defaultDisplay(Graphics2D g2, Shape shape) {
         if (this.fillPaint != null) {
@@ -322,7 +327,7 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Sets the size.
      *
-     * @param pixels  the new size.
+     * @param pixels the new size.
      */
     public void setSize(int pixels) {
         this.size = pixels;
@@ -341,7 +346,6 @@ public abstract class MeterNeedle implements Serializable {
      * Tests another object for equality with this object.
      *
      * @param obj the object to test ({@code null} permitted).
-     *
      * @return A boolean.
      */
     @Override
@@ -397,9 +401,8 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -412,13 +415,12 @@ public abstract class MeterNeedle implements Serializable {
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.outlineStroke = SerialUtils.readStroke(stream);
         this.outlinePaint = SerialUtils.readPaint(stream);

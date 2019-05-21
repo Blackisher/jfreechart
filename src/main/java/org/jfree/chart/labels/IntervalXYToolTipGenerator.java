@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------
@@ -40,15 +40,15 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.xy.IntervalXYDataset;
+import org.jfree.data.xy.XYDataset;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.Date;
-import org.jfree.chart.util.PublicCloneable;
-
-import org.jfree.data.xy.IntervalXYDataset;
-import org.jfree.data.xy.XYDataset;
 
 /**
  * A tooltip generator for datasets that implement the
@@ -58,10 +58,12 @@ import org.jfree.data.xy.XYDataset;
  */
 public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
         implements XYToolTipGenerator, Cloneable, PublicCloneable,
-                   Serializable {
+        Serializable {
 
-    /** The default item label format. */
-    public static final String DEFAULT_TOOL_TIP_FORMAT 
+    /**
+     * The default item label format.
+     */
+    public static final String DEFAULT_TOOL_TIP_FORMAT
             = "{0}: ({1} - {2}), ({5} - {6})";
 
     /**
@@ -69,36 +71,36 @@ public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
      */
     public IntervalXYToolTipGenerator() {
         this(DEFAULT_TOOL_TIP_FORMAT, NumberFormat.getNumberInstance(),
-            NumberFormat.getNumberInstance());
+                NumberFormat.getNumberInstance());
     }
 
     /**
      * Creates a new tooltip generator using the specified number formatters.
      *
-     * @param formatString  the item label format string ({@code null} not
-     *                      permitted).
-     * @param xFormat  the format object for the x values ({@code null}
-     *                 not permitted).
-     * @param yFormat  the format object for the y values ({@code null}
-     *                 not permitted).
+     * @param formatString the item label format string ({@code null} not
+     *                     permitted).
+     * @param xFormat      the format object for the x values ({@code null}
+     *                     not permitted).
+     * @param yFormat      the format object for the y values ({@code null}
+     *                     not permitted).
      */
     public IntervalXYToolTipGenerator(String formatString,
-            NumberFormat xFormat, NumberFormat yFormat) {
+                                      NumberFormat xFormat, NumberFormat yFormat) {
         super(formatString, xFormat, yFormat);
     }
 
     /**
      * Creates a new tool tip generator using the specified formatters.
      *
-     * @param formatString  the item label format string ({@code null}
-     *                      not permitted).
-     * @param xFormat  the format object for the x values ({@code null}
-     *                 not permitted).
-     * @param yFormat  the format object for the y values ({@code null}
-     *                 not permitted).
+     * @param formatString the item label format string ({@code null}
+     *                     not permitted).
+     * @param xFormat      the format object for the x values ({@code null}
+     *                     not permitted).
+     * @param yFormat      the format object for the y values ({@code null}
+     *                     not permitted).
      */
     public IntervalXYToolTipGenerator(String formatString,
-            DateFormat xFormat, NumberFormat yFormat) {
+                                      DateFormat xFormat, NumberFormat yFormat) {
         super(formatString, xFormat, yFormat);
     }
 
@@ -107,30 +109,30 @@ public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
      * number formatter for the x-values and a date formatter for the
      * y-values).
      *
-     * @param formatString  the item label format string ({@code null}
-     *                      not permitted).
-     * @param xFormat  the format object for the x values ({@code null}
-     *                 permitted).
-     * @param yFormat  the format object for the y values ({@code null}
-     *                 not permitted).
+     * @param formatString the item label format string ({@code null}
+     *                     not permitted).
+     * @param xFormat      the format object for the x values ({@code null}
+     *                     permitted).
+     * @param yFormat      the format object for the y values ({@code null}
+     *                     not permitted).
      */
     public IntervalXYToolTipGenerator(String formatString,
-            NumberFormat xFormat, DateFormat yFormat) {
+                                      NumberFormat xFormat, DateFormat yFormat) {
         super(formatString, xFormat, yFormat);
     }
 
     /**
      * Creates a new tool tip generator using the specified date formatters.
      *
-     * @param formatString  the label format string ({@code null} not
-     *                      permitted).
-     * @param xFormat  the format object for the x values ({@code null} not 
-     *                 permitted).
-     * @param yFormat  the format object for the y values ({@code null}
-     *                 not permitted).
+     * @param formatString the label format string ({@code null} not
+     *                     permitted).
+     * @param xFormat      the format object for the x values ({@code null} not
+     *                     permitted).
+     * @param yFormat      the format object for the y values ({@code null}
+     *                     not permitted).
      */
     public IntervalXYToolTipGenerator(String formatString,
-            DateFormat xFormat, DateFormat yFormat) {
+                                      DateFormat xFormat, DateFormat yFormat) {
         super(formatString, xFormat, yFormat);
     }
 
@@ -138,16 +140,15 @@ public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
      * Creates the array of items that can be passed to the
      * {@link MessageFormat} class for creating labels.
      *
-     * @param dataset  the dataset ({@code null} not permitted).
+     * @param dataset the dataset ({@code null} not permitted).
      * @param series  the series (zero-based index).
-     * @param item  the item (zero-based index).
-     *
+     * @param item    the item (zero-based index).
      * @return An array of seven items from the dataset formatted as
-     *         {@code String} objects (never {@code null}).
+     * {@code String} objects (never {@code null}).
      */
     @Override
-    protected Object[] createItemArray(XYDataset dataset, int series, 
-            int item) {
+    protected Object[] createItemArray(XYDataset dataset, int series,
+                                       int item) {
         IntervalXYDataset intervalDataset = null;
         if (dataset instanceof IntervalXYDataset) {
             intervalDataset = (IntervalXYDataset) dataset;
@@ -187,8 +188,7 @@ public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
         } else {
             if (ydf != null) {
                 result[4] = ydf.format(new Date((long) y));
-            }
-            else {
+            } else {
                 result[4] = ynf.format(y);
             }
         }
@@ -198,8 +198,7 @@ public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
         } else {
             if (ydf != null) {
                 result[5] = ydf.format(new Date((long) ys));
-            }
-            else {
+            } else {
                 result[5] = ynf.format(ys);
             }
         }
@@ -209,8 +208,7 @@ public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
         } else {
             if (ydf != null) {
                 result[6] = ydf.format(new Date((long) ye));
-            }
-            else {
+            } else {
                 result[6] = ynf.format(ye);
             }
         }
@@ -220,10 +218,9 @@ public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
     /**
      * Generates the tool tip text for an item in a dataset.
      *
-     * @param dataset  the dataset ({@code null} not permitted).
+     * @param dataset the dataset ({@code null} not permitted).
      * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param item    the item index (zero-based).
      * @return The tool tip text (possibly {@code null}).
      */
     @Override
@@ -235,7 +232,6 @@ public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
      * Returns an independent copy of the generator.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
@@ -246,8 +242,7 @@ public class IntervalXYToolTipGenerator extends AbstractXYItemLabelGenerator
     /**
      * Tests this object for equality with an arbitrary object.
      *
-     * @param obj  the other object ({@code null} permitted).
-     *
+     * @param obj the other object ({@code null} permitted).
      * @return A boolean.
      */
     @Override

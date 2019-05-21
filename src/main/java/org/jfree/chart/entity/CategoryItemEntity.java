@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -53,12 +53,12 @@
 
 package org.jfree.chart.entity;
 
-import java.awt.Shape;
-import java.io.Serializable;
-import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.Args;
-
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.category.CategoryDataset;
+
+import java.awt.*;
+import java.io.Serializable;
 
 /**
  * A chart entity that represents one item within a category plot.
@@ -66,10 +66,14 @@ import org.jfree.data.category.CategoryDataset;
 public class CategoryItemEntity extends ChartEntity
         implements Cloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -8657249457902337349L;
 
-    /** The dataset. */
+    /**
+     * The dataset.
+     */
     private CategoryDataset dataset;
 
     /**
@@ -89,17 +93,16 @@ public class CategoryItemEntity extends ChartEntity
     /**
      * Creates a new entity instance for an item in the specified dataset.
      *
-     * @param area  the 'hotspot' area ({@code null} not permitted).
-     * @param toolTipText  the tool tip text.
-     * @param urlText  the URL text.
-     * @param dataset  the dataset ({@code null} not permitted).
-     * @param rowKey  the row key ({@code null} not permitted).
-     * @param columnKey  the column key ({@code null} not permitted).
-     *
+     * @param area        the 'hotspot' area ({@code null} not permitted).
+     * @param toolTipText the tool tip text.
+     * @param urlText     the URL text.
+     * @param dataset     the dataset ({@code null} not permitted).
+     * @param rowKey      the row key ({@code null} not permitted).
+     * @param columnKey   the column key ({@code null} not permitted).
      * @since 1.0.6
      */
     public CategoryItemEntity(Shape area, String toolTipText, String urlText,
-            CategoryDataset dataset, Comparable rowKey, Comparable columnKey) {
+                              CategoryDataset dataset, Comparable rowKey, Comparable columnKey) {
         super(area, toolTipText, urlText);
         Args.nullNotPermitted(dataset, "dataset");
         this.dataset = dataset;
@@ -113,7 +116,6 @@ public class CategoryItemEntity extends ChartEntity
      * dataset.
      *
      * @return The dataset (never {@code null}).
-     *
      * @see #setDataset(CategoryDataset)
      */
     public CategoryDataset getDataset() {
@@ -123,8 +125,7 @@ public class CategoryItemEntity extends ChartEntity
     /**
      * Sets the dataset this entity refers to.
      *
-     * @param dataset  the dataset ({@code null} not permitted).
-     *
+     * @param dataset the dataset ({@code null} not permitted).
      * @see #getDataset()
      */
     public void setDataset(CategoryDataset dataset) {
@@ -136,10 +137,8 @@ public class CategoryItemEntity extends ChartEntity
      * Returns the row key.
      *
      * @return The row key (never {@code null}).
-     *
-     * @since 1.0.6
-     *
      * @see #setRowKey(Comparable)
+     * @since 1.0.6
      */
     public Comparable getRowKey() {
         return this.rowKey;
@@ -148,11 +147,9 @@ public class CategoryItemEntity extends ChartEntity
     /**
      * Sets the row key.
      *
-     * @param rowKey  the row key ({@code null} not permitted).
-     *
-     * @since 1.0.6
-     *
+     * @param rowKey the row key ({@code null} not permitted).
      * @see #getRowKey()
+     * @since 1.0.6
      */
     public void setRowKey(Comparable rowKey) {
         this.rowKey = rowKey;
@@ -162,10 +159,8 @@ public class CategoryItemEntity extends ChartEntity
      * Returns the column key.
      *
      * @return The column key (never {@code null}).
-     *
-     * @since 1.0.6
-     *
      * @see #setColumnKey(Comparable)
+     * @since 1.0.6
      */
     public Comparable getColumnKey() {
         return this.columnKey;
@@ -174,11 +169,9 @@ public class CategoryItemEntity extends ChartEntity
     /**
      * Sets the column key.
      *
-     * @param columnKey  the column key ({@code null} not permitted).
-     *
-     * @since 1.0.6
-     *
+     * @param columnKey the column key ({@code null} not permitted).
      * @see #getColumnKey()
+     * @since 1.0.6
      */
     public void setColumnKey(Comparable columnKey) {
         this.columnKey = columnKey;
@@ -193,14 +186,13 @@ public class CategoryItemEntity extends ChartEntity
     @Override
     public String toString() {
         return "CategoryItemEntity: rowKey=" + this.rowKey
-               + ", columnKey=" + this.columnKey + ", dataset=" + this.dataset;
+                + ", columnKey=" + this.columnKey + ", dataset=" + this.dataset;
     }
 
     /**
      * Tests the entity for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override

@@ -7,16 +7,16 @@ if (!jfc) jfc = {};
 
 jfc.Utils = {};
 
-jfc.Utils.makeArrayOf = function(value, length) {
-  var arr = [], i = length;
-  while (i--) {
-    arr[i] = value;
-  }
-  return arr;
+jfc.Utils.makeArrayOf = function (value, length) {
+    var arr = [], i = length;
+    while (i--) {
+        arr[i] = value;
+    }
+    return arr;
 };
 
 // returns the chart entity reference for this element        
-jfc.Utils.findChartRef = function(element) {
+jfc.Utils.findChartRef = function (element) {
     var id = element.getAttribute("jfreesvg:ref");
     var found = false;
     var current = element;
@@ -30,10 +30,10 @@ jfc.Utils.findChartRef = function(element) {
         }
     }
     return id;
-}
+};
 
 // find the chart id by finding the group that is written for the entire chart
-jfc.Utils.findChartId = function(element) {
+jfc.Utils.findChartId = function (element) {
     var id = null;
     var found = false;
     var current = element;
@@ -50,4 +50,4 @@ jfc.Utils.findChartId = function(element) {
         }
     }
     return id;
-}
+};

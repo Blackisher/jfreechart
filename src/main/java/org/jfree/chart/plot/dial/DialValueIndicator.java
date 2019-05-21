@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -44,14 +44,15 @@
 
 package org.jfree.chart.plot.dial;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.HashUtils;
+import org.jfree.chart.text.TextUtils;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.*;
+
+import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -62,18 +63,6 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.HashUtils;
-import org.jfree.chart.text.TextUtils;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtils;
-
 /**
  * A value indicator for a {@link DialPlot}.
  *
@@ -82,22 +71,34 @@ import org.jfree.chart.util.SerialUtils;
 public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
         Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     static final long serialVersionUID = 803094354130942585L;
 
-    /** The dataset index. */
+    /**
+     * The dataset index.
+     */
     private int datasetIndex;
 
-    /** The angle that defines the anchor point. */
+    /**
+     * The angle that defines the anchor point.
+     */
     private double angle;
 
-    /** The radius that defines the anchor point. */
+    /**
+     * The radius that defines the anchor point.
+     */
     private double radius;
 
-    /** The frame anchor. */
+    /**
+     * The frame anchor.
+     */
     private RectangleAnchor frameAnchor;
 
-    /** The template value. */
+    /**
+     * The template value.
+     */
     private Number templateValue;
 
     /**
@@ -109,31 +110,49 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      */
     private Number maxTemplateValue;
 
-    /** The formatter. */
+    /**
+     * The formatter.
+     */
     private NumberFormat formatter;
 
-    /** The font. */
+    /**
+     * The font.
+     */
     private Font font;
 
-    /** The paint. */
+    /**
+     * The paint.
+     */
     private transient Paint paint;
 
-    /** The background paint. */
+    /**
+     * The background paint.
+     */
     private transient Paint backgroundPaint;
 
-    /** The outline stroke. */
+    /**
+     * The outline stroke.
+     */
     private transient Stroke outlineStroke;
 
-    /** The outline paint. */
+    /**
+     * The outline paint.
+     */
     private transient Paint outlinePaint;
 
-    /** The insets. */
+    /**
+     * The insets.
+     */
     private RectangleInsets insets;
 
-    /** The value anchor. */
+    /**
+     * The value anchor.
+     */
     private RectangleAnchor valueAnchor;
 
-    /** The text anchor for displaying the value. */
+    /**
+     * The text anchor for displaying the value.
+     */
     private TextAnchor textAnchor;
 
     /**
@@ -146,7 +165,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
     /**
      * Creates a new instance of {@code DialValueIndicator}.
      *
-     * @param datasetIndex  the dataset index.
+     * @param datasetIndex the dataset index.
      */
     public DialValueIndicator(int datasetIndex) {
         this.datasetIndex = datasetIndex;
@@ -171,7 +190,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * current value.
      *
      * @return The dataset index.
-     *
      * @see #setDatasetIndex(int)
      */
     public int getDatasetIndex() {
@@ -182,8 +200,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the dataset index and sends a {@link DialLayerChangeEvent} to all
      * registered listeners.
      *
-     * @param index  the index.
-     *
+     * @param index the index.
      * @see #getDatasetIndex()
      */
     public void setDatasetIndex(int index) {
@@ -196,7 +213,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * degrees using the same orientation as Java's {@code Arc2D} class.
      *
      * @return The angle (in degrees).
-     *
      * @see #setAngle(double)
      */
     public double getAngle() {
@@ -207,8 +223,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the angle for the anchor point and sends a
      * {@link DialLayerChangeEvent} to all registered listeners.
      *
-     * @param angle  the angle (in degrees).
-     *
+     * @param angle the angle (in degrees).
      * @see #getAngle()
      */
     public void setAngle(double angle) {
@@ -220,7 +235,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the radius.
      *
      * @return The radius.
-     *
      * @see #setRadius(double)
      */
     public double getRadius() {
@@ -231,8 +245,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the radius and sends a {@link DialLayerChangeEvent} to all
      * registered listeners.
      *
-     * @param radius  the radius.
-     *
+     * @param radius the radius.
      * @see #getRadius()
      */
     public void setRadius(double radius) {
@@ -244,7 +257,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the frame anchor.
      *
      * @return The frame anchor.
-     *
      * @see #setFrameAnchor(RectangleAnchor)
      */
     public RectangleAnchor getFrameAnchor() {
@@ -255,8 +267,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the frame anchor and sends a {@link DialLayerChangeEvent} to all
      * registered listeners.
      *
-     * @param anchor  the anchor ({@code null} not permitted).
-     *
+     * @param anchor the anchor ({@code null} not permitted).
      * @see #getFrameAnchor()
      */
     public void setFrameAnchor(RectangleAnchor anchor) {
@@ -269,7 +280,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the template value.
      *
      * @return The template value (never {@code null}).
-     *
      * @see #setTemplateValue(Number)
      */
     public Number getTemplateValue() {
@@ -280,8 +290,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the template value and sends a {@link DialLayerChangeEvent} to
      * all registered listeners.
      *
-     * @param value  the value ({@code null} not permitted).
-     *
+     * @param value the value ({@code null} not permitted).
      * @see #setTemplateValue(Number)
      */
     public void setTemplateValue(Number value) {
@@ -295,10 +304,8 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * bounds.
      *
      * @return The template value (possibly {@code null}).
-     *
-     * @since 1.0.14
-     *
      * @see #setMaxTemplateValue(java.lang.Number)
+     * @since 1.0.14
      */
     public Number getMaxTemplateValue() {
         return this.maxTemplateValue;
@@ -308,11 +315,9 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the template value for the maximum size of the indicator bounds
      * and sends a {@link DialLayerChangeEvent} to all registered listeners.
      *
-     * @param value  the value ({@code null} permitted).
-     *
-     * @since 1.0.14
-     *
+     * @param value the value ({@code null} permitted).
      * @see #getMaxTemplateValue()
+     * @since 1.0.14
      */
     public void setMaxTemplateValue(Number value) {
         this.maxTemplateValue = value;
@@ -323,7 +328,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the formatter used to format the value.
      *
      * @return The formatter (never {@code null}).
-     *
      * @see #setNumberFormat(NumberFormat)
      */
     public NumberFormat getNumberFormat() {
@@ -334,8 +338,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the formatter used to format the value and sends a
      * {@link DialLayerChangeEvent} to all registered listeners.
      *
-     * @param formatter  the formatter ({@code null} not permitted).
-     *
+     * @param formatter the formatter ({@code null} not permitted).
      * @see #getNumberFormat()
      */
     public void setNumberFormat(NumberFormat formatter) {
@@ -348,7 +351,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the font.
      *
      * @return The font (never {@code null}).
-     *
      * @see #getFont()
      */
     public Font getFont() {
@@ -359,7 +361,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the font and sends a {@link DialLayerChangeEvent} to all registered
      * listeners.
      *
-     * @param font  the font ({@code null} not permitted).
+     * @param font the font ({@code null} not permitted).
      */
     public void setFont(Font font) {
         Args.nullNotPermitted(font, "font");
@@ -371,7 +373,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the paint.
      *
      * @return The paint (never {@code null}).
-     *
      * @see #setPaint(Paint)
      */
     public Paint getPaint() {
@@ -382,8 +383,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the paint and sends a {@link DialLayerChangeEvent} to all
      * registered listeners.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
@@ -396,7 +396,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the background paint.
      *
      * @return The background paint.
-     *
      * @see #setBackgroundPaint(Paint)
      */
     public Paint getBackgroundPaint() {
@@ -407,8 +406,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the background paint and sends a {@link DialLayerChangeEvent} to
      * all registered listeners.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getBackgroundPaint()
      */
     public void setBackgroundPaint(Paint paint) {
@@ -421,7 +419,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the outline stroke.
      *
      * @return The outline stroke (never {@code null}).
-     *
      * @see #setOutlineStroke(Stroke)
      */
     public Stroke getOutlineStroke() {
@@ -432,8 +429,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the outline stroke and sends a {@link DialLayerChangeEvent} to
      * all registered listeners.
      *
-     * @param stroke  the stroke ({@code null} not permitted).
-     *
+     * @param stroke the stroke ({@code null} not permitted).
      * @see #getOutlineStroke()
      */
     public void setOutlineStroke(Stroke stroke) {
@@ -446,7 +442,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the outline paint.
      *
      * @return The outline paint (never {@code null}).
-     *
      * @see #setOutlinePaint(Paint)
      */
     public Paint getOutlinePaint() {
@@ -457,8 +452,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the outline paint and sends a {@link DialLayerChangeEvent} to all
      * registered listeners.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getOutlinePaint()
      */
     public void setOutlinePaint(Paint paint) {
@@ -471,7 +465,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the insets.
      *
      * @return The insets (never {@code null}).
-     *
      * @see #setInsets(RectangleInsets)
      */
     public RectangleInsets getInsets() {
@@ -482,8 +475,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the insets and sends a {@link DialLayerChangeEvent} to all
      * registered listeners.
      *
-     * @param insets  the insets ({@code null} not permitted).
-     *
+     * @param insets the insets ({@code null} not permitted).
      * @see #getInsets()
      */
     public void setInsets(RectangleInsets insets) {
@@ -496,7 +488,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the value anchor.
      *
      * @return The value anchor (never {@code null}).
-     *
      * @see #setValueAnchor(RectangleAnchor)
      */
     public RectangleAnchor getValueAnchor() {
@@ -507,8 +498,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the value anchor and sends a {@link DialLayerChangeEvent} to all
      * registered listeners.
      *
-     * @param anchor  the anchor ({@code null} not permitted).
-     *
+     * @param anchor the anchor ({@code null} not permitted).
      * @see #getValueAnchor()
      */
     public void setValueAnchor(RectangleAnchor anchor) {
@@ -521,7 +511,6 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns the text anchor.
      *
      * @return The text anchor (never {@code null}).
-     *
      * @see #setTextAnchor(TextAnchor)
      */
     public TextAnchor getTextAnchor() {
@@ -532,8 +521,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Sets the text anchor and sends a {@link DialLayerChangeEvent} to all
      * registered listeners.
      *
-     * @param anchor  the anchor ({@code null} not permitted).
-     *
+     * @param anchor the anchor ({@code null} not permitted).
      * @see #getTextAnchor()
      */
     public void setTextAnchor(TextAnchor anchor) {
@@ -558,14 +546,14 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * frame specifies a window, the clipping region will already have been
      * set to this window before this method is called.
      *
-     * @param g2  the graphics device ({@code null} not permitted).
+     * @param g2    the graphics device ({@code null} not permitted).
      * @param plot  the plot (ignored here).
-     * @param frame  the dial frame (ignored here).
+     * @param frame the dial frame (ignored here).
      * @param view  the view rectangle ({@code null} not permitted).
      */
     @Override
     public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
-            Rectangle2D view) {
+                     Rectangle2D view) {
 
         // work out the anchor point
         Rectangle2D f = DialPlot.rectangleByRadius(frame, this.radius,
@@ -628,13 +616,12 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
     }
 
     /**
-     * A utility method that adjusts a value, if necessary, to be within a 
+     * A utility method that adjusts a value, if necessary, to be within a
      * specified range.
-     * 
-     * @param x  the value.
-     * @param minX  the minimum value in the range.
-     * @param maxX  the maximum value in the range.
-     * 
+     *
+     * @param x    the value.
+     * @param minX the minimum value in the range.
+     * @param maxX the maximum value in the range.
      * @return The adjusted value.
      */
     private double fixToRange(double x, double minX, double maxX) {
@@ -643,11 +630,9 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
         }
         if (x < minX) {
             return minX;
-        }
-        else if (x > maxX) {
+        } else if (x > maxX) {
             return maxX;
-        }
-        else {
+        } else {
             return x;
         }
     }
@@ -655,8 +640,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
     /**
      * Tests this instance for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -735,9 +719,8 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * Returns a clone of this instance.
      *
      * @return The clone.
-     *
      * @throws CloneNotSupportedException if some attribute of this instance
-     *     cannot be cloned.
+     *                                    cannot be cloned.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -747,9 +730,8 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -762,10 +744,9 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {

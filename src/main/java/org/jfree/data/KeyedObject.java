@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -42,29 +42,36 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
+
+import java.io.Serializable;
 
 /**
  * A (key, object) pair.
  */
 public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 2677930479256885863L;
 
-    /** The key. */
+    /**
+     * The key.
+     */
     private Comparable key;
 
-    /** The object. */
+    /**
+     * The object.
+     */
     private Object object;
 
     /**
      * Creates a new (key, object) pair.
      *
-     * @param key  the key.
-     * @param object  the object ({@code null} permitted).
+     * @param key    the key.
+     * @param object the object ({@code null} permitted).
      */
     public KeyedObject(Comparable key, Object object) {
         this.key = key;
@@ -92,7 +99,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
     /**
      * Sets the object.
      *
-     * @param object  the object ({@code null} permitted).
+     * @param object the object ({@code null} permitted).
      */
     public void setObject(Object object) {
         this.object = object;
@@ -105,7 +112,6 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
      * made.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
@@ -121,8 +127,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
     /**
      * Tests if this object is equal to another.
      *
-     * @param obj  the other object.
-     *
+     * @param obj the other object.
      * @return A boolean.
      */
     @Override

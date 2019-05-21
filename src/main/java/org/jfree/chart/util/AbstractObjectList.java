@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
@@ -39,19 +39,27 @@ import java.util.Arrays;
  */
 public class AbstractObjectList implements Cloneable, Serializable {
 
-    /** For serialization. */
-    private static final long serialVersionUID = 7789833772597351595L;
-    
-    /** The default initial capacity of the list. */
+    /**
+     * The default initial capacity of the list.
+     */
     public static final int DEFAULT_INITIAL_CAPACITY = 8;
-
-    /** Storage for the objects. */
+    /**
+     * For serialization.
+     */
+    private static final long serialVersionUID = 7789833772597351595L;
+    /**
+     * Storage for the objects.
+     */
     private transient Object[] objects;
 
-    /** The current list size. */
+    /**
+     * The current list size.
+     */
     private int size = 0;
 
-    /** The default increment. */
+    /**
+     * The default increment.
+     */
     private int increment = DEFAULT_INITIAL_CAPACITY;
 
     /**
@@ -64,17 +72,17 @@ public class AbstractObjectList implements Cloneable, Serializable {
     /**
      * Creates a new list.
      *
-     * @param initialCapacity  the initial capacity.
+     * @param initialCapacity the initial capacity.
      */
     protected AbstractObjectList(int initialCapacity) {
-        this (initialCapacity, initialCapacity);
+        this(initialCapacity, initialCapacity);
     }
 
     /**
      * Creates a new list.
-     * 
-     * @param initialCapacity  the initial capacity.
-     * @param increment  the increment.
+     *
+     * @param initialCapacity the initial capacity.
+     * @param increment       the increment.
      */
     protected AbstractObjectList(int initialCapacity, int increment) {
         this.objects = new Object[initialCapacity];
@@ -82,11 +90,10 @@ public class AbstractObjectList implements Cloneable, Serializable {
     }
 
     /**
-     * Returns the object at the specified index, if there is one, or 
+     * Returns the object at the specified index, if there is one, or
      * {@code null}.
      *
-     * @param index  the object index.
-     *
+     * @param index the object index.
      * @return The object or {@code null}.
      */
     protected Object get(int index) {
@@ -101,7 +108,7 @@ public class AbstractObjectList implements Cloneable, Serializable {
      * Sets an object reference (overwriting any existing object).
      *
      * @param index  the object index.
-     * @param object  the object ({@code null} permitted).
+     * @param object the object ({@code null} permitted).
      */
     protected void set(int index, Object object) {
         if (index < 0) {
@@ -137,8 +144,7 @@ public class AbstractObjectList implements Cloneable, Serializable {
      * Returns the index of the specified object, or -1 if the object is not in
      * the list.
      *
-     * @param object  the object.
-     *
+     * @param object the object.
      * @return The index or -1.
      */
     protected int indexOf(Object object) {
@@ -153,8 +159,7 @@ public class AbstractObjectList implements Cloneable, Serializable {
     /**
      * Tests this list for equality with another object.
      *
-     * @param obj  the object to test.
-     * 
+     * @param obj the object to test.
      * @return A boolean.
      */
     @Override
@@ -175,9 +180,9 @@ public class AbstractObjectList implements Cloneable, Serializable {
         final AbstractObjectList other = (AbstractObjectList) obj;
         final int listSize = size();
         for (int i = 0; i < listSize; i++) {
-           if (!ObjectUtils.equal(get(i), other.get(i))) {
-               return false;
-           }
+            if (!ObjectUtils.equal(get(i), other.get(i))) {
+                return false;
+            }
         }
         return true;
     }
@@ -192,13 +197,12 @@ public class AbstractObjectList implements Cloneable, Serializable {
     }
 
     /**
-     * Clones the list of objects.  The objects in the list are not cloned, so 
+     * Clones the list of objects.  The objects in the list are not cloned, so
      * this is method makes a 'shallow' copy of the list.
      *
      * @return A clone.
-     * 
-     * @throws CloneNotSupportedException if an item in the list does not 
-     *         support cloning.
+     * @throws CloneNotSupportedException if an item in the list does not
+     *                                    support cloning.
      */
     public Object clone() throws CloneNotSupportedException {
 
@@ -206,7 +210,7 @@ public class AbstractObjectList implements Cloneable, Serializable {
         if (this.objects != null) {
             clone.objects = new Object[this.objects.length];
             System.arraycopy(
-                this.objects, 0, clone.objects, 0, this.objects.length
+                    this.objects, 0, clone.objects, 0, this.objects.length
             );
         }
         return clone;
@@ -216,12 +220,11 @@ public class AbstractObjectList implements Cloneable, Serializable {
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
-    private void writeObject(ObjectOutputStream stream) 
-        throws IOException {
+    private void writeObject(ObjectOutputStream stream)
+            throws IOException {
 
         stream.defaultWriteObject();
         final int count = size();
@@ -231,24 +234,22 @@ public class AbstractObjectList implements Cloneable, Serializable {
             if (object != null && object instanceof Serializable) {
                 stream.writeInt(i);
                 stream.writeObject(object);
-            }
-            else {
+            } else {
                 stream.writeInt(-1);
             }
         }
 
     }
-    
+
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
-    private void readObject(ObjectInputStream stream) 
-        throws IOException, ClassNotFoundException {
+    private void readObject(ObjectInputStream stream)
+            throws IOException, ClassNotFoundException {
 
         stream.defaultReadObject();
         this.objects = new Object[this.size];
@@ -259,8 +260,8 @@ public class AbstractObjectList implements Cloneable, Serializable {
                 set(index, stream.readObject());
             }
         }
-        
+
     }
-  
+
 }
 

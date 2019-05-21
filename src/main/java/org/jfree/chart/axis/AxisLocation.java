@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -55,34 +55,30 @@ import org.jfree.chart.util.Args;
  */
 public enum AxisLocation {
 
-    /** Axis at the top or left. */
+    /**
+     * Axis at the top or left.
+     */
     TOP_OR_LEFT,
 
-    /** Axis at the top or right. */
+    /**
+     * Axis at the top or right.
+     */
     TOP_OR_RIGHT,
 
-    /** Axis at the bottom or left. */
+    /**
+     * Axis at the bottom or left.
+     */
     BOTTOM_OR_LEFT,
 
-    /** Axis at the bottom or right. */
-    BOTTOM_OR_RIGHT;
-
     /**
-     * Returns the location that is opposite to this location.
-     *
-     * @return The opposite location.
-     *
-     * @since 1.0.5
+     * Axis at the bottom or right.
      */
-    public AxisLocation getOpposite() {
-        return getOpposite(this);
-    }
+    BOTTOM_OR_RIGHT;
 
     /**
      * Returns the location that is opposite to the supplied location.
      *
-     * @param location  the location ({@code null} not permitted).
-     *
+     * @param location the location ({@code null} not permitted).
      * @return The opposite location.
      */
     public static AxisLocation getOpposite(AxisLocation location) {
@@ -90,20 +86,26 @@ public enum AxisLocation {
         AxisLocation result = null;
         if (location == AxisLocation.TOP_OR_LEFT) {
             result = AxisLocation.BOTTOM_OR_RIGHT;
-        }
-        else if (location == AxisLocation.TOP_OR_RIGHT) {
+        } else if (location == AxisLocation.TOP_OR_RIGHT) {
             result = AxisLocation.BOTTOM_OR_LEFT;
-        }
-        else if (location == AxisLocation.BOTTOM_OR_LEFT) {
+        } else if (location == AxisLocation.BOTTOM_OR_LEFT) {
             result = AxisLocation.TOP_OR_RIGHT;
-        }
-        else if (location == AxisLocation.BOTTOM_OR_RIGHT) {
+        } else if (location == AxisLocation.BOTTOM_OR_RIGHT) {
             result = AxisLocation.TOP_OR_LEFT;
-        }
-        else {
+        } else {
             throw new IllegalStateException("AxisLocation not recognised.");
         }
         return result;
+    }
+
+    /**
+     * Returns the location that is opposite to this location.
+     *
+     * @return The opposite location.
+     * @since 1.0.5
+     */
+    public AxisLocation getOpposite() {
+        return getOpposite(this);
     }
 
 }

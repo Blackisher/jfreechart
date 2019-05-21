@@ -21,42 +21,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.ui;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.RenderingHints;
-import java.awt.Stroke;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
 /**
  * A panel that displays a stroke sample.
  */
 public class StrokeSample extends JComponent implements ListCellRenderer {
 
-    /** The stroke being displayed (may be null). */
+    /**
+     * The stroke being displayed (may be null).
+     */
     private Stroke stroke;
 
-    /** The preferred size of the component. */
+    /**
+     * The preferred size of the component.
+     */
     private Dimension preferredSize;
 
     /**
      * Creates a StrokeSample for the specified stroke.
      *
-     * @param stroke  the sample stroke ({@code null} permitted).
+     * @param stroke the sample stroke ({@code null} permitted).
      */
     public StrokeSample(Stroke stroke) {
         this.stroke = stroke;
@@ -76,7 +72,7 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
     /**
      * Sets the stroke object being displayed and repaints the component.
      *
-     * @param stroke  the stroke ({@code null} permitted).
+     * @param stroke the stroke ({@code null} permitted).
      */
     public void setStroke(Stroke stroke) {
         this.stroke = stroke;
@@ -96,7 +92,7 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
     /**
      * Draws a line using the sample stroke.
      *
-     * @param g  the graphics device.
+     * @param g the graphics device.
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -112,9 +108,9 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
         double hh = size.getHeight() - insets.top - insets.bottom;
 
         // calculate point one
-        Point2D one =  new Point2D.Double(xx + 6, yy + hh / 2);
+        Point2D one = new Point2D.Double(xx + 6, yy + hh / 2);
         // calculate point two
-        Point2D two =  new Point2D.Double(xx + ww - 6, yy + hh / 2);
+        Point2D two = new Point2D.Double(xx + ww - 6, yy + hh / 2);
         // draw a circle at point one
         Ellipse2D circle1 = new Ellipse2D.Double(one.getX() - 5,
                 one.getY() - 5, 10, 10);
@@ -140,21 +136,19 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
      * Returns a list cell renderer for the stroke, so the sample can be
      * displayed in a list or combo.
      *
-     * @param list  the list.
-     * @param value  the value.
-     * @param index  the index.
-     * @param isSelected  selected?
-     * @param cellHasFocus  focussed?
-     *
+     * @param list         the list.
+     * @param value        the value.
+     * @param index        the index.
+     * @param isSelected   selected?
+     * @param cellHasFocus focussed?
      * @return the component for rendering.
      */
     @Override
     public Component getListCellRendererComponent(JList list, Object value,
-            int index, boolean isSelected, boolean cellHasFocus) {
+                                                  int index, boolean isSelected, boolean cellHasFocus) {
         if (value instanceof Stroke) {
             setStroke((Stroke) value);
-        }
-        else {
+        } else {
             setStroke(null);
         }
         return this;

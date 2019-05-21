@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
@@ -53,9 +53,8 @@ public interface PieToolTipGenerator {
      * This method can return {@code null} to indicate that no tool tip
      * should be displayed for an item.
      *
-     * @param dataset  the dataset ({@code null} not permitted).
-     * @param key  the section key ({@code null} not permitted).
-     *
+     * @param dataset the dataset ({@code null} not permitted).
+     * @param key     the section key ({@code null} not permitted).
      * @return The tool tip text (possibly {@code null}).
      */
     public String generateToolTip(PieDataset dataset, Comparable key);

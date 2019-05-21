@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * Changes
@@ -37,12 +37,18 @@ package org.jfree.chart.ui;
  */
 public enum LengthAdjustmentType {
 
-    /** NO_CHANGE. */
+    /**
+     * NO_CHANGE.
+     */
     NO_CHANGE,
 
-    /** EXPAND. */
+    /**
+     * EXPAND.
+     */
     EXPAND,
 
-    /** CONTRACT. */
+    /**
+     * CONTRACT.
+     */
     CONTRACT
 }

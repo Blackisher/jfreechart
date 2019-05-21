@@ -21,18 +21,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.ui;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.LayoutManager;
+import java.awt.*;
 import java.io.Serializable;
 
 /**
@@ -40,31 +36,45 @@ import java.io.Serializable;
  */
 public class LCBLayout implements LayoutManager, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -2531780832406163833L;
-    
-    /** A constant for the number of columns in the layout. */
+
+    /**
+     * A constant for the number of columns in the layout.
+     */
     private static final int COLUMNS = 3;
 
-    /** Tracks the column widths. */
+    /**
+     * Tracks the column widths.
+     */
     private int[] colWidth;
 
-    /** Tracks the row heights. */
+    /**
+     * Tracks the row heights.
+     */
     private int[] rowHeight;
 
-    /** The gap between each label and component. */
+    /**
+     * The gap between each label and component.
+     */
     private int labelGap;
 
-    /** The gap between each component and button. */
+    /**
+     * The gap between each component and button.
+     */
     private int buttonGap;
 
-    /** The gap between rows. */
+    /**
+     * The gap between rows.
+     */
     private int vGap;
 
     /**
      * Creates a new LCBLayout with the specified maximum number of rows.
      *
-     * @param maxrows  the maximum number of rows.
+     * @param maxrows the maximum number of rows.
      */
     public LCBLayout(int maxrows) {
         this.labelGap = 10;
@@ -77,10 +87,9 @@ public class LCBLayout implements LayoutManager, Serializable {
     /**
      * Returns the preferred size using this layout manager.
      *
-     * @param parent  the parent.
-     *
+     * @param parent the parent.
      * @return the preferred size using this layout manager.
-    */
+     */
     @Override
     public Dimension preferredLayoutSize(Container parent) {
 
@@ -104,12 +113,12 @@ public class LCBLayout implements LayoutManager, Serializable {
             for (int r = 0; r < nrows; r++) {
                 totalHeight = totalHeight + this.rowHeight[r];
             }
-            int totalWidth = this.colWidth[0] + this.labelGap 
-                + this.colWidth[1] + this.buttonGap + this.colWidth[2];
+            int totalWidth = this.colWidth[0] + this.labelGap
+                    + this.colWidth[1] + this.buttonGap + this.colWidth[2];
             return new Dimension(
-                insets.left + insets.right + totalWidth + this.labelGap 
-                    + this.buttonGap,
-                insets.top + insets.bottom + totalHeight + this.vGap
+                    insets.left + insets.right + totalWidth + this.labelGap
+                            + this.buttonGap,
+                    insets.top + insets.bottom + totalHeight + this.vGap
             );
         }
 
@@ -118,8 +127,7 @@ public class LCBLayout implements LayoutManager, Serializable {
     /**
      * Returns the minimum size using this layout manager.
      *
-     * @param parent  the parent.
-     *
+     * @param parent the parent.
      * @return the minimum size using this layout manager.
      */
     @Override
@@ -145,12 +153,12 @@ public class LCBLayout implements LayoutManager, Serializable {
             for (int r = 0; r < nrows; r++) {
                 totalHeight = totalHeight + this.rowHeight[r];
             }
-            int totalWidth = this.colWidth[0] + this.labelGap 
-                + this.colWidth[1] + this.buttonGap + this.colWidth[2];
+            int totalWidth = this.colWidth[0] + this.labelGap
+                    + this.colWidth[1] + this.buttonGap + this.colWidth[2];
             return new Dimension(
-                insets.left + insets.right + totalWidth + this.labelGap 
-                + this.buttonGap,
-                insets.top + insets.bottom + totalHeight + this.vGap
+                    insets.left + insets.right + totalWidth + this.labelGap
+                            + this.buttonGap,
+                    insets.top + insets.bottom + totalHeight + this.vGap
             );
         }
 
@@ -159,7 +167,7 @@ public class LCBLayout implements LayoutManager, Serializable {
     /**
      * Lays out the components.
      *
-     * @param parent  the parent.
+     * @param parent the parent.
      */
     @Override
     public void layoutContainer(Container parent) {
@@ -184,12 +192,12 @@ public class LCBLayout implements LayoutManager, Serializable {
             for (int r = 0; r < nrows; r++) {
                 totalHeight = totalHeight + this.rowHeight[r];
             }
-            int totalWidth = this.colWidth[0] + this.colWidth[1] 
-                                                    + this.colWidth[2];
+            int totalWidth = this.colWidth[0] + this.colWidth[1]
+                    + this.colWidth[2];
 
             // adjust the width of the second column to use up all of parent
-            int available = parent.getWidth() - insets.left 
-                - insets.right - this.labelGap - this.buttonGap;
+            int available = parent.getWidth() - insets.left
+                    - insets.right - this.labelGap - this.buttonGap;
             this.colWidth[1] = this.colWidth[1] + (available - totalWidth);
 
             // *** DO THE LAYOUT ***
@@ -203,7 +211,7 @@ public class LCBLayout implements LayoutManager, Serializable {
                         Dimension d = component.getPreferredSize();
                         int h = d.height;
                         int adjust = (this.rowHeight[r] - h) / 2;
-                        parent.getComponent(i).setBounds(x, y + adjust, 
+                        parent.getComponent(i).setBounds(x, y + adjust,
                                 this.colWidth[c], h);
                     }
                     y = y + this.rowHeight[r] + this.vGap;
@@ -224,7 +232,7 @@ public class LCBLayout implements LayoutManager, Serializable {
     /**
      * Not used.
      *
-     * @param comp  the component.
+     * @param comp the component.
      */
     public void addLayoutComponent(Component comp) {
         // not used
@@ -233,7 +241,7 @@ public class LCBLayout implements LayoutManager, Serializable {
     /**
      * Not used.
      *
-     * @param comp  the component.
+     * @param comp the component.
      */
     @Override
     public void removeLayoutComponent(Component comp) {
@@ -243,8 +251,8 @@ public class LCBLayout implements LayoutManager, Serializable {
     /**
      * Not used.
      *
-     * @param name  the component name.
-     * @param comp  the component.
+     * @param name the component name.
+     * @param comp the component.
      */
     @Override
     public void addLayoutComponent(String name, Component comp) {
@@ -254,8 +262,8 @@ public class LCBLayout implements LayoutManager, Serializable {
     /**
      * Not used.
      *
-     * @param name  the component name.
-     * @param comp  the component.
+     * @param name the component name.
+     * @param comp the component.
      */
     public void removeLayoutComponent(String name, Component comp) {
         // not used

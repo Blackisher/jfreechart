@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -42,8 +42,9 @@
 
 package org.jfree.chart.block;
 
-import java.awt.Graphics2D;
 import org.jfree.chart.ui.Size2D;
+
+import java.awt.*;
 
 /**
  * An object that is responsible for arranging a collection of {@link Block}s
@@ -57,8 +58,8 @@ public interface Arrangement {
      * (you don't need to call this method directly) and gives the arrangement
      * an opportunity to record the details if they are required.
      *
-     * @param block  the block.
-     * @param key  the key ({@code null} permitted).
+     * @param block the block.
+     * @param key   the key ({@code null} permitted).
      */
     public void add(Block block, Object key);
 
@@ -67,9 +68,8 @@ public interface Arrangement {
      * constraint.
      *
      * @param container  the container ({@code null} not permitted).
-     * @param g2  the graphics device.
-     * @param constraint  the constraint.
-     *
+     * @param g2         the graphics device.
+     * @param constraint the constraint.
      * @return The container size after the arrangement.
      */
     public Size2D arrange(BlockContainer container,

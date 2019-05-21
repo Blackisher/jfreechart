@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -40,17 +40,6 @@
  */
 
 package org.jfree.chart.title;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.ui.Size2D;
-import org.junit.Test;
 
 /**
  * Tests for the {@link ImageTitle} class.
@@ -99,14 +88,14 @@ public class ImageTitleTest {
 //        assertTrue(t1.equals(t2));
 //    }
 
+    private static final double EPSILON = 0.00000001;
+
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
         // TODO: add serialization support for images
     }
-
-    private static final double EPSILON = 0.00000001;
 
 //    /**
 //     * Check the width and height.

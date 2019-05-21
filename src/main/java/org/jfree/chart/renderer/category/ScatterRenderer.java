@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -45,18 +45,6 @@
 
 package org.jfree.chart.renderer.category;
 
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.List;
-
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
@@ -70,6 +58,15 @@ import org.jfree.chart.util.ShapeUtils;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.statistics.MultiValueCategoryDataset;
+
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * A renderer that handles the multiple values from a
@@ -144,7 +141,6 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * data item is offset within the category according to the series.
      *
      * @return A boolean.
-     *
      * @see #setUseSeriesOffset(boolean)
      */
     public boolean getUseSeriesOffset() {
@@ -156,8 +152,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * data item is offset within its category according to the series, and
      * sends a {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param offset  the offset.
-     *
+     * @param offset the offset.
      * @see #getUseSeriesOffset()
      */
     public void setUseSeriesOffset(boolean offset) {
@@ -172,7 +167,6 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * a {@link BarRenderer}).
      *
      * @return The item margin.
-     *
      * @see #setItemMargin(double)
      * @see #getUseSeriesOffset()
      */
@@ -185,8 +179,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * (expressed as a percentage of the overall category width), and sends
      * a {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param margin  the margin (0.0 &lt;= margin &lt; 1.0).
-     *
+     * @param margin the margin (0.0 &lt;= margin &lt; 1.0).
      * @see #getItemMargin()
      * @see #getUseSeriesOffset()
      */
@@ -203,7 +196,6 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * {@code false} otherwise.
      *
      * @return A boolean.
-     *
      * @see #setDrawOutlines(boolean)
      */
     public boolean getDrawOutlines() {
@@ -218,7 +210,6 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * this flag allows you to set your own preference.</p>
      *
      * @param flag the flag.
-     *
      * @see #getDrawOutlines()
      */
     public void setDrawOutlines(boolean flag) {
@@ -231,7 +222,6 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * shape outlines.  If not, the regular series paint is used.
      *
      * @return A boolean.
-     *
      * @see #setUseOutlinePaint(boolean)
      */
     public boolean getUseOutlinePaint() {
@@ -244,7 +234,6 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * listeners.
      *
      * @param use the flag.
-     *
      * @see #getUseOutlinePaint()
      */
     public void setUseOutlinePaint(boolean use) {
@@ -279,8 +268,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
         Boolean flag = this.seriesShapesFilled.getBoolean(series);
         if (flag != null) {
             return flag.booleanValue();
-        }
-        else {
+        } else {
             return this.baseShapesFilled;
         }
 
@@ -358,35 +346,34 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * items from the specified dataset. This takes into account the range
      * between the min/max values, possibly ignoring invisible series.
      *
-     * @param dataset  the dataset ({@code null} permitted).
-     *
+     * @param dataset the dataset ({@code null} permitted).
      * @return The range (or {@code null} if the dataset is
-     *         {@code null} or empty).
+     * {@code null} or empty).
      */
     @Override
     public Range findRangeBounds(CategoryDataset dataset) {
-         return findRangeBounds(dataset, true);
+        return findRangeBounds(dataset, true);
     }
 
     /**
      * Draw a single data item.
      *
-     * @param g2  the graphics device.
-     * @param state  the renderer state.
-     * @param dataArea  the area in which the data is drawn.
-     * @param plot  the plot.
-     * @param domainAxis  the domain axis.
+     * @param g2         the graphics device.
+     * @param state      the renderer state.
+     * @param dataArea   the area in which the data is drawn.
+     * @param plot       the plot.
+     * @param domainAxis the domain axis.
      * @param rangeAxis  the range axis.
-     * @param dataset  the dataset.
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
-     * @param pass  the pass index.
+     * @param dataset    the dataset.
+     * @param row        the row index (zero-based).
+     * @param column     the column index (zero-based).
+     * @param pass       the pass index.
      */
     @Override
     public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-            Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-            ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
-            int pass) {
+                         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+                         ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+                         int pass) {
 
         // do nothing if item is not visible
         if (!getItemVisible(row, column)) {
@@ -410,11 +397,10 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
             // current data point...
             double x1;
             if (this.useSeriesOffset) {
-                x1 = domainAxis.getCategorySeriesMiddle(column, 
+                x1 = domainAxis.getCategorySeriesMiddle(column,
                         dataset.getColumnCount(), visibleRow, visibleRowCount,
                         this.itemMargin, dataArea, plot.getDomainAxisEdge());
-            }
-            else {
+            } else {
                 x1 = domainAxis.getCategoryMiddle(column, getColumnCount(),
                         dataArea, plot.getDomainAxisEdge());
             }
@@ -426,15 +412,13 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
             Shape shape = getItemShape(row, column);
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, y1, x1);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, x1, y1);
             }
             if (getItemShapeFilled(row, column)) {
                 if (this.useFillPaint) {
                     g2.setPaint(getItemFillPaint(row, column));
-                }
-                else {
+                } else {
                     g2.setPaint(getItemPaint(row, column));
                 }
                 g2.fill(shape);
@@ -442,8 +426,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
             if (this.drawOutlines) {
                 if (this.useOutlinePaint) {
                     g2.setPaint(getItemOutlinePaint(row, column));
-                }
-                else {
+                } else {
                     g2.setPaint(getItemPaint(row, column));
                 }
                 g2.setStroke(getItemOutlineStroke(row, column));
@@ -456,9 +439,8 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
     /**
      * Returns a legend item for a series.
      *
-     * @param datasetIndex  the dataset index (zero-based).
-     * @param series  the series index (zero-based).
-     *
+     * @param datasetIndex the dataset index (zero-based).
+     * @param series       the series index (zero-based).
      * @return The legend item.
      */
     @Override
@@ -556,8 +538,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * Returns an independent copy of the renderer.
      *
      * @return A clone.
-     *
-     * @throws CloneNotSupportedException  should not happen.
+     * @throws CloneNotSupportedException should not happen.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

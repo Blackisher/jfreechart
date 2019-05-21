@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -48,27 +48,43 @@ package org.jfree.chart.plot;
  */
 public enum PolarAxisLocation {
 
-    /** Axis left of north. */
+    /**
+     * Axis left of north.
+     */
     NORTH_LEFT,
 
-    /** Axis right of north. */
+    /**
+     * Axis right of north.
+     */
     NORTH_RIGHT,
 
-    /** Axis left of south. */
+    /**
+     * Axis left of south.
+     */
     SOUTH_LEFT,
 
-    /** Axis right of south. */
+    /**
+     * Axis right of south.
+     */
     SOUTH_RIGHT,
 
-    /** Axis above east. */
+    /**
+     * Axis above east.
+     */
     EAST_ABOVE,
 
-    /** Axis below east. */
+    /**
+     * Axis below east.
+     */
     EAST_BELOW,
 
-    /** Axis above west. */
+    /**
+     * Axis above west.
+     */
     WEST_ABOVE,
 
-    /** Axis below west. */
+    /**
+     * Axis below west.
+     */
     WEST_BELOW
 }

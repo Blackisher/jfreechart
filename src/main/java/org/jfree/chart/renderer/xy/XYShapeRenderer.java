@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -47,20 +47,6 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -70,15 +56,20 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.LookupPaintScale;
 import org.jfree.chart.renderer.PaintScale;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.CloneUtils;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtils;
-import org.jfree.chart.util.ShapeUtils;
+import org.jfree.chart.util.*;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtils;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
+
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * A renderer that draws shapes at (x, y) coordinates and, if the dataset
@@ -102,13 +93,19 @@ import org.jfree.data.xy.XYZDataset;
 public class XYShapeRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
 
-    /** Auto generated serial version id. */
+    /**
+     * Auto generated serial version id.
+     */
     private static final long serialVersionUID = 8320552104211173221L;
 
-    /** The paint scale (never null). */
+    /**
+     * The paint scale (never null).
+     */
     private PaintScale paintScale;
 
-    /** A flag that controls whether or not the shape outlines are drawn. */
+    /**
+     * A flag that controls whether or not the shape outlines are drawn.
+     */
     private boolean drawOutlines;
 
     /**
@@ -123,13 +120,19 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      */
     private boolean useFillPaint;
 
-    /** Flag indicating if guide lines should be drawn for every item. */
+    /**
+     * Flag indicating if guide lines should be drawn for every item.
+     */
     private boolean guideLinesVisible;
 
-    /** The paint used for drawing the guide lines (never null). */
+    /**
+     * The paint used for drawing the guide lines (never null).
+     */
     private transient Paint guideLinePaint;
 
-    /** The stroke used for drawing the guide lines (never null). */
+    /**
+     * The stroke used for drawing the guide lines (never null).
+     */
     private transient Stroke guideLineStroke;
 
     /**
@@ -152,7 +155,6 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * Returns the paint scale used by the renderer.
      *
      * @return The paint scale (never {@code null}).
-     *
      * @see #setPaintScale(PaintScale)
      */
     public PaintScale getPaintScale() {
@@ -163,8 +165,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * Sets the paint scale used by the renderer and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param scale  the scale ({@code null} not permitted).
-     *
+     * @param scale the scale ({@code null} not permitted).
      * @see #getPaintScale()
      */
     public void setPaintScale(PaintScale scale) {
@@ -178,7 +179,6 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * {@code false} otherwise.
      *
      * @return A boolean.
-     *
      * @see #setDrawOutlines(boolean)
      */
     public boolean getDrawOutlines() {
@@ -189,12 +189,11 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * Sets the flag that controls whether outlines are drawn for
      * shapes, and sends a {@link RendererChangeEvent} to all registered
      * listeners.
-     * <P>
+     * <p>
      * In some cases, shapes look better if they do NOT have an outline, but
      * this flag allows you to set your own preference.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getDrawOutlines()
      */
     public void setDrawOutlines(boolean flag) {
@@ -211,7 +210,6 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * effect of this flag.
      *
      * @return A boolean.
-     *
      * @see #setUseFillPaint(boolean)
      * @see #getUseOutlinePaint()
      */
@@ -224,8 +222,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * shapes, and sends a {@link RendererChangeEvent} to all
      * registered listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getUseFillPaint()
      */
     public void setUseFillPaint(boolean flag) {
@@ -238,7 +235,6 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * shape outlines.  If not, the regular series paint is used.
      *
      * @return A boolean.
-     *
      * @see #setUseOutlinePaint(boolean)
      */
     public boolean getUseOutlinePaint() {
@@ -250,8 +246,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * outlines, and sends a {@link RendererChangeEvent} to all registered
      * listeners.
      *
-     * @param use  the flag.
-     *
+     * @param use the flag.
      * @see #getUseOutlinePaint()
      */
     public void setUseOutlinePaint(boolean use) {
@@ -265,7 +260,6 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * linking the data point to the axes).
      *
      * @return A boolean.
-     *
      * @see #setGuideLinesVisible(boolean)
      */
     public boolean isGuideLinesVisible() {
@@ -277,8 +271,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * each data item and sends a {@link RendererChangeEvent} to all registered
      * listeners.
      *
-     * @param visible  the new flag value.
-     *
+     * @param visible the new flag value.
      * @see #isGuideLinesVisible()
      */
     public void setGuideLinesVisible(boolean visible) {
@@ -290,7 +283,6 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * Returns the paint used to draw the guide lines.
      *
      * @return The paint (never {@code null}).
-     *
      * @see #setGuideLinePaint(Paint)
      */
     public Paint getGuideLinePaint() {
@@ -301,8 +293,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * Sets the paint used to draw the guide lines and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getGuideLinePaint()
      */
     public void setGuideLinePaint(Paint paint) {
@@ -315,7 +306,6 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * Returns the stroke used to draw the guide lines.
      *
      * @return The stroke.
-     *
      * @see #setGuideLineStroke(Stroke)
      */
     public Stroke getGuideLineStroke() {
@@ -326,8 +316,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * Sets the stroke used to draw the guide lines and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param stroke  the stroke ({@code null} not permitted).
-     *
+     * @param stroke the stroke ({@code null} not permitted).
      * @see #getGuideLineStroke()
      */
     public void setGuideLineStroke(Stroke stroke) {
@@ -340,10 +329,9 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * Returns the lower and upper bounds (range) of the x-values in the
      * specified dataset.
      *
-     * @param dataset  the dataset ({@code null} permitted).
-     *
+     * @param dataset the dataset ({@code null} permitted).
      * @return The range ({@code null} if the dataset is {@code null}
-     *         or empty).
+     * or empty).
      */
     @Override
     public Range findDomainBounds(XYDataset dataset) {
@@ -356,17 +344,16 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
         }
         double offset = 0; // TODO getSeriesShape(n).getBounds().width / 2;
         return new Range(r.getLowerBound() + offset,
-                         r.getUpperBound() + offset);
+                r.getUpperBound() + offset);
     }
 
     /**
      * Returns the range of values the renderer requires to display all the
      * items from the specified dataset.
      *
-     * @param dataset  the dataset ({@code null} permitted).
-     *
+     * @param dataset the dataset ({@code null} permitted).
      * @return The range ({@code null} if the dataset is {@code null}
-     *         or empty).
+     * or empty).
      */
     @Override
     public Range findRangeBounds(XYDataset dataset) {
@@ -384,11 +371,10 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
 
     /**
      * Return the range of z-values in the specified dataset.
-     *  
-     * @param dataset  the dataset ({@code null} permitted).
-     * 
+     *
+     * @param dataset the dataset ({@code null} permitted).
      * @return The range ({@code null} if the dataset is {@code null}
-     *         or empty).
+     * or empty).
      */
     public Range findZBounds(XYZDataset dataset) {
         if (dataset != null) {
@@ -411,24 +397,24 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
     /**
      * Draws the block representing the specified item.
      *
-     * @param g2  the graphics device.
-     * @param state  the state.
-     * @param dataArea  the data area.
-     * @param info  the plot rendering info.
-     * @param plot  the plot.
-     * @param domainAxis  the x-axis.
-     * @param rangeAxis  the y-axis.
-     * @param dataset  the dataset.
-     * @param series  the series index.
-     * @param item  the item index.
-     * @param crosshairState  the crosshair state.
-     * @param pass  the pass index.
+     * @param g2             the graphics device.
+     * @param state          the state.
+     * @param dataArea       the data area.
+     * @param info           the plot rendering info.
+     * @param plot           the plot.
+     * @param domainAxis     the x-axis.
+     * @param rangeAxis      the y-axis.
+     * @param dataset        the dataset.
+     * @param series         the series index.
+     * @param item           the item index.
+     * @param crosshairState the crosshair state.
+     * @param pass           the pass index.
      */
     @Override
     public void drawItem(Graphics2D g2, XYItemRendererState state,
-            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
-            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
-            int series, int item, CrosshairState crosshairState, int pass) {
+                         Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+                         ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+                         int series, int item, CrosshairState crosshairState, int pass) {
 
         Shape hotspot;
         EntityCollection entities = null;
@@ -477,9 +463,9 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
             hotspot = shape;
             if (shape.intersects(dataArea)) {
                 //if (getItemShapeFilled(series, item)) {
-                    g2.setPaint(getPaint(dataset, series, item));
-                    g2.fill(shape);
-               //}
+                g2.setPaint(getPaint(dataset, series, item));
+                g2.fill(shape);
+                //}
                 if (this.drawOutlines) {
                     if (getUseOutlinePaint()) {
                         g2.setPaint(getItemOutlinePaint(series, item));
@@ -490,7 +476,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
                     g2.draw(shape);
                 }
             }
-            
+
             int datasetIndex = plot.indexOf(dataset);
             updateCrosshairValues(crosshairState, x, y, datasetIndex,
                     transX, transY, orientation);
@@ -505,10 +491,9 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
     /**
      * Get the paint for a given series and item from a dataset.
      *
-     * @param dataset  the dataset.
+     * @param dataset the dataset.
      * @param series  the series index.
-     * @param item  the item index.
-     *
+     * @param item    the item index.
      * @return The paint.
      */
     protected Paint getPaint(XYDataset dataset, int series, int item) {
@@ -519,8 +504,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
         } else {
             if (this.useFillPaint) {
                 p = getItemFillPaint(series, item);
-            }
-            else {
+            } else {
                 p = getItemPaint(series, item);
             }
         }
@@ -532,13 +516,12 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * returns {@code true} if and only if:
      * <ul>
      * <li>{@code obj} is an instance of {@code XYShapeRenderer} (not
-     *     {@code null});</li>
+     * {@code null});</li>
      * <li>{@code obj} has the same field values as this
-     *     {@code XYShapeRenderer};</li>
+     * {@code XYShapeRenderer};</li>
      * </ul>
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -578,9 +561,8 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * Returns a clone of this renderer.
      *
      * @return A clone of this renderer.
-     *
      * @throws CloneNotSupportedException if there is a problem creating the
-     *     clone.
+     *                                    clone.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -592,10 +574,9 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
@@ -607,9 +588,8 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();

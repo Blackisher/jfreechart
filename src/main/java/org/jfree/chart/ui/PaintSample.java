@@ -21,37 +21,36 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Paint;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import javax.swing.JComponent;
 
 /**
  * A panel that displays a paint sample.
  */
 public class PaintSample extends JComponent {
 
-    /** The paint. */
+    /**
+     * The paint.
+     */
     private Paint paint;
 
-    /** The preferred size of the component. */
+    /**
+     * The preferred size of the component.
+     */
     private Dimension preferredSize;
 
     /**
      * Standard constructor - builds a paint sample.
      *
-     * @param paint  the paint to display.
+     * @param paint the paint to display.
      */
     public PaintSample(Paint paint) {
         this.paint = paint;
@@ -70,7 +69,7 @@ public class PaintSample extends JComponent {
     /**
      * Sets the Paint object being displayed in the panel.
      *
-     * @param paint  the paint.
+     * @param paint the paint.
      */
     public void setPaint(Paint paint) {
         this.paint = paint;
@@ -90,7 +89,7 @@ public class PaintSample extends JComponent {
     /**
      * Fills the component with the current Paint.
      *
-     * @param g  the graphics device.
+     * @param g the graphics device.
      */
     @Override
     public void paintComponent(Graphics g) {

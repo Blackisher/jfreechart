@@ -71,31 +71,6 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Composite;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
-import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
-
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.entity.CategoryItemEntity;
@@ -106,18 +81,21 @@ import org.jfree.chart.labels.CategoryToolTipGenerator;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.urls.CategoryURLGenerator;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintList;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.Rotation;
-import org.jfree.chart.util.SerialUtils;
-import org.jfree.chart.util.ShapeUtils;
-import org.jfree.chart.util.StrokeList;
-import org.jfree.chart.util.TableOrder;
+import org.jfree.chart.util.*;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtils;
+
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
+import java.awt.geom.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A plot that displays data from a {@link CategoryDataset} in the form of a
@@ -126,58 +104,75 @@ import org.jfree.data.general.DatasetUtils;
  */
 public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
 
-    /** For serialization. */
-    private static final long serialVersionUID = -5376340422031599463L;
-
-    /** The default head radius percent (currently 1%). */
+    /**
+     * The default head radius percent (currently 1%).
+     */
     public static final double DEFAULT_HEAD = 0.01;
-
-    /** The default axis label gap (currently 10%). */
+    /**
+     * The default axis label gap (currently 10%).
+     */
     public static final double DEFAULT_AXIS_LABEL_GAP = 0.10;
-
-    /** The default interior gap. */
+    /**
+     * The default interior gap.
+     */
     public static final double DEFAULT_INTERIOR_GAP = 0.25;
-
-    /** The maximum interior gap (currently 40%). */
+    /**
+     * The maximum interior gap (currently 40%).
+     */
     public static final double MAX_INTERIOR_GAP = 0.40;
-
-    /** The default starting angle for the radar chart axes. */
+    /**
+     * The default starting angle for the radar chart axes.
+     */
     public static final double DEFAULT_START_ANGLE = 90.0;
-
-    /** The default series label font. */
+    /**
+     * The default series label font.
+     */
     public static final Font DEFAULT_LABEL_FONT = new Font("SansSerif",
             Font.PLAIN, 10);
-
-    /** The default series label paint. */
-    public static final Paint  DEFAULT_LABEL_PAINT = Color.BLACK;
-
-    /** The default series label background paint. */
-    public static final Paint  DEFAULT_LABEL_BACKGROUND_PAINT
+    /**
+     * The default series label paint.
+     */
+    public static final Paint DEFAULT_LABEL_PAINT = Color.BLACK;
+    /**
+     * The default series label background paint.
+     */
+    public static final Paint DEFAULT_LABEL_BACKGROUND_PAINT
             = new Color(255, 255, 192);
-
-    /** The default series label outline paint. */
-    public static final Paint  DEFAULT_LABEL_OUTLINE_PAINT = Color.BLACK;
-
-    /** The default series label outline stroke. */
+    /**
+     * The default series label outline paint.
+     */
+    public static final Paint DEFAULT_LABEL_OUTLINE_PAINT = Color.BLACK;
+    /**
+     * The default series label outline stroke.
+     */
     public static final Stroke DEFAULT_LABEL_OUTLINE_STROKE
             = new BasicStroke(0.5f);
-
-    /** The default series label shadow paint. */
-    public static final Paint  DEFAULT_LABEL_SHADOW_PAINT = Color.LIGHT_GRAY;
-
+    /**
+     * The default series label shadow paint.
+     */
+    public static final Paint DEFAULT_LABEL_SHADOW_PAINT = Color.LIGHT_GRAY;
     /**
      * The default maximum value plotted - forces the plot to evaluate
-     *  the maximum from the data passed in
+     * the maximum from the data passed in
      */
     public static final double DEFAULT_MAX_VALUE = -1.0;
-
-    /** The head radius as a percentage of the available drawing area. */
+    /**
+     * For serialization.
+     */
+    private static final long serialVersionUID = -5376340422031599463L;
+    /**
+     * The head radius as a percentage of the available drawing area.
+     */
     protected double headPercent;
 
-    /** The space left around the outside of the plot as a percentage. */
+    /**
+     * The space left around the outside of the plot as a percentage.
+     */
     private double interiorGap;
 
-    /** The gap between the labels and the axes as a %age of the radius. */
+    /**
+     * The gap between the labels and the axes as a %age of the radius.
+     */
     private double axisLabelGap;
 
     /**
@@ -194,10 +189,14 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      */
     private transient Stroke axisLineStroke;
 
-    /** The dataset. */
+    /**
+     * The dataset.
+     */
     private CategoryDataset dataset;
 
-    /** The maximum value we are plotting against on each category axis */
+    /**
+     * The maximum value we are plotting against on each category axis
+     */
     private double maxValue;
 
     /**
@@ -208,58 +207,94 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      */
     private TableOrder dataExtractOrder;
 
-    /** The starting angle. */
+    /**
+     * The starting angle.
+     */
     private double startAngle;
 
-    /** The direction for drawing the radar axis and plots. */
+    /**
+     * The direction for drawing the radar axis and plots.
+     */
     private Rotation direction;
 
-    /** The legend item shape. */
+    /**
+     * The legend item shape.
+     */
     private transient Shape legendItemShape;
 
-    /** The paint for ALL series (overrides list). */
+    /**
+     * The paint for ALL series (overrides list).
+     */
     private transient Paint seriesPaint;
 
-    /** The series paint list. */
+    /**
+     * The series paint list.
+     */
     private PaintList seriesPaintList;
 
-    /** The base series paint (fallback). */
+    /**
+     * The base series paint (fallback).
+     */
     private transient Paint baseSeriesPaint;
 
-    /** The outline paint for ALL series (overrides list). */
+    /**
+     * The outline paint for ALL series (overrides list).
+     */
     private transient Paint seriesOutlinePaint;
 
-    /** The series outline paint list. */
+    /**
+     * The series outline paint list.
+     */
     private PaintList seriesOutlinePaintList;
 
-    /** The base series outline paint (fallback). */
+    /**
+     * The base series outline paint (fallback).
+     */
     private transient Paint baseSeriesOutlinePaint;
 
-    /** The outline stroke for ALL series (overrides list). */
+    /**
+     * The outline stroke for ALL series (overrides list).
+     */
     private transient Stroke seriesOutlineStroke;
 
-    /** The series outline stroke list. */
+    /**
+     * The series outline stroke list.
+     */
     private StrokeList seriesOutlineStrokeList;
 
-    /** The base series outline stroke (fallback). */
+    /**
+     * The base series outline stroke (fallback).
+     */
     private transient Stroke baseSeriesOutlineStroke;
 
-    /** The font used to display the category labels. */
+    /**
+     * The font used to display the category labels.
+     */
     private Font labelFont;
 
-    /** The color used to draw the category labels. */
+    /**
+     * The color used to draw the category labels.
+     */
     private transient Paint labelPaint;
 
-    /** The label generator. */
+    /**
+     * The label generator.
+     */
     private CategoryItemLabelGenerator labelGenerator;
 
-    /** controls if the web polygons are filled or not */
+    /**
+     * controls if the web polygons are filled or not
+     */
     private boolean webFilled = true;
 
-    /** A tooltip generator for the plot ({@code null} permitted). */
+    /**
+     * A tooltip generator for the plot ({@code null} permitted).
+     */
     private CategoryToolTipGenerator toolTipGenerator;
 
-    /** A URL generator for the plot ({@code null} permitted). */
+    /**
+     * A URL generator for the plot ({@code null} permitted).
+     */
     private CategoryURLGenerator urlGenerator;
 
     /**
@@ -273,7 +308,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Creates a new spider web plot with the given dataset, with each row
      * representing a series.
      *
-     * @param dataset  the dataset ({@code null} permitted).
+     * @param dataset the dataset ({@code null} permitted).
      */
     public SpiderWebPlot(CategoryDataset dataset) {
         this(dataset, TableOrder.BY_ROW);
@@ -282,9 +317,9 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Creates a new spider web plot with the given dataset.
      *
-     * @param dataset  the dataset.
-     * @param extract  controls how data is extracted ({@link TableOrder#BY_ROW}
-     *                 or {@link TableOrder#BY_COLUMN}).
+     * @param dataset the dataset.
+     * @param extract controls how data is extracted ({@link TableOrder#BY_ROW}
+     *                or {@link TableOrder#BY_COLUMN}).
      */
     public SpiderWebPlot(CategoryDataset dataset, TableOrder extract) {
         super();
@@ -339,7 +374,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the dataset.
      *
      * @return The dataset (possibly {@code null}).
-     *
      * @see #setDataset(CategoryDataset)
      */
     public CategoryDataset getDataset() {
@@ -350,8 +384,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the dataset used by the plot and sends a {@link PlotChangeEvent}
      * to all registered listeners.
      *
-     * @param dataset  the dataset ({@code null} permitted).
-     *
+     * @param dataset the dataset ({@code null} permitted).
      * @see #getDataset()
      */
     public void setDataset(CategoryDataset dataset) {
@@ -376,7 +409,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Method to determine if the web chart is to be filled.
      *
      * @return A boolean.
-     *
      * @see #setWebFilled(boolean)
      */
     public boolean isWebFilled() {
@@ -387,8 +419,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the webFilled flag and sends a {@link PlotChangeEvent} to all
      * registered listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #isWebFilled()
      */
     public void setWebFilled(boolean flag) {
@@ -400,7 +431,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the data extract order (by row or by column).
      *
      * @return The data extract order (never {@code null}).
-     *
      * @see #setDataExtractOrder(TableOrder)
      */
     public TableOrder getDataExtractOrder() {
@@ -412,10 +442,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * {@link PlotChangeEvent}to all registered listeners.
      *
      * @param order the order ({@code null} not permitted).
-     *
      * @throws IllegalArgumentException if {@code order} is
-     *     {@code null}.
-     *
+     *                                  {@code null}.
      * @see #getDataExtractOrder()
      */
     public void setDataExtractOrder(TableOrder order) {
@@ -428,7 +456,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the head percent.
      *
      * @return The head percent.
-     *
      * @see #setHeadPercent(double)
      */
     public double getHeadPercent() {
@@ -439,8 +466,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the head percent and sends a {@link PlotChangeEvent} to all
      * registered listeners.
      *
-     * @param percent  the percent.
-     *
+     * @param percent the percent.
      * @see #getHeadPercent()
      */
     public void setHeadPercent(double percent) {
@@ -455,7 +481,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * and measuring anti-clockwise.
      *
      * @return The start angle.
-     *
      * @see #setStartAngle(double)
      */
     public double getStartAngle() {
@@ -465,13 +490,12 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Sets the starting angle and sends a {@link PlotChangeEvent} to all
      * registered listeners.
-     * <P>
+     * <p>
      * The initial default value is 90 degrees, which corresponds to 12 o'clock.
      * A value of zero corresponds to 3 o'clock... this is the encoding used by
      * Java's Arc2D class.
      *
-     * @param angle  the angle (in degrees).
-     *
+     * @param angle the angle (in degrees).
      * @see #getStartAngle()
      */
     public void setStartAngle(double angle) {
@@ -483,7 +507,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the maximum value any category axis can take.
      *
      * @return The maximum value.
-     *
      * @see #setMaxValue(double)
      */
     public double getMaxValue() {
@@ -494,8 +517,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the maximum value any category axis can take and sends
      * a {@link PlotChangeEvent} to all registered listeners.
      *
-     * @param value  the maximum value.
-     *
+     * @param value the maximum value.
      * @see #getMaxValue()
      */
     public void setMaxValue(double value) {
@@ -508,7 +530,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * (clockwise or anti-clockwise).
      *
      * @return The direction (never {@code null}).
-     *
      * @see #setDirection(Rotation)
      */
     public Rotation getDirection() {
@@ -519,8 +540,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the direction in which the radar axes are drawn and sends a
      * {@link PlotChangeEvent} to all registered listeners.
      *
-     * @param direction  the direction ({@code null} not permitted).
-     *
+     * @param direction the direction ({@code null} not permitted).
      * @see #getDirection()
      */
     public void setDirection(Rotation direction) {
@@ -534,7 +554,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * drawing space.
      *
      * @return The gap (as a percentage of the available drawing space).
-     *
      * @see #setInteriorGap(double)
      */
     public double getInteriorGap() {
@@ -546,8 +565,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * registered listeners. This controls the space between the edges of the
      * plot and the plot area itself (the region where the axis labels appear).
      *
-     * @param percent  the gap (as a percentage of the available drawing space).
-     *
+     * @param percent the gap (as a percentage of the available drawing space).
      * @see #getInteriorGap()
      */
     public void setInteriorGap(double percent) {
@@ -565,7 +583,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the axis label gap.
      *
      * @return The axis label gap.
-     *
      * @see #setAxisLabelGap(double)
      */
     public double getAxisLabelGap() {
@@ -576,8 +593,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the axis label gap and sends a {@link PlotChangeEvent} to all
      * registered listeners.
      *
-     * @param gap  the gap.
-     *
+     * @param gap the gap.
      * @see #getAxisLabelGap()
      */
     public void setAxisLabelGap(double gap) {
@@ -589,7 +605,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the paint used to draw the axis lines.
      *
      * @return The paint used to draw the axis lines (never {@code null}).
-     *
      * @see #setAxisLinePaint(Paint)
      * @see #getAxisLineStroke()
      * @since 1.0.4
@@ -602,8 +617,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the paint used to draw the axis lines and sends a
      * {@link PlotChangeEvent} to all registered listeners.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getAxisLinePaint()
      * @since 1.0.4
      */
@@ -617,7 +631,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the stroke used to draw the axis lines.
      *
      * @return The stroke used to draw the axis lines (never {@code null}).
-     *
      * @see #setAxisLineStroke(Stroke)
      * @see #getAxisLinePaint()
      * @since 1.0.4
@@ -630,8 +643,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the stroke used to draw the axis lines and sends a
      * {@link PlotChangeEvent} to all registered listeners.
      *
-     * @param stroke  the stroke ({@code null} not permitted).
-     *
+     * @param stroke the stroke ({@code null} not permitted).
      * @see #getAxisLineStroke()
      * @since 1.0.4
      */
@@ -647,7 +659,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the paint for ALL series in the plot.
      *
      * @return The paint (possibly {@code null}).
-     *
      * @see #setSeriesPaint(Paint)
      */
     public Paint getSeriesPaint() {
@@ -655,12 +666,11 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     }
 
     /**
-     * Sets the paint for ALL series in the plot.  If this is set to 
-     * {@code null}, then a list of paints is used instead (to allow different 
+     * Sets the paint for ALL series in the plot.  If this is set to
+     * {@code null}, then a list of paints is used instead (to allow different
      * colors to be used for each series of the radar group).
      *
      * @param paint the paint ({@code null} permitted).
-     *
      * @see #getSeriesPaint()
      */
     public void setSeriesPaint(Paint paint) {
@@ -671,10 +681,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Returns the paint for the specified series.
      *
-     * @param series  the series index (zero-based).
-     *
+     * @param series the series index (zero-based).
      * @return The paint (never {@code null}).
-     *
      * @see #setSeriesPaint(int, Paint)
      */
     public Paint getSeriesPaint(int series) {
@@ -692,8 +700,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
                 Paint p = supplier.getNextPaint();
                 this.seriesPaintList.setPaint(series, p);
                 result = p;
-            }
-            else {
+            } else {
                 result = this.baseSeriesPaint;
             }
         }
@@ -705,9 +712,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the paint used to fill a series of the radar and sends a
      * {@link PlotChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (zero-based).
+     * @param series the series index (zero-based).
      * @param paint  the paint ({@code null} permitted).
-     *
      * @see #getSeriesPaint(int)
      */
     public void setSeriesPaint(int series, Paint paint) {
@@ -720,18 +726,16 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * available.
      *
      * @return The paint (never {@code null}).
-     *
      * @see #setBaseSeriesPaint(Paint)
      */
     public Paint getBaseSeriesPaint() {
-      return this.baseSeriesPaint;
+        return this.baseSeriesPaint;
     }
 
     /**
      * Sets the base series paint.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getBaseSeriesPaint()
      */
     public void setBaseSeriesPaint(Paint paint) {
@@ -756,7 +760,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * {@code null}, then a list of paints is used instead (to allow
      * different colors to be used for each series).
      *
-     * @param paint  the paint ({@code null} permitted).
+     * @param paint the paint ({@code null} permitted).
      */
     public void setSeriesOutlinePaint(Paint paint) {
         this.seriesOutlinePaint = paint;
@@ -766,8 +770,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Returns the paint for the specified series.
      *
-     * @param series  the series index (zero-based).
-     *
+     * @param series the series index (zero-based).
      * @return The paint (never {@code null}).
      */
     public Paint getSeriesOutlinePaint(int series) {
@@ -787,7 +790,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the paint used to fill a series of the radar and sends a
      * {@link PlotChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (zero-based).
+     * @param series the series index (zero-based).
      * @param paint  the paint ({@code null} permitted).
      */
     public void setSeriesOutlinePaint(int series, Paint paint) {
@@ -808,7 +811,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Sets the base series paint.
      *
-     * @param paint  the paint ({@code null} not permitted).
+     * @param paint the paint ({@code null} not permitted).
      */
     public void setBaseSeriesOutlinePaint(Paint paint) {
         Args.nullNotPermitted(paint, "paint");
@@ -832,7 +835,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * {@code null}, then a list of paints is used instead (to allow
      * different colors to be used for each series).
      *
-     * @param stroke  the stroke ({@code null} permitted).
+     * @param stroke the stroke ({@code null} permitted).
      */
     public void setSeriesOutlineStroke(Stroke stroke) {
         this.seriesOutlineStroke = stroke;
@@ -842,8 +845,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Returns the stroke for the specified series.
      *
-     * @param series  the series index (zero-based).
-     *
+     * @param series the series index (zero-based).
      * @return The stroke (never {@code null}).
      */
     public Stroke getSeriesOutlineStroke(int series) {
@@ -866,8 +868,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the stroke used to fill a series of the radar and sends a
      * {@link PlotChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (zero-based).
-     * @param stroke  the stroke ({@code null} permitted).
+     * @param series the series index (zero-based).
+     * @param stroke the stroke ({@code null} permitted).
      */
     public void setSeriesOutlineStroke(int series, Stroke stroke) {
         this.seriesOutlineStrokeList.setStroke(series, stroke);
@@ -887,7 +889,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Sets the base series stroke.
      *
-     * @param stroke  the stroke ({@code null} not permitted).
+     * @param stroke the stroke ({@code null} not permitted).
      */
     public void setBaseSeriesOutlineStroke(Stroke stroke) {
         Args.nullNotPermitted(stroke, "stroke");
@@ -899,7 +901,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the shape used for legend items.
      *
      * @return The shape (never {@code null}).
-     *
      * @see #setLegendItemShape(Shape)
      */
     public Shape getLegendItemShape() {
@@ -910,8 +911,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the shape used for legend items and sends a {@link PlotChangeEvent}
      * to all registered listeners.
      *
-     * @param shape  the shape ({@code null} not permitted).
-     *
+     * @param shape the shape ({@code null} not permitted).
      * @see #getLegendItemShape()
      */
     public void setLegendItemShape(Shape shape) {
@@ -924,7 +924,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the series label font.
      *
      * @return The font (never {@code null}).
-     *
      * @see #setLabelFont(Font)
      */
     public Font getLabelFont() {
@@ -935,8 +934,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the series label font and sends a {@link PlotChangeEvent} to all
      * registered listeners.
      *
-     * @param font  the font ({@code null} not permitted).
-     *
+     * @param font the font ({@code null} not permitted).
      * @see #getLabelFont()
      */
     public void setLabelFont(Font font) {
@@ -949,7 +947,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the series label paint.
      *
      * @return The paint (never {@code null}).
-     *
      * @see #setLabelPaint(Paint)
      */
     public Paint getLabelPaint() {
@@ -960,8 +957,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the series label paint and sends a {@link PlotChangeEvent} to all
      * registered listeners.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getLabelPaint()
      */
     public void setLabelPaint(Paint paint) {
@@ -974,7 +970,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the label generator.
      *
      * @return The label generator (never {@code null}).
-     *
      * @see #setLabelGenerator(CategoryItemLabelGenerator)
      */
     public CategoryItemLabelGenerator getLabelGenerator() {
@@ -985,8 +980,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the label generator and sends a {@link PlotChangeEvent} to all
      * registered listeners.
      *
-     * @param generator  the generator ({@code null} not permitted).
-     *
+     * @param generator the generator ({@code null} not permitted).
      * @see #getLabelGenerator()
      */
     public void setLabelGenerator(CategoryItemLabelGenerator generator) {
@@ -998,9 +992,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the tool tip generator for the plot.
      *
      * @return The tool tip generator (possibly {@code null}).
-     *
      * @see #setToolTipGenerator(CategoryToolTipGenerator)
-     *
      * @since 1.0.2
      */
     public CategoryToolTipGenerator getToolTipGenerator() {
@@ -1011,10 +1003,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the tool tip generator for the plot and sends a
      * {@link PlotChangeEvent} to all registered listeners.
      *
-     * @param generator  the generator ({@code null} permitted).
-     *
+     * @param generator the generator ({@code null} permitted).
      * @see #getToolTipGenerator()
-     *
      * @since 1.0.2
      */
     public void setToolTipGenerator(CategoryToolTipGenerator generator) {
@@ -1026,9 +1016,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the URL generator for the plot.
      *
      * @return The URL generator (possibly {@code null}).
-     *
      * @see #setURLGenerator(CategoryURLGenerator)
-     *
      * @since 1.0.2
      */
     public CategoryURLGenerator getURLGenerator() {
@@ -1039,10 +1027,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Sets the URL generator for the plot and sends a
      * {@link PlotChangeEvent} to all registered listeners.
      *
-     * @param generator  the generator ({@code null} permitted).
-     *
+     * @param generator the generator ({@code null} permitted).
      * @see #getURLGenerator()
-     *
      * @since 1.0.2
      */
     public void setURLGenerator(CategoryURLGenerator generator) {
@@ -1064,8 +1050,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         List keys = null;
         if (this.dataExtractOrder == TableOrder.BY_ROW) {
             keys = this.dataset.getRowKeys();
-        }
-        else if (this.dataExtractOrder == TableOrder.BY_COLUMN) {
+        } else if (this.dataExtractOrder == TableOrder.BY_COLUMN) {
             keys = this.dataset.getColumnKeys();
         }
         if (keys == null) {
@@ -1096,10 +1081,9 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Returns a cartesian point from a polar angle, length and bounding box
      *
-     * @param bounds  the area inside which the point needs to be.
+     * @param bounds the area inside which the point needs to be.
      * @param angle  the polar angle, in degrees.
-     * @param length  the relative length. Given in percent of maximum extend.
-     *
+     * @param length the relative length. Given in percent of maximum extend.
      * @return The cartesian point.
      */
     protected Point2D getWebPoint(Rectangle2D bounds,
@@ -1117,15 +1101,15 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Draws the plot on a Java 2D graphics device (such as the screen or a
      * printer).
      *
-     * @param g2  the graphics device.
-     * @param area  the area within which the plot should be drawn.
-     * @param anchor  the anchor point ({@code null} permitted).
-     * @param parentState  the state from the parent plot, if there is one.
-     * @param info  collects info about the drawing.
+     * @param g2          the graphics device.
+     * @param area        the area within which the plot should be drawn.
+     * @param anchor      the anchor point ({@code null} permitted).
+     * @param parentState the state from the parent plot, if there is one.
+     * @param info        collects info about the drawing.
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-            PlotState parentState, PlotRenderingInfo info) {
+                     PlotState parentState, PlotRenderingInfo info) {
 
         // adjust for insets...
         RectangleInsets insets = getInsets();
@@ -1152,8 +1136,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
             if (this.dataExtractOrder == TableOrder.BY_ROW) {
                 seriesCount = this.dataset.getRowCount();
                 catCount = this.dataset.getColumnCount();
-            }
-            else {
+            } else {
                 seriesCount = this.dataset.getColumnCount();
                 catCount = this.dataset.getRowCount();
             }
@@ -1185,7 +1168,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
             W = 2 * min;
             H = 2 * min;
 
-            Point2D  centre = new Point2D.Double(X + W / 2, Y + H / 2);
+            Point2D centre = new Point2D.Double(X + W / 2, Y + H / 2);
             Rectangle2D radarArea = new Rectangle2D.Double(X, Y, W, H);
 
             // draw the axis and category label
@@ -1194,8 +1177,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
                         + (getDirection().getFactor() * cat * 360 / catCount);
 
                 Point2D endPoint = getWebPoint(radarArea, angle, 1);
-                                                     // 1 = end of axis
-                Line2D  line = new Line2D.Double(centre, endPoint);
+                // 1 = end of axis
+                Line2D line = new Line2D.Double(centre, endPoint);
                 g2.setPaint(this.axisLinePaint);
                 g2.setStroke(this.axisLineStroke);
                 g2.draw(line);
@@ -1207,8 +1190,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
                 drawRadarPoly(g2, radarArea, centre, info, series, catCount,
                         headH, headW);
             }
-        }
-        else {
+        } else {
             drawNoDataMessage(g2, area);
         }
         g2.setClip(savedClip);
@@ -1220,8 +1202,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * loop through each of the series to get the maximum value
      * on each category axis
      *
-     * @param seriesCount  the number of series
-     * @param catCount  the number of categories
+     * @param seriesCount the number of series
+     * @param catCount    the number of categories
      */
     private void calculateMaxValue(int seriesCount, int catCount) {
         double v;
@@ -1243,14 +1225,14 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Draws a radar plot polygon.
      *
-     * @param g2 the graphics device.
+     * @param g2       the graphics device.
      * @param plotArea the area we are plotting in (already adjusted).
-     * @param centre the centre point of the radar axes
-     * @param info chart rendering info.
-     * @param series the series within the dataset we are plotting
+     * @param centre   the centre point of the radar axes
+     * @param info     chart rendering info.
+     * @param series   the series within the dataset we are plotting
      * @param catCount the number of categories per radar plot
-     * @param headH the data point height
-     * @param headW the data point width
+     * @param headH    the data point height
+     * @param headW    the data point width
      */
     protected void drawRadarPoly(Graphics2D g2,
                                  Rectangle2D plotArea,
@@ -1279,7 +1261,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
                     // Finds our starting angle from the centre for this axis
 
                     double angle = getStartAngle()
-                        + (getDirection().getFactor() * cat * 360 / catCount);
+                            + (getDirection().getFactor() * cat * 360 / catCount);
 
                     // The following angle calc will ensure there isn't a top
                     // vertical axis - this may be useful if you don't want any
@@ -1316,8 +1298,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
                         if (this.dataExtractOrder == TableOrder.BY_ROW) {
                             row = series;
                             col = cat;
-                        }
-                        else {
+                        } else {
                             row = cat;
                             col = series;
                         }
@@ -1330,7 +1311,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
                         String url = null;
                         if (this.urlGenerator != null) {
                             url = this.urlGenerator.generateURL(this.dataset,
-                                   row, col);
+                                    row, col);
                         }
 
                         Shape area = new Rectangle(
@@ -1373,18 +1354,15 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * plotted.
      *
      * @param series the series to be plotted.
-     * @param cat the category within the series to be plotted.
-     *
+     * @param cat    the category within the series to be plotted.
      * @return The value to be plotted (possibly {@code null}).
-     *
      * @see #getDataExtractOrder()
      */
     protected Number getPlotValue(int series, int cat) {
         Number value = null;
         if (this.dataExtractOrder == TableOrder.BY_ROW) {
             value = this.dataset.getValue(series, cat);
-        }
-        else if (this.dataExtractOrder == TableOrder.BY_COLUMN) {
+        } else if (this.dataExtractOrder == TableOrder.BY_COLUMN) {
             value = this.dataset.getValue(cat, series);
         }
         return value;
@@ -1393,12 +1371,12 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Draws the label for one axis.
      *
-     * @param g2  the graphics device.
-     * @param plotArea  the plot area
-     * @param value  the value of the label (ignored).
-     * @param cat  the category (zero-based index).
-     * @param startAngle  the starting angle.
-     * @param extent  the extent of the arc.
+     * @param g2         the graphics device.
+     * @param plotArea   the plot area
+     * @param value      the value of the label (ignored).
+     * @param cat        the category (zero-based index).
+     * @param startAngle the starting angle.
+     * @param extent     the extent of the arc.
      */
     protected void drawLabel(Graphics2D g2, Rectangle2D plotArea, double value,
                              int cat, double startAngle, double extent) {
@@ -1408,8 +1386,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         if (this.dataExtractOrder == TableOrder.BY_ROW) {
             // if series are in rows, then the categories are the column keys
             label = this.labelGenerator.generateColumnLabel(this.dataset, cat);
-        }
-        else {
+        } else {
             // if series are in columns, then the categories are the row keys
             label = this.labelGenerator.generateRowLabel(this.dataset, cat);
         }
@@ -1436,24 +1413,22 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns the location for a label
      *
      * @param labelBounds the label bounds.
-     * @param ascent the ascent (height of font).
-     * @param plotArea the plot area
-     * @param startAngle the start angle for the pie series.
-     *
+     * @param ascent      the ascent (height of font).
+     * @param plotArea    the plot area
+     * @param startAngle  the start angle for the pie series.
      * @return The location for a label.
      */
     protected Point2D calculateLabelLocation(Rectangle2D labelBounds,
                                              double ascent,
                                              Rectangle2D plotArea,
-                                             double startAngle)
-    {
+                                             double startAngle) {
         Arc2D arc1 = new Arc2D.Double(plotArea, startAngle, 0, Arc2D.OPEN);
         Point2D point1 = arc1.getEndPoint();
 
         double deltaX = -(point1.getX() - plotArea.getCenterX())
-                        * this.axisLabelGap;
+                * this.axisLabelGap;
         double deltaY = -(point1.getY() - plotArea.getCenterY())
-                        * this.axisLabelGap;
+                * this.axisLabelGap;
 
         double labelX = point1.getX() - deltaX;
         double labelY = point1.getY() - deltaY;
@@ -1476,8 +1451,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Tests this plot for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -1581,9 +1555,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * Returns a clone of this plot.
      *
      * @return A clone of this plot.
-     *
      * @throws CloneNotSupportedException if the plot cannot be cloned for
-     *         any reason.
+     *                                    any reason.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -1600,9 +1573,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -1622,10 +1594,9 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream) throws IOException,
             ClassNotFoundException {

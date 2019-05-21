@@ -21,18 +21,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.ui;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 /**
- * An interface for an object that can draw itself within an area on a 
+ * An interface for an object that can draw itself within an area on a
  * {@code Graphics2D}.
  */
 public interface Drawable {
@@ -40,8 +40,8 @@ public interface Drawable {
     /**
      * Draws the object.
      *
-     * @param g2  the graphics device.
-     * @param area  the area inside which the object should be drawn.
+     * @param g2   the graphics device.
+     * @param area the area inside which the object should be drawn.
      */
     public void draw(Graphics2D g2, Rectangle2D area);
 

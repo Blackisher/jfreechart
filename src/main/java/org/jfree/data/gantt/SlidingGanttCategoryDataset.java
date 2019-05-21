@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------------
@@ -40,13 +40,13 @@
 
 package org.jfree.data.gantt;
 
-import java.util.Collections;
-import java.util.List;
 import org.jfree.chart.util.PublicCloneable;
-
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A {@link GanttCategoryDataset} implementation that presents a subset of the
@@ -59,26 +59,32 @@ import org.jfree.data.general.DatasetChangeEvent;
 public class SlidingGanttCategoryDataset extends AbstractDataset
         implements GanttCategoryDataset {
 
-    /** The underlying dataset. */
+    /**
+     * The underlying dataset.
+     */
     private GanttCategoryDataset underlying;
 
-    /** The index of the first category to present. */
+    /**
+     * The index of the first category to present.
+     */
     private int firstCategoryIndex;
 
-    /** The maximum number of categories to present. */
+    /**
+     * The maximum number of categories to present.
+     */
     private int maximumCategoryCount;
 
     /**
      * Creates a new instance.
      *
      * @param underlying  the underlying dataset ({@code null} not
-     *     permitted).
-     * @param firstColumn  the index of the first visible column from the
-     *     underlying dataset.
+     *                    permitted).
+     * @param firstColumn the index of the first visible column from the
+     *                    underlying dataset.
      * @param maxColumns  the maximumColumnCount.
      */
     public SlidingGanttCategoryDataset(GanttCategoryDataset underlying,
-            int firstColumn, int maxColumns) {
+                                       int firstColumn, int maxColumns) {
         this.underlying = underlying;
         this.firstCategoryIndex = firstColumn;
         this.maximumCategoryCount = maxColumns;
@@ -97,7 +103,6 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      * Returns the index of the first visible category.
      *
      * @return The index.
-     *
      * @see #setFirstCategoryIndex(int)
      */
     public int getFirstCategoryIndex() {
@@ -109,8 +114,7 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      * underlying dataset, and sends a {@link DatasetChangeEvent} to all
      * registered listeners.
      *
-     * @param first  the index.
-     *
+     * @param first the index.
      * @see #getFirstCategoryIndex()
      */
     public void setFirstCategoryIndex(int first) {
@@ -125,7 +129,6 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      * Returns the maximum category count.
      *
      * @return The maximum category count.
-     *
      * @see #setMaximumCategoryCount(int)
      */
     public int getMaximumCategoryCount() {
@@ -136,8 +139,7 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      * Sets the maximum category count and sends a {@link DatasetChangeEvent}
      * to all registered listeners.
      *
-     * @param max  the maximum.
-     *
+     * @param max the maximum.
      * @see #getMaximumCategoryCount()
      */
     public void setMaximumCategoryCount(int max) {
@@ -164,8 +166,7 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the index for the specified column key.
      *
-     * @param key  the key.
-     *
+     * @param key the key.
      * @return The column index, or -1 if the key is not recognised.
      */
     @Override
@@ -180,10 +181,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the column key for a given index.
      *
-     * @param column  the column index (zero-based).
-     *
+     * @param column the column index (zero-based).
      * @return The column key.
-     *
      * @throws IndexOutOfBoundsException if {@code row} is out of bounds.
      */
     @Override
@@ -195,7 +194,6 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      * Returns the column keys.
      *
      * @return The keys.
-     *
      * @see #getColumnKey(int)
      */
     @Override
@@ -211,8 +209,7 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the row index for a given key.
      *
-     * @param key  the row key.
-     *
+     * @param key the row key.
      * @return The row index, or {@code -1} if the key is unrecognised.
      */
     @Override
@@ -223,10 +220,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the row key for a given index.
      *
-     * @param row  the row index (zero-based).
-     *
+     * @param row the row index (zero-based).
      * @return The row key.
-     *
      * @throws IndexOutOfBoundsException if {@code row} is out of bounds.
      */
     @Override
@@ -247,11 +242,9 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the value for a pair of keys.
      *
-     * @param rowKey  the row key ({@code null} not permitted).
-     * @param columnKey  the column key ({@code null} not permitted).
-     *
+     * @param rowKey    the row key ({@code null} not permitted).
+     * @param columnKey the column key ({@code null} not permitted).
      * @return The value (possibly {@code null}).
-     *
      * @throws UnknownKeyException if either key is not defined in the dataset.
      */
     @Override
@@ -260,11 +253,9 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
         int c = getColumnIndex(columnKey);
         if (c == -1) {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
-        }
-        else if (r == -1) {
+        } else if (r == -1) {
             throw new UnknownKeyException("Unknown rowKey: " + rowKey);
-        }
-        else {
+        } else {
             return this.underlying.getValue(r, c + this.firstCategoryIndex);
         }
     }
@@ -279,8 +270,7 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
         int last = lastCategoryIndex();
         if (last == -1) {
             return 0;
-        }
-        else {
+        } else {
             return Math.max(last - this.firstCategoryIndex + 1, 0);
         }
     }
@@ -298,9 +288,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns a value from the table.
      *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
-     *
+     * @param row    the row index (zero-based).
+     * @param column the column index (zero-based).
      * @return The value (possibly {@code null}).
      */
     @Override
@@ -311,9 +300,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the percent complete for a given item.
      *
-     * @param rowKey  the row key.
-     * @param columnKey  the column key.
-     *
+     * @param rowKey    the row key.
+     * @param columnKey the column key.
      * @return The percent complete.
      */
     @Override
@@ -322,11 +310,9 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
         int c = getColumnIndex(columnKey);
         if (c == -1) {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
-        }
-        else if (r == -1) {
+        } else if (r == -1) {
             throw new UnknownKeyException("Unknown rowKey: " + rowKey);
-        }
-        else {
+        } else {
             return this.underlying.getPercentComplete(r,
                     c + this.firstCategoryIndex);
         }
@@ -335,26 +321,22 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the percentage complete value of a sub-interval for a given item.
      *
-     * @param rowKey  the row key.
-     * @param columnKey  the column key.
-     * @param subinterval  the sub-interval.
-     *
+     * @param rowKey      the row key.
+     * @param columnKey   the column key.
+     * @param subinterval the sub-interval.
      * @return The percent complete value (possibly {@code null}).
-     *
      * @see #getPercentComplete(int, int, int)
      */
     @Override
     public Number getPercentComplete(Comparable rowKey, Comparable columnKey,
-            int subinterval) {
+                                     int subinterval) {
         int r = getRowIndex(rowKey);
         int c = getColumnIndex(columnKey);
         if (c == -1) {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
-        }
-        else if (r == -1) {
+        } else if (r == -1) {
             throw new UnknownKeyException("Unknown rowKey: " + rowKey);
-        }
-        else {
+        } else {
             return this.underlying.getPercentComplete(r,
                     c + this.firstCategoryIndex, subinterval);
         }
@@ -363,26 +345,22 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the end value of a sub-interval for a given item.
      *
-     * @param rowKey  the row key.
-     * @param columnKey  the column key.
-     * @param subinterval  the sub-interval.
-     *
+     * @param rowKey      the row key.
+     * @param columnKey   the column key.
+     * @param subinterval the sub-interval.
      * @return The end value (possibly {@code null}).
-     *
      * @see #getStartValue(Comparable, Comparable, int)
      */
     @Override
     public Number getEndValue(Comparable rowKey, Comparable columnKey,
-            int subinterval) {
+                              int subinterval) {
         int r = getRowIndex(rowKey);
         int c = getColumnIndex(columnKey);
         if (c == -1) {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
-        }
-        else if (r == -1) {
+        } else if (r == -1) {
             throw new UnknownKeyException("Unknown rowKey: " + rowKey);
-        }
-        else {
+        } else {
             return this.underlying.getEndValue(r,
                     c + this.firstCategoryIndex, subinterval);
         }
@@ -391,12 +369,10 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the end value of a sub-interval for a given item.
      *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
-     * @param subinterval  the sub-interval.
-     *
+     * @param row         the row index (zero-based).
+     * @param column      the column index (zero-based).
+     * @param subinterval the sub-interval.
      * @return The end value (possibly {@code null}).
-     *
      * @see #getStartValue(int, int, int)
      */
     @Override
@@ -408,9 +384,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the percent complete for a given item.
      *
-     * @param series  the row index (zero-based).
-     * @param category  the column index (zero-based).
-     *
+     * @param series   the row index (zero-based).
+     * @param category the column index (zero-based).
      * @return The percent complete.
      */
     @Override
@@ -422,12 +397,10 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the percentage complete value of a sub-interval for a given item.
      *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
-     * @param subinterval  the sub-interval.
-     *
+     * @param row         the row index (zero-based).
+     * @param column      the column index (zero-based).
+     * @param subinterval the sub-interval.
      * @return The percent complete value (possibly {@code null}).
-     *
      * @see #getPercentComplete(Comparable, Comparable, int)
      */
     @Override
@@ -439,26 +412,22 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the start value of a sub-interval for a given item.
      *
-     * @param rowKey  the row key.
-     * @param columnKey  the column key.
-     * @param subinterval  the sub-interval.
-     *
+     * @param rowKey      the row key.
+     * @param columnKey   the column key.
+     * @param subinterval the sub-interval.
      * @return The start value (possibly {@code null}).
-     *
      * @see #getEndValue(Comparable, Comparable, int)
      */
     @Override
     public Number getStartValue(Comparable rowKey, Comparable columnKey,
-            int subinterval) {
+                                int subinterval) {
         int r = getRowIndex(rowKey);
         int c = getColumnIndex(columnKey);
         if (c == -1) {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
-        }
-        else if (r == -1) {
+        } else if (r == -1) {
             throw new UnknownKeyException("Unknown rowKey: " + rowKey);
-        }
-        else {
+        } else {
             return this.underlying.getStartValue(r,
                     c + this.firstCategoryIndex, subinterval);
         }
@@ -467,12 +436,10 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the start value of a sub-interval for a given item.
      *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
-     * @param subinterval  the sub-interval index (zero-based).
-     *
+     * @param row         the row index (zero-based).
+     * @param column      the column index (zero-based).
+     * @param subinterval the sub-interval index (zero-based).
      * @return The start value (possibly {@code null}).
-     *
      * @see #getEndValue(int, int, int)
      */
     @Override
@@ -484,11 +451,9 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the number of sub-intervals for a given item.
      *
-     * @param rowKey  the row key.
-     * @param columnKey  the column key.
-     *
+     * @param rowKey    the row key.
+     * @param columnKey the column key.
      * @return The sub-interval count.
-     *
      * @see #getSubIntervalCount(int, int)
      */
     @Override
@@ -499,8 +464,7 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         } else if (r == -1) {
             throw new UnknownKeyException("Unknown rowKey: " + rowKey);
-        }
-        else {
+        } else {
             return this.underlying.getSubIntervalCount(r,
                     c + this.firstCategoryIndex);
         }
@@ -509,11 +473,9 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the number of sub-intervals for a given item.
      *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
-     *
+     * @param row    the row index (zero-based).
+     * @param column the column index (zero-based).
      * @return The sub-interval count.
-     *
      * @see #getSubIntervalCount(Comparable, Comparable)
      */
     @Override
@@ -525,11 +487,9 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the start value for the interval for a given series and category.
      *
-     * @param rowKey  the series key.
-     * @param columnKey  the category key.
-     *
+     * @param rowKey    the series key.
+     * @param columnKey the category key.
      * @return The start value (possibly {@code null}).
-     *
      * @see #getEndValue(Comparable, Comparable)
      */
     @Override
@@ -540,8 +500,7 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         } else if (r == -1) {
             throw new UnknownKeyException("Unknown rowKey: " + rowKey);
-        }
-        else {
+        } else {
             return this.underlying.getStartValue(r,
                     c + this.firstCategoryIndex);
         }
@@ -550,11 +509,9 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the start value for the interval for a given series and category.
      *
-     * @param row  the series (zero-based index).
-     * @param column  the category (zero-based index).
-     *
+     * @param row    the series (zero-based index).
+     * @param column the category (zero-based index).
      * @return The start value (possibly {@code null}).
-     *
      * @see #getEndValue(int, int)
      */
     @Override
@@ -566,11 +523,9 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the end value for the interval for a given series and category.
      *
-     * @param rowKey  the series key.
-     * @param columnKey  the category key.
-     *
+     * @param rowKey    the series key.
+     * @param columnKey the category key.
      * @return The end value (possibly {@code null}).
-     *
      * @see #getStartValue(Comparable, Comparable)
      */
     @Override
@@ -581,8 +536,7 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         } else if (r == -1) {
             throw new UnknownKeyException("Unknown rowKey: " + rowKey);
-        }
-        else {
+        } else {
             return this.underlying.getEndValue(r, c + this.firstCategoryIndex);
         }
     }
@@ -590,9 +544,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     /**
      * Returns the end value for the interval for a given series and category.
      *
-     * @param series  the series (zero-based index).
-     * @param category  the category (zero-based index).
-     *
+     * @param series   the series (zero-based index).
+     * @param category the category (zero-based index).
      * @return The end value (possibly {@code null}).
      */
     @Override
@@ -602,11 +555,10 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
     }
 
     /**
-     * Tests this {@code SlidingGanttCategoryDataset} instance for equality 
+     * Tests this {@code SlidingGanttCategoryDataset} instance for equality
      * with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -640,9 +592,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      * </ul>
      *
      * @return An independent copy of the dataset.
-     *
      * @throws CloneNotSupportedException if the dataset cannot be cloned for
-     *         any reason.
+     *                                    any reason.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

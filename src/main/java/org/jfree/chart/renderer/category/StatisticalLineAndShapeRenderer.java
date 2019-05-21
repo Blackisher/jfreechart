@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------------------
@@ -58,17 +58,6 @@
 
 package org.jfree.chart.renderer.category;
 
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 import org.jfree.chart.HashUtils;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
@@ -77,14 +66,18 @@ import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtils;
-import org.jfree.chart.util.ShapeUtils;
+import org.jfree.chart.util.*;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.statistics.StatisticalCategoryDataset;
+
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * A renderer that draws shapes for each data item, and lines between data
@@ -99,16 +92,20 @@ import org.jfree.data.statistics.StatisticalCategoryDataset;
 public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
         implements Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -3557517173697777579L;
 
-    /** The paint used to show the error indicator. */
+    /**
+     * The paint used to show the error indicator.
+     */
     private transient Paint errorIndicatorPaint;
 
-    /** 
+    /**
      * The stroke used to draw the error indicators.  If null, the renderer
      * will use the itemOutlineStroke.
-     * 
+     *
      * @since 1.0.13
      */
     private transient Stroke errorIndicatorStroke;
@@ -124,7 +121,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * Constructs a new renderer.
      *
      * @param linesVisible  draw lines?
-     * @param shapesVisible  draw shapes?
+     * @param shapesVisible draw shapes?
      */
     public StatisticalLineAndShapeRenderer(boolean linesVisible,
                                            boolean shapesVisible) {
@@ -137,8 +134,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * Returns the paint used for the error indicators.
      *
      * @return The paint used for the error indicators (possibly
-     *         {@code null}).
-     *
+     * {@code null}).
      * @see #setErrorIndicatorPaint(Paint)
      */
     public Paint getErrorIndicatorPaint() {
@@ -150,8 +146,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * the item paint is used instead) and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param paint  the paint ({@code null} permitted).
-     *
+     * @param paint the paint ({@code null} permitted).
      * @see #getErrorIndicatorPaint()
      */
     public void setErrorIndicatorPaint(Paint paint) {
@@ -163,10 +158,8 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * Returns the stroke used for the error indicators.
      *
      * @return The stroke used for the error indicators (possibly
-     *         {@code null}).
-     *
+     * {@code null}).
      * @see #setErrorIndicatorStroke(Stroke)
-     *
      * @since 1.0.13
      */
     public Stroke getErrorIndicatorStroke() {
@@ -178,10 +171,8 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * the item outline stroke is used instead) and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param stroke  the stroke ({@code null} permitted).
-     *
+     * @param stroke the stroke ({@code null} permitted).
      * @see #getErrorIndicatorStroke()
-     *
      * @since 1.0.13
      */
     public void setErrorIndicatorStroke(Stroke stroke) {
@@ -193,10 +184,9 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * Returns the range of values the renderer requires to display all the
      * items from the specified dataset.
      *
-     * @param dataset  the dataset ({@code null} permitted).
-     *
+     * @param dataset the dataset ({@code null} permitted).
      * @return The range (or {@code null} if the dataset is
-     *         {@code null} or empty).
+     * {@code null} or empty).
      */
     @Override
     public Range findRangeBounds(CategoryDataset dataset) {
@@ -206,23 +196,23 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
     /**
      * Draw a single data item.
      *
-     * @param g2  the graphics device.
-     * @param state  the renderer state.
-     * @param dataArea  the area in which the data is drawn.
-     * @param plot  the plot.
-     * @param domainAxis  the domain axis.
+     * @param g2         the graphics device.
+     * @param state      the renderer state.
+     * @param dataArea   the area in which the data is drawn.
+     * @param plot       the plot.
+     * @param domainAxis the domain axis.
      * @param rangeAxis  the range axis.
-     * @param dataset  the dataset (a {@link StatisticalCategoryDataset} is
-     *                 required).
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
-     * @param pass  the pass.
+     * @param dataset    the dataset (a {@link StatisticalCategoryDataset} is
+     *                   required).
+     * @param row        the row index (zero-based).
+     * @param column     the column index (zero-based).
+     * @param pass       the pass.
      */
     @Override
     public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-            Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-            ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
-            int pass) {
+                         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+                         ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+                         int pass) {
 
         // do nothing if item is not visible
         if (!getItemVisible(row, column)) {
@@ -258,8 +248,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                     dataset.getColumnCount(),
                     visibleRow, visibleRowCount,
                     getItemMargin(), dataArea, plot.getDomainAxisEdge());
-        }
-        else {
+        } else {
             x1 = domainAxis.getCategoryMiddle(column, getColumnCount(),
                     dataArea, plot.getDomainAxisEdge());
         }
@@ -280,8 +269,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 highVal = rangeAxis.valueToJava2D(
                         rangeAxis.getRange().getUpperBound(), dataArea,
                         yAxisLocation);
-            }
-            else {
+            } else {
                 highVal = rangeAxis.valueToJava2D(meanValue.doubleValue()
                         + valueDelta, dataArea, yAxisLocation);
             }
@@ -291,22 +279,19 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 lowVal = rangeAxis.valueToJava2D(
                         rangeAxis.getRange().getLowerBound(), dataArea,
                         yAxisLocation);
-            }
-            else {
+            } else {
                 lowVal = rangeAxis.valueToJava2D(meanValue.doubleValue()
                         - valueDelta, dataArea, yAxisLocation);
             }
 
             if (this.errorIndicatorPaint != null) {
                 g2.setPaint(this.errorIndicatorPaint);
-            }
-            else {
+            } else {
                 g2.setPaint(getItemPaint(row, column));
             }
             if (this.errorIndicatorStroke != null) {
                 g2.setStroke(this.errorIndicatorStroke);
-            }
-            else {
+            } else {
                 g2.setStroke(getItemOutlineStroke(row, column));
             }
             Line2D line = new Line2D.Double();
@@ -317,8 +302,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 g2.draw(line);
                 line.setLine(highVal, x1 - 5.0d, highVal, x1 + 5.0d);
                 g2.draw(line);
-            }
-            else {  // PlotOrientation.VERTICAL
+            } else {  // PlotOrientation.VERTICAL
                 line.setLine(x1, lowVal, x1, highVal);
                 g2.draw(line);
                 line.setLine(x1 - 5.0d, highVal, x1 + 5.0d, highVal);
@@ -334,17 +318,15 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
             Shape shape = getItemShape(row, column);
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, y1, x1);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, x1, y1);
             }
             hotspot = shape;
-            
+
             if (getItemShapeFilled(row, column)) {
                 if (getUseFillPaint()) {
                     g2.setPaint(getItemFillPaint(row, column));
-                }
-                else {
+                } else {
                     g2.setPaint(getItemPaint(row, column));
                 }
                 g2.fill(shape);
@@ -352,8 +334,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
             if (getDrawOutlines()) {
                 if (getUseOutlinePaint()) {
                     g2.setPaint(getItemOutlinePaint(row, column));
-                }
-                else {
+                } else {
                     g2.setPaint(getItemPaint(row, column));
                 }
                 g2.setStroke(getItemOutlineStroke(row, column));
@@ -364,8 +345,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 if (orientation == PlotOrientation.HORIZONTAL) {
                     drawItemLabel(g2, orientation, dataset, row, column,
                             y1, x1, (meanValue.doubleValue() < 0.0));
-                }
-                else if (orientation == PlotOrientation.VERTICAL) {
+                } else if (orientation == PlotOrientation.VERTICAL) {
                     drawItemLabel(g2, orientation, dataset, row, column,
                             x1, y1, (meanValue.doubleValue() < 0.0));
                 }
@@ -387,8 +367,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                                 visibleRow, visibleRowCount,
                                 getItemMargin(), dataArea,
                                 plot.getDomainAxisEdge());
-                    }
-                    else {
+                    } else {
                         x0 = domainAxis.getCategoryMiddle(column - 1,
                                 getColumnCount(), dataArea,
                                 plot.getDomainAxisEdge());
@@ -399,8 +378,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                     Line2D line = null;
                     if (orientation == PlotOrientation.HORIZONTAL) {
                         line = new Line2D.Double(y0, x0, y1, x1);
-                    }
-                    else if (orientation == PlotOrientation.VERTICAL) {
+                    } else if (orientation == PlotOrientation.VERTICAL) {
                         line = new Line2D.Double(x0, y0, x1, y1);
                     }
                     g2.setPaint(getItemPaint(row, column));
@@ -423,8 +401,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
     /**
      * Tests this renderer for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -463,9 +440,8 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -476,10 +452,9 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * Changes
@@ -36,15 +36,23 @@ package org.jfree.chart.ui;
  */
 public enum GradientPaintTransformType {
 
-    /** Vertical. */
+    /**
+     * Vertical.
+     */
     VERTICAL,
 
-    /** Horizontal. */
+    /**
+     * Horizontal.
+     */
     HORIZONTAL,
 
-    /** Center/vertical. */
+    /**
+     * Center/vertical.
+     */
     CENTER_VERTICAL,
 
-    /** Center/horizontal. */
+    /**
+     * Center/horizontal.
+     */
     CENTER_HORIZONTAL
 }

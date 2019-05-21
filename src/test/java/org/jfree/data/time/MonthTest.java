@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -49,39 +49,39 @@
 
 package org.jfree.data.time;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.date.MonthConstants;
 import org.jfree.chart.date.SerialDate;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.*;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link Month} class.
  */
 public class MonthTest {
 
-    /** A month. */
+    /**
+     * A month.
+     */
     private Month jan1900;
 
-    /** A month. */
+    /**
+     * A month.
+     */
     private Month feb1900;
 
-    /** A month. */
+    /**
+     * A month.
+     */
     private Month nov9999;
 
-    /** A month. */
+    /**
+     * A month.
+     */
     private Month dec9999;
 
     /**
@@ -97,7 +97,7 @@ public class MonthTest {
 
     /**
      * Check that a Month instance is equal to itself.
-     *
+     * <p>
      * SourceForge Bug ID: 558850.
      */
     @Test
@@ -206,8 +206,7 @@ public class MonthTest {
         // test 1...
         try {
             month = Month.parseMonth("1990-01");
-        }
-        catch (TimePeriodFormatException e) {
+        } catch (TimePeriodFormatException e) {
             month = new Month(1, 1900);
         }
         assertEquals(1, month.getMonth());
@@ -216,8 +215,7 @@ public class MonthTest {
         // test 2...
         try {
             month = Month.parseMonth("02-1991");
-        }
-        catch (TimePeriodFormatException e) {
+        } catch (TimePeriodFormatException e) {
             month = new Month(1, 1900);
         }
         assertEquals(2, month.getMonth());
@@ -227,8 +225,7 @@ public class MonthTest {
         try {
             String monthName = SerialDate.DATE_FORMAT_SYMBOLS.getMonths()[2];
             month = Month.parseMonth(monthName + " 1993");
-        }
-        catch (TimePeriodFormatException e) {
+        } catch (TimePeriodFormatException e) {
             month = new Month(1, 1900);
         }
         assertEquals(3, month.getMonth());
@@ -297,8 +294,7 @@ public class MonthTest {
         boolean pass = false;
         try {
             m.getFirstMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -318,8 +314,7 @@ public class MonthTest {
         boolean pass = false;
         try {
             m.getFirstMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -354,8 +349,7 @@ public class MonthTest {
         boolean pass = false;
         try {
             m.getLastMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -375,8 +369,7 @@ public class MonthTest {
         boolean pass = false;
         try {
             m.getLastMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);

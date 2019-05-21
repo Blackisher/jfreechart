@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -48,12 +48,18 @@ package org.jfree.data.time;
  */
 public enum TimePeriodAnchor {
 
-    /** Start of period. */
+    /**
+     * Start of period.
+     */
     START,
 
-    /** Middle of period. */
+    /**
+     * Middle of period.
+     */
     MIDDLE,
 
-    /** End of period. */
+    /**
+     * End of period.
+     */
     END
 }

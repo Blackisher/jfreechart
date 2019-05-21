@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------
@@ -41,16 +41,6 @@
 
 package org.jfree.data.xml;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.XMLConstants;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import org.jfree.chart.util.Args;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.PieDataset;
@@ -58,56 +48,65 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * A utility class for reading datasets from XML.
  */
 public class DatasetReader {
 
-	/** A factory for creating new parser instances. */
+    /**
+     * A factory for creating new parser instances.
+     */
     static SAXParserFactory factory;
 
     /**
      * Returns the {@link SAXParserFactory} used to create {@link SAXParser} instances.
-     * 
+     *
      * @return The {@link SAXParserFactory} (never {@code null}).
      */
     public static SAXParserFactory getSAXParserFactory() {
-    	if (factory == null) {
-    		SAXParserFactory f = SAXParserFactory.newInstance();
-			try {
-				f.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-		        f.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-		        factory = f;
-			} catch (SAXNotRecognizedException e) {
-				throw new RuntimeException(e);
-			} catch (SAXNotSupportedException e) {
-				throw new RuntimeException(e);
-			} catch (ParserConfigurationException e) {
-				throw new RuntimeException(e);
-			}
-    	}
+        if (factory == null) {
+            SAXParserFactory f = SAXParserFactory.newInstance();
+            try {
+                f.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+                f.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+                factory = f;
+            } catch (SAXNotRecognizedException e) {
+                throw new RuntimeException(e);
+            } catch (SAXNotSupportedException e) {
+                throw new RuntimeException(e);
+            } catch (ParserConfigurationException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return factory;
     }
-    
+
     /**
-     * Sets the SAXParserFactory that will be used to create SAXParser instances.  
+     * Sets the SAXParserFactory that will be used to create SAXParser instances.
      * You would only call this method if you wish to configure a new factory because
      * the default does not meet requirements.
-     * 
-     * @param f  the new factory ({@code null} not permitted).
+     *
+     * @param f the new factory ({@code null} not permitted).
      */
     public static void setSAXParserFactory(SAXParserFactory f) {
-    	Args.nullNotPermitted(f, "f");
+        Args.nullNotPermitted(f, "f");
         factory = f;
     }
 
     /**
      * Reads a {@link PieDataset} from an XML file.
      *
-     * @param file  the file ({@code null} not permitted).
-     *
+     * @param file the file ({@code null} not permitted).
      * @return A dataset.
-     *
      * @throws IOException if there is a problem reading the file.
      */
     public static PieDataset readPieDatasetFromXML(File file)
@@ -119,25 +118,21 @@ public class DatasetReader {
     /**
      * Reads a {@link PieDataset} from a stream.
      *
-     * @param in  the input stream.
-     *
+     * @param in the input stream.
      * @return A dataset.
-     *
      * @throws IOException if there is an I/O error.
      */
     public static PieDataset readPieDatasetFromXML(InputStream in)
-             throws IOException {
+            throws IOException {
         PieDataset result = null;
         try {
             SAXParser parser = getSAXParserFactory().newSAXParser();
             PieDatasetHandler handler = new PieDatasetHandler();
             parser.parse(in, handler);
             result = handler.getDataset();
-        }
-        catch (SAXException e) {
+        } catch (SAXException e) {
             throw new RuntimeException(e);
-        }
-        catch (ParserConfigurationException e2) {
+        } catch (ParserConfigurationException e2) {
             throw new RuntimeException(e2);
         }
         return result;
@@ -146,10 +141,8 @@ public class DatasetReader {
     /**
      * Reads a {@link CategoryDataset} from a file.
      *
-     * @param file  the file.
-     *
+     * @param file the file.
      * @return A dataset.
-     *
      * @throws IOException if there is a problem reading the file.
      */
     public static CategoryDataset readCategoryDatasetFromXML(File file)
@@ -161,10 +154,8 @@ public class DatasetReader {
     /**
      * Reads a {@link CategoryDataset} from a stream.
      *
-     * @param in  the stream.
-     *
+     * @param in the stream.
      * @return A dataset.
-     *
      * @throws IOException if there is a problem reading the file.
      */
     public static CategoryDataset readCategoryDatasetFromXML(InputStream in)
@@ -175,11 +166,9 @@ public class DatasetReader {
             CategoryDatasetHandler handler = new CategoryDatasetHandler();
             parser.parse(in, handler);
             result = handler.getDataset();
-        }
-        catch (SAXException e) {
+        } catch (SAXException e) {
             throw new RuntimeException(e);
-        }
-        catch (ParserConfigurationException e2) {
+        } catch (ParserConfigurationException e2) {
             throw new RuntimeException(e2);
         }
         return result;

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -46,15 +46,15 @@ import java.util.Date;
 
 /**
  * An interface that defines the contract for a Timeline.
- * <P>
+ * <p>
  * A Timeline will present a series of values to be used for an axis. Each
  * Timeline must provide transformation methods between domain values and
  * timeline values. In theory many transformations are possible.
- * <P>
+ * <p>
  * A timeline can be used as parameter to a
  * {@link org.jfree.chart.axis.DateAxis} to define the values that this axis
  * supports.
- * <P>
+ * <p>
  * Because Timelines were created mainly for Date related axis, values are
  * represented as longs instead of doubles. In this case, the domain value is
  * just the number of milliseconds since January 1, 1970, 00:00:00 GMT as
@@ -68,8 +68,7 @@ public interface Timeline {
      * Translates a millisecond (as defined by java.util.Date) into an index
      * along this timeline.
      *
-     * @param millisecond  the millisecond.
-     *
+     * @param millisecond the millisecond.
      * @return A timeline value.
      */
     long toTimelineValue(long millisecond);
@@ -77,8 +76,7 @@ public interface Timeline {
     /**
      * Translates a date into a value on this timeline.
      *
-     * @param date  the date.
-     *
+     * @param date the date.
      * @return A timeline value
      */
     long toTimelineValue(Date date);
@@ -91,8 +89,7 @@ public interface Timeline {
      * This is because the original transformation may not be complete
      * reversable.
      *
-     * @param timelineValue  a timeline value.
-     *
+     * @param timelineValue a timeline value.
      * @return A domain value.
      */
     long toMillisecond(long timelineValue);
@@ -100,20 +97,18 @@ public interface Timeline {
     /**
      * Returns {@code true} if a value is contained in the timeline values.
      *
-     * @param millisecond  the millisecond.
-     *
+     * @param millisecond the millisecond.
      * @return {@code true} if value is contained in the timeline and
-     *         {@code false} otherwise.
+     * {@code false} otherwise.
      */
     boolean containsDomainValue(long millisecond);
 
     /**
      * Returns {@code true} if a date is contained in the timeline values.
      *
-     * @param date  the date to verify.
-     *
+     * @param date the date to verify.
      * @return {@code true} if value is contained in the timeline and
-     *         {@code false}  otherwise.
+     * {@code false}  otherwise.
      */
     boolean containsDomainValue(Date date);
 
@@ -121,11 +116,10 @@ public interface Timeline {
      * Returns {@code true} if a range of values are contained in the
      * timeline.
      *
-     * @param fromMillisecond  the start of the range to verify.
-     * @param toMillisecond  the end of the range to verify.
-     *
+     * @param fromMillisecond the start of the range to verify.
+     * @param toMillisecond   the end of the range to verify.
      * @return {@code true} if the range is contained in the timeline or
-     *         {@code false} otherwise
+     * {@code false} otherwise
      */
     boolean containsDomainRange(long fromMillisecond, long toMillisecond);
 
@@ -133,11 +127,10 @@ public interface Timeline {
      * Returns {@code true} if a range of dates are contained in the
      * timeline.
      *
-     * @param fromDate  the start of the range to verify.
-     * @param toDate  the end of the range to verify.
-     *
+     * @param fromDate the start of the range to verify.
+     * @param toDate   the end of the range to verify.
      * @return {@code true} if the range is contained in the timeline or
-     *         {@code false} otherwise
+     * {@code false} otherwise
      */
     boolean containsDomainRange(Date fromDate, Date toDate);
 

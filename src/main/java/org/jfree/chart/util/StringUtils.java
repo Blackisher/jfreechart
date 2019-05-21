@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
@@ -34,7 +34,7 @@ package org.jfree.chart.util;
 public class StringUtils {
 
     /**
-     * Private constructor prevents object creation. 
+     * Private constructor prevents object creation.
      */
     private StringUtils() {
     }
@@ -43,8 +43,7 @@ public class StringUtils {
      * Helper functions to query a strings start portion. The comparison is case insensitive.
      *
      * @param base  the base string.
-     * @param start  the starting text.
-     *
+     * @param start the starting text.
      * @return true, if the string starts with the given starting text.
      */
     public static boolean startsWithIgnoreCase(String base, String start) {
@@ -57,9 +56,8 @@ public class StringUtils {
     /**
      * Helper functions to query a strings end portion. The comparison is case insensitive.
      *
-     * @param base  the base string.
+     * @param base the base string.
      * @param end  the ending text.
-     *
      * @return true, if the string ends with the given ending text.
      */
     public static boolean endsWithIgnoreCase(String base, String end) {
@@ -78,8 +76,7 @@ public class StringUtils {
     public static String getLineSeparator() {
         try {
             return System.getProperty("line.separator", "\n");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return "\n";
         }
     }

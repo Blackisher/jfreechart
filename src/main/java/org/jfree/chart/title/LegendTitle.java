@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -57,54 +57,36 @@
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
  * 11-Mar-2012 : Added sort-order support - patch 3500621 by Simon Kaczor (MH);
  * 03-Jul-2013 : Use ParamChecks (DG);
- * 
+ *
  */
 
 package org.jfree.chart.title;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.LegendItemSource;
-import org.jfree.chart.block.Arrangement;
-import org.jfree.chart.block.Block;
-import org.jfree.chart.block.BlockContainer;
-import org.jfree.chart.block.BlockFrame;
-import org.jfree.chart.block.BlockResult;
-import org.jfree.chart.block.BorderArrangement;
-import org.jfree.chart.block.CenterArrangement;
-import org.jfree.chart.block.ColumnArrangement;
-import org.jfree.chart.block.EntityBlockParams;
-import org.jfree.chart.block.FlowArrangement;
-import org.jfree.chart.block.LabelBlock;
-import org.jfree.chart.block.RectangleConstraint;
+import org.jfree.chart.block.*;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.entity.TitleEntity;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtils;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.SortOrder;
+import org.jfree.chart.util.*;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 
 /**
  * A chart title that displays a legend for the data in the chart.
- * <P>
+ * <p>
  * The title can be populated with legend items manually, or you can assign a
  * reference to the plot, in which case the legend items will be automatically
  * created to match the dataset(s).
@@ -112,41 +94,62 @@ import org.jfree.chart.util.SortOrder;
 public class LegendTitle extends Title
         implements Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
-    private static final long serialVersionUID = 2644010518533854633L;
-
-    /** The default item font. */
+    /**
+     * The default item font.
+     */
     public static final Font DEFAULT_ITEM_FONT
             = new Font("SansSerif", Font.PLAIN, 12);
-
-    /** The default item paint. */
+    /**
+     * The default item paint.
+     */
     public static final Paint DEFAULT_ITEM_PAINT = Color.BLACK;
-
-    /** The sources for legend items. */
+    /**
+     * For serialization.
+     */
+    private static final long serialVersionUID = 2644010518533854633L;
+    /**
+     * The sources for legend items.
+     */
     private LegendItemSource[] sources;
 
-    /** The background paint (possibly {@code null}). */
+    /**
+     * The background paint (possibly {@code null}).
+     */
     private transient Paint backgroundPaint;
 
-    /** The edge for the legend item graphic relative to the text. */
+    /**
+     * The edge for the legend item graphic relative to the text.
+     */
     private RectangleEdge legendItemGraphicEdge;
 
-    /** The anchor point for the legend item graphic. */
+    /**
+     * The anchor point for the legend item graphic.
+     */
     private RectangleAnchor legendItemGraphicAnchor;
 
-    /** The legend item graphic location. */
+    /**
+     * The legend item graphic location.
+     */
     private RectangleAnchor legendItemGraphicLocation;
 
-    /** The padding for the legend item graphic. */
+    /**
+     * The padding for the legend item graphic.
+     */
     private RectangleInsets legendItemGraphicPadding;
 
-    /** The item font. */
+    /**
+     * The item font.
+     */
     private Font itemFont;
 
-    /** The item paint. */
+    /**
+     * The item paint.
+     */
     private transient Paint itemPaint;
 
-    /** The padding for the item labels. */
+    /**
+     * The padding for the item labels.
+     */
     private RectangleInsets itemLabelPadding;
 
     /**
@@ -174,6 +177,7 @@ public class LegendTitle extends Title
 
     /**
      * Whether to render legend items in ascending or descending order.
+     *
      * @since 1.0.15
      */
     private SortOrder sortOrder;
@@ -181,7 +185,7 @@ public class LegendTitle extends Title
     /**
      * Constructs a new (empty) legend for the specified source.
      *
-     * @param source  the source.
+     * @param source the source.
      */
     public LegendTitle(LegendItemSource source) {
         this(source, new FlowArrangement(), new ColumnArrangement());
@@ -191,14 +195,14 @@ public class LegendTitle extends Title
      * Creates a new legend title with the specified arrangement.
      *
      * @param source  the source.
-     * @param hLayout  the horizontal item arrangement ({@code null} not
-     *                 permitted).
-     * @param vLayout  the vertical item arrangement ({@code null} not
-     *                 permitted).
+     * @param hLayout the horizontal item arrangement ({@code null} not
+     *                permitted).
+     * @param vLayout the vertical item arrangement ({@code null} not
+     *                permitted).
      */
     public LegendTitle(LegendItemSource source,
                        Arrangement hLayout, Arrangement vLayout) {
-        this.sources = new LegendItemSource[] {source};
+        this.sources = new LegendItemSource[]{source};
         this.items = new BlockContainer(hLayout);
         this.hLayout = hLayout;
         this.vLayout = vLayout;
@@ -226,7 +230,7 @@ public class LegendTitle extends Title
      * Sets the legend item sources and sends a {@link TitleChangeEvent} to
      * all registered listeners.
      *
-     * @param sources  the sources ({@code null} not permitted).
+     * @param sources the sources ({@code null} not permitted).
      */
     public void setSources(LegendItemSource[] sources) {
         Args.nullNotPermitted(sources, "sources");
@@ -247,7 +251,7 @@ public class LegendTitle extends Title
      * Sets the background paint for the legend and sends a
      * {@link TitleChangeEvent} to all registered listeners.
      *
-     * @param paint  the paint ({@code null} permitted).
+     * @param paint the paint ({@code null} permitted).
      */
     public void setBackgroundPaint(Paint paint) {
         this.backgroundPaint = paint;
@@ -266,7 +270,7 @@ public class LegendTitle extends Title
     /**
      * Sets the location of the shape within each legend item.
      *
-     * @param edge  the edge ({@code null} not permitted).
+     * @param edge the edge ({@code null} not permitted).
      */
     public void setLegendItemGraphicEdge(RectangleEdge edge) {
         Args.nullNotPermitted(edge, "edge");
@@ -286,7 +290,7 @@ public class LegendTitle extends Title
     /**
      * Sets the anchor point used for the graphic in each legend item.
      *
-     * @param anchor  the anchor point ({@code null} not permitted).
+     * @param anchor the anchor point ({@code null} not permitted).
      */
     public void setLegendItemGraphicAnchor(RectangleAnchor anchor) {
         Args.nullNotPermitted(anchor, "anchor");
@@ -305,7 +309,7 @@ public class LegendTitle extends Title
     /**
      * Sets the legend item graphic location.
      *
-     * @param anchor  the anchor ({@code null} not permitted).
+     * @param anchor the anchor ({@code null} not permitted).
      */
     public void setLegendItemGraphicLocation(RectangleAnchor anchor) {
         this.legendItemGraphicLocation = anchor;
@@ -324,7 +328,7 @@ public class LegendTitle extends Title
      * Sets the padding that will be applied to each item graphic in the
      * legend and sends a {@link TitleChangeEvent} to all registered listeners.
      *
-     * @param padding  the padding ({@code null} not permitted).
+     * @param padding the padding ({@code null} not permitted).
      */
     public void setLegendItemGraphicPadding(RectangleInsets padding) {
         Args.nullNotPermitted(padding, "padding");
@@ -345,7 +349,7 @@ public class LegendTitle extends Title
      * Sets the item font and sends a {@link TitleChangeEvent} to
      * all registered listeners.
      *
-     * @param font  the font ({@code null} not permitted).
+     * @param font the font ({@code null} not permitted).
      */
     public void setItemFont(Font font) {
         Args.nullNotPermitted(font, "font");
@@ -365,7 +369,7 @@ public class LegendTitle extends Title
     /**
      * Sets the item paint.
      *
-     * @param paint  the paint ({@code null} not permitted).
+     * @param paint the paint ({@code null} not permitted).
      */
     public void setItemPaint(Paint paint) {
         Args.nullNotPermitted(paint, "paint");
@@ -385,7 +389,7 @@ public class LegendTitle extends Title
     /**
      * Sets the padding used for the item labels in the legend.
      *
-     * @param padding  the padding ({@code null} not permitted).
+     * @param padding the padding ({@code null} not permitted).
      */
     public void setItemLabelPadding(RectangleInsets padding) {
         Args.nullNotPermitted(padding, "padding");
@@ -395,7 +399,7 @@ public class LegendTitle extends Title
 
     /**
      * Gets the order used to display legend items.
-     * 
+     *
      * @return The order (never {@code null}).
      * @since 1.0.15
      */
@@ -405,7 +409,7 @@ public class LegendTitle extends Title
 
     /**
      * Sets the order used to display legend items.
-     * 
+     *
      * @param order Specifies ascending or descending order ({@code null}
      *              not permitted).
      * @since 1.0.15
@@ -424,28 +428,26 @@ public class LegendTitle extends Title
         RectangleEdge p = getPosition();
         if (RectangleEdge.isTopOrBottom(p)) {
             this.items.setArrangement(this.hLayout);
-        }
-        else {
+        } else {
             this.items.setArrangement(this.vLayout);
         }
 
         if (this.sortOrder.equals(SortOrder.ASCENDING)) {
             for (int s = 0; s < this.sources.length; s++) {
                 LegendItemCollection legendItems =
-                    this.sources[s].getLegendItems();
+                        this.sources[s].getLegendItems();
                 if (legendItems != null) {
                     for (int i = 0; i < legendItems.getItemCount(); i++) {
                         addItemBlock(legendItems.get(i));
                     }
                 }
             }
-        }
-        else {
+        } else {
             for (int s = this.sources.length - 1; s >= 0; s--) {
                 LegendItemCollection legendItems =
-                    this.sources[s].getLegendItems();
+                        this.sources[s].getLegendItems();
                 if (legendItems != null) {
-                    for (int i = legendItems.getItemCount()-1; i >= 0; i--) {
+                    for (int i = legendItems.getItemCount() - 1; i >= 0; i--) {
                         addItemBlock(legendItems.get(i));
                     }
                 }
@@ -461,8 +463,7 @@ public class LegendTitle extends Title
     /**
      * Creates a legend item block.
      *
-     * @param item  the legend item.
-     *
+     * @param item the legend item.
      * @return The block.
      */
     protected Block createLegendItemBlock(LegendItem item) {
@@ -521,9 +522,8 @@ public class LegendTitle extends Title
      * Arranges the contents of the block, within the given constraints, and
      * returns the block size.
      *
-     * @param g2  the graphics device.
-     * @param constraint  the constraint ({@code null} not permitted).
-     *
+     * @param g2         the graphics device.
+     * @param constraint the constraint ({@code null} not permitted).
      * @return The block size (in Java2D units, never {@code null}).
      */
     @Override
@@ -548,8 +548,8 @@ public class LegendTitle extends Title
      * Draws the title on a Java 2D graphics device (such as the screen or a
      * printer).
      *
-     * @param g2  the graphics device.
-     * @param area  the available area for the title.
+     * @param g2   the graphics device.
+     * @param area the available area for the title.
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area) {
@@ -559,12 +559,11 @@ public class LegendTitle extends Title
     /**
      * Draws the block within the specified area.
      *
-     * @param g2  the graphics device.
-     * @param area  the area.
-     * @param params  ignored ({@code null} permitted).
-     *
+     * @param g2     the graphics device.
+     * @param area   the area.
+     * @param params ignored ({@code null} permitted).
      * @return An {@link org.jfree.chart.block.EntityBlockResult} or
-     *         {@code null}.
+     * {@code null}.
      */
     @Override
     public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
@@ -604,7 +603,6 @@ public class LegendTitle extends Title
      * Returns the wrapper container, if any.
      *
      * @return The wrapper container (possibly {@code null}).
-     *
      * @since 1.0.11
      */
     public BlockContainer getWrapper() {
@@ -614,7 +612,7 @@ public class LegendTitle extends Title
     /**
      * Sets the wrapper container for the legend.
      *
-     * @param wrapper  the wrapper container.
+     * @param wrapper the wrapper container.
      */
     public void setWrapper(BlockContainer wrapper) {
         this.wrapper = wrapper;
@@ -623,8 +621,7 @@ public class LegendTitle extends Title
     /**
      * Tests this title for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -672,9 +669,8 @@ public class LegendTitle extends Title
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -685,13 +681,12 @@ public class LegendTitle extends Title
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.backgroundPaint = SerialUtils.readPaint(stream);
         this.itemPaint = SerialUtils.readPaint(stream);

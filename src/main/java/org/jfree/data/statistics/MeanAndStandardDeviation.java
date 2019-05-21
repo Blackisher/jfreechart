@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------------
@@ -43,8 +43,9 @@
 
 package org.jfree.data.statistics;
 
-import java.io.Serializable;
 import org.jfree.chart.util.ObjectUtils;
+
+import java.io.Serializable;
 
 /**
  * A simple data structure that holds a mean value and a standard deviation
@@ -53,20 +54,26 @@ import org.jfree.chart.util.ObjectUtils;
  */
 public class MeanAndStandardDeviation implements Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 7413468697315721515L;
 
-    /** The mean. */
+    /**
+     * The mean.
+     */
     private Number mean;
 
-    /** The standard deviation. */
+    /**
+     * The standard deviation.
+     */
     private Number standardDeviation;
 
     /**
      * Creates a new mean and standard deviation record.
      *
-     * @param mean  the mean.
-     * @param standardDeviation  the standard deviation.
+     * @param mean              the mean.
+     * @param standardDeviation the standard deviation.
      */
     public MeanAndStandardDeviation(double mean, double standardDeviation) {
         this(new Double(mean), new Double(standardDeviation));
@@ -75,9 +82,9 @@ public class MeanAndStandardDeviation implements Serializable {
     /**
      * Creates a new mean and standard deviation record.
      *
-     * @param mean  the mean ({@code null} permitted).
-     * @param standardDeviation  the standard deviation ({@code null}
-     *                           permitted.
+     * @param mean              the mean ({@code null} permitted).
+     * @param standardDeviation the standard deviation ({@code null}
+     *                          permitted.
      */
     public MeanAndStandardDeviation(Number mean, Number standardDeviation) {
         this.mean = mean;
@@ -98,9 +105,7 @@ public class MeanAndStandardDeviation implements Serializable {
      * {@code null}, this method will return {@code Double.NaN}.
      *
      * @return The mean.
-     *
      * @see #getMean()
-     *
      * @since 1.0.7
      */
     public double getMeanValue() {
@@ -126,7 +131,6 @@ public class MeanAndStandardDeviation implements Serializable {
      * {@code Double.NaN}.
      *
      * @return The standard deviation.
-     *
      * @since 1.0.7
      */
     public double getStandardDeviationValue() {
@@ -140,8 +144,7 @@ public class MeanAndStandardDeviation implements Serializable {
     /**
      * Tests this instance for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -157,7 +160,7 @@ public class MeanAndStandardDeviation implements Serializable {
             return false;
         }
         if (!ObjectUtils.equal(
-            this.standardDeviation, that.standardDeviation)
+                this.standardDeviation, that.standardDeviation)
         ) {
             return false;
         }
@@ -168,7 +171,6 @@ public class MeanAndStandardDeviation implements Serializable {
      * Returns a string representing this instance.
      *
      * @return A string.
-     *
      * @since 1.0.7
      */
     @Override

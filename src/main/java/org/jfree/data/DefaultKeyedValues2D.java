@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -53,18 +53,19 @@
  * 23-Nov-2007 : Added argument checks to removeRow(Comparable) to make it
  *               consistent with the removeRow(Comparable) method (DG);
  * 03-Jul-2013 : Use ParamChecks (DG);
- * 
+ *
  */
 
 package org.jfree.data;
+
+import org.jfree.chart.util.Args;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PublicCloneable;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A data structure that stores zero, one or many values, where each value
@@ -74,19 +75,29 @@ import org.jfree.chart.util.PublicCloneable;
 public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         Cloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -5514169970951994748L;
 
-    /** The row keys. */
+    /**
+     * The row keys.
+     */
     private List rowKeys;
 
-    /** The column keys. */
+    /**
+     * The column keys.
+     */
     private List columnKeys;
 
-    /** The row data. */
+    /**
+     * The row data.
+     */
     private List rows;
 
-    /** If the row keys should be sorted by their comparable order. */
+    /**
+     * If the row keys should be sorted by their comparable order.
+     */
     private boolean sortRowKeys;
 
     /**
@@ -99,7 +110,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Creates a new instance (initially empty).
      *
-     * @param sortRowKeys  if the row keys should be sorted.
+     * @param sortRowKeys if the row keys should be sorted.
      */
     public DefaultKeyedValues2D(boolean sortRowKeys) {
         this.rowKeys = new java.util.ArrayList();
@@ -112,7 +123,6 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * Returns the row count.
      *
      * @return The row count.
-     *
      * @see #getColumnCount()
      */
     @Override
@@ -124,7 +134,6 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * Returns the column count.
      *
      * @return The column count.
-     *
      * @see #getRowCount()
      */
     @Override
@@ -135,11 +144,9 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Returns the value for a given row and column.
      *
-     * @param row  the row index.
-     * @param column  the column index.
-     *
+     * @param row    the row index.
+     * @param column the column index.
      * @return The value.
-     *
      * @see #getValue(Comparable, Comparable)
      */
     @Override
@@ -161,10 +168,8 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Returns the key for a given row.
      *
-     * @param row  the row index (in the range 0 to {@link #getRowCount()} - 1).
-     *
+     * @param row the row index (in the range 0 to {@link #getRowCount()} - 1).
      * @return The row key.
-     *
      * @see #getRowIndex(Comparable)
      * @see #getColumnKey(int)
      */
@@ -176,10 +181,8 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Returns the row index for a given key.
      *
-     * @param key  the key ({@code null} not permitted).
-     *
+     * @param key the key ({@code null} not permitted).
      * @return The row index.
-     *
      * @see #getRowKey(int)
      * @see #getColumnIndex(Comparable)
      */
@@ -188,8 +191,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         Args.nullNotPermitted(key, "key");
         if (this.sortRowKeys) {
             return Collections.binarySearch(this.rowKeys, key);
-        }
-        else {
+        } else {
             return this.rowKeys.indexOf(key);
         }
     }
@@ -198,7 +200,6 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * Returns the row keys in an unmodifiable list.
      *
      * @return The row keys.
-     *
      * @see #getColumnKeys()
      */
     @Override
@@ -209,11 +210,9 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Returns the key for a given column.
      *
-     * @param column  the column (in the range 0 to {@link #getColumnCount()}
-     *     - 1).
-     *
+     * @param column the column (in the range 0 to {@link #getColumnCount()}
+     *               - 1).
      * @return The key.
-     *
      * @see #getColumnIndex(Comparable)
      * @see #getRowKey(int)
      */
@@ -225,10 +224,8 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Returns the column index for a given key.
      *
-     * @param key  the key ({@code null} not permitted).
-     *
+     * @param key the key ({@code null} not permitted).
      * @return The column index.
-     *
      * @see #getColumnKey(int)
      * @see #getRowIndex(Comparable)
      */
@@ -242,7 +239,6 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * Returns the column keys in an unmodifiable list.
      *
      * @return The column keys.
-     *
      * @see #getRowKeys()
      */
     @Override
@@ -255,11 +251,9 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * throw an {@link UnknownKeyException} if either key is not defined in the
      * data structure.
      *
-     * @param rowKey  the row key ({@code null} not permitted).
-     * @param columnKey  the column key ({@code null} not permitted).
-     *
+     * @param rowKey    the row key ({@code null} not permitted).
+     * @param columnKey the column key ({@code null} not permitted).
      * @return The value (possibly {@code null}).
-     *
      * @see #addValue(Number, Comparable, Comparable)
      * @see #removeValue(Comparable, Comparable)
      */
@@ -280,11 +274,10 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         int row = getRowIndex(rowKey);
         if (row >= 0) {
             DefaultKeyedValues rowData
-                = (DefaultKeyedValues) this.rows.get(row);
+                    = (DefaultKeyedValues) this.rows.get(row);
             int col = rowData.getIndex(columnKey);
             return (col >= 0 ? rowData.getValue(col) : null);
-        }
-        else {
+        } else {
             throw new UnknownKeyException("Unrecognised rowKey: " + rowKey);
         }
     }
@@ -293,10 +286,9 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * Adds a value to the table.  Performs the same function as
      * #setValue(Number, Comparable, Comparable).
      *
-     * @param value  the value ({@code null} permitted).
-     * @param rowKey  the row key ({@code null} not permitted).
-     * @param columnKey  the column key ({@code null} not permitted).
-     *
+     * @param value     the value ({@code null} permitted).
+     * @param rowKey    the row key ({@code null} not permitted).
+     * @param columnKey the column key ({@code null} not permitted).
      * @see #setValue(Number, Comparable, Comparable)
      * @see #removeValue(Comparable, Comparable)
      */
@@ -309,10 +301,9 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Adds or updates a value.
      *
-     * @param value  the value ({@code null} permitted).
-     * @param rowKey  the row key ({@code null} not permitted).
-     * @param columnKey  the column key ({@code null} not permitted).
-     *
+     * @param value     the value ({@code null} permitted).
+     * @param rowKey    the row key ({@code null} not permitted).
+     * @param columnKey the column key ({@code null} not permitted).
      * @see #addValue(Number, Comparable, Comparable)
      * @see #removeValue(Comparable, Comparable)
      */
@@ -324,15 +315,13 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
 
         if (rowIndex >= 0) {
             row = (DefaultKeyedValues) this.rows.get(rowIndex);
-        }
-        else {
+        } else {
             row = new DefaultKeyedValues();
             if (this.sortRowKeys) {
                 rowIndex = -rowIndex - 1;
                 this.rowKeys.add(rowIndex, rowKey);
                 this.rows.add(rowIndex, row);
-            }
-            else {
+            } else {
                 this.rowKeys.add(rowKey);
                 this.rows.add(row);
             }
@@ -350,9 +339,8 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * all the values in the specified row and/or column are now
      * {@code null}, the row and/or column is removed from the table.
      *
-     * @param rowKey  the row key ({@code null} not permitted).
-     * @param columnKey  the column key ({@code null} not permitted).
-     *
+     * @param rowKey    the row key ({@code null} not permitted).
+     * @param columnKey the column key ({@code null} not permitted).
      * @see #addValue(Number, Comparable, Comparable)
      */
     public void removeValue(Comparable rowKey, Comparable columnKey) {
@@ -406,8 +394,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Removes a row.
      *
-     * @param rowIndex  the row index.
-     *
+     * @param rowIndex the row index.
      * @see #removeRow(Comparable)
      * @see #removeColumn(int)
      */
@@ -419,21 +406,18 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Removes a row from the table.
      *
-     * @param rowKey  the row key ({@code null} not permitted).
-     *
+     * @param rowKey the row key ({@code null} not permitted).
+     * @throws UnknownKeyException if {@code rowKey} is not defined in the
+     *                             table.
      * @see #removeRow(int)
      * @see #removeColumn(Comparable)
-     *
-     * @throws UnknownKeyException if {@code rowKey} is not defined in the
-     *         table.
      */
     public void removeRow(Comparable rowKey) {
         Args.nullNotPermitted(rowKey, "rowKey");
         int index = getRowIndex(rowKey);
         if (index >= 0) {
             removeRow(index);
-        }
-        else {
+        } else {
             throw new UnknownKeyException("Unknown key: " + rowKey);
         }
     }
@@ -441,8 +425,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Removes a column.
      *
-     * @param columnIndex  the column index.
-     *
+     * @param columnIndex the column index.
      * @see #removeColumn(Comparable)
      * @see #removeRow(int)
      */
@@ -454,13 +437,11 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Removes a column from the table.
      *
-     * @param columnKey  the column key ({@code null} not permitted).
-     *
-     * @throws UnknownKeyException if the table does not contain a column with
-     *     the specified key.
+     * @param columnKey the column key ({@code null} not permitted).
+     * @throws UnknownKeyException      if the table does not contain a column with
+     *                                  the specified key.
      * @throws IllegalArgumentException if {@code columnKey} is
-     *     {@code null}.
-     *
+     *                                  {@code null}.
      * @see #removeColumn(int)
      * @see #removeRow(Comparable)
      */
@@ -492,8 +473,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     /**
      * Tests if this object is equal to another.
      *
-     * @param o  the other object ({@code null} permitted).
-     *
+     * @param o the other object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -534,8 +514,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
                     if (v2 != null) {
                         return false;
                     }
-                }
-                else {
+                } else {
                     if (!v1.equals(v2)) {
                         return false;
                     }
@@ -563,9 +542,8 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * Returns a clone.
      *
      * @return A clone.
-     *
-     * @throws CloneNotSupportedException  this class will not throw this
-     *         exception, but subclasses (if any) might.
+     * @throws CloneNotSupportedException this class will not throw this
+     *                                    exception, but subclasses (if any) might.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

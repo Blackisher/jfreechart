@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
@@ -41,11 +41,16 @@
 
 package org.jfree.chart.annotations;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Stroke;
+import org.jfree.chart.HashUtils;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.*;
+
+import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -54,19 +59,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import org.jfree.chart.HashUtils;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtils;
-
 /**
  * A polygon annotation that can be placed on an {@link XYPlot}.  The
  * polygon coordinates are specified in data space.
@@ -74,19 +66,29 @@ import org.jfree.chart.util.SerialUtils;
 public class XYPolygonAnnotation extends AbstractXYAnnotation
         implements Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -6984203651995900036L;
 
-    /** The polygon. */
+    /**
+     * The polygon.
+     */
     private double[] polygon;
 
-    /** The stroke used to draw the box outline. */
+    /**
+     * The stroke used to draw the box outline.
+     */
     private transient Stroke stroke;
 
-    /** The paint used to draw the box outline. */
+    /**
+     * The paint used to draw the box outline.
+     */
     private transient Paint outlinePaint;
 
-    /** The paint used to fill the box. */
+    /**
+     * The paint used to fill the box.
+     */
     private transient Paint fillPaint;
 
     /**
@@ -95,8 +97,8 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * an even number of coordinates (each pair is an (x, y) location on the
      * plot) and the last point is automatically joined back to the first point.
      *
-     * @param polygon  the coordinates of the polygon's vertices
-     *     ({@code null} not permitted).
+     * @param polygon the coordinates of the polygon's vertices
+     *                ({@code null} not permitted).
      */
     public XYPolygonAnnotation(double[] polygon) {
         this(polygon, new BasicStroke(1.0f), Color.BLACK);
@@ -109,10 +111,10 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * coordinates (each pair is an (x, y) location on the plot) and the last
      * point is automatically joined back to the first point.
      *
-     * @param polygon  the coordinates of the polygon's vertices
-     *     ({@code null} not permitted).
-     * @param stroke  the shape stroke ({@code null} permitted).
-     * @param outlinePaint  the shape color ({@code null} permitted).
+     * @param polygon      the coordinates of the polygon's vertices
+     *                     ({@code null} not permitted).
+     * @param stroke       the shape stroke ({@code null} permitted).
+     * @param outlinePaint the shape color ({@code null} permitted).
      */
     public XYPolygonAnnotation(double[] polygon,
                                Stroke stroke, Paint outlinePaint) {
@@ -125,15 +127,15 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * on the plot) and the last point is automatically joined back to the
      * first point.
      *
-     * @param polygon  the coordinates of the polygon's vertices
-     *     ({@code null} not permitted).
-     * @param stroke  the shape stroke ({@code null} permitted).
-     * @param outlinePaint  the shape color ({@code null} permitted).
-     * @param fillPaint  the paint used to fill the shape ({@code null}
-     *                   permitted).
+     * @param polygon      the coordinates of the polygon's vertices
+     *                     ({@code null} not permitted).
+     * @param stroke       the shape stroke ({@code null} permitted).
+     * @param outlinePaint the shape color ({@code null} permitted).
+     * @param fillPaint    the paint used to fill the shape ({@code null}
+     *                     permitted).
      */
-    public XYPolygonAnnotation(double[] polygon, Stroke stroke, 
-            Paint outlinePaint, Paint fillPaint) {
+    public XYPolygonAnnotation(double[] polygon, Stroke stroke,
+                               Paint outlinePaint, Paint fillPaint) {
         super();
         Args.nullNotPermitted(polygon, "polygon");
         if (polygon.length % 2 != 0) {
@@ -152,7 +154,6 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * state.
      *
      * @return The coordinates of the polygon's vertices.
-     *
      * @since 1.0.2
      */
     public double[] getPolygonCoordinates() {
@@ -163,7 +164,6 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * Returns the fill paint.
      *
      * @return The fill paint (possibly {@code null}).
-     *
      * @since 1.0.2
      */
     public Paint getFillPaint() {
@@ -174,7 +174,6 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * Returns the outline stroke.
      *
      * @return The outline stroke (possibly {@code null}).
-     *
      * @since 1.0.2
      */
     public Stroke getOutlineStroke() {
@@ -185,7 +184,6 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * Returns the outline paint.
      *
      * @return The outline paint (possibly {@code null}).
-     *
      * @since 1.0.2
      */
     public Paint getOutlinePaint() {
@@ -196,13 +194,13 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * Draws the annotation.  This method is usually called by the
      * {@link XYPlot} class, you shouldn't need to call it directly.
      *
-     * @param g2  the graphics device.
-     * @param plot  the plot.
-     * @param dataArea  the data area.
-     * @param domainAxis  the domain axis.
-     * @param rangeAxis  the range axis.
-     * @param rendererIndex  the renderer index.
-     * @param info  the plot rendering info.
+     * @param g2            the graphics device.
+     * @param plot          the plot.
+     * @param dataArea      the data area.
+     * @param domainAxis    the domain axis.
+     * @param rangeAxis     the range axis.
+     * @param rendererIndex the renderer index.
+     * @param info          the plot rendering info.
      */
     @Override
     public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
@@ -234,8 +232,7 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
                 area.lineTo((float) y, (float) x);
             }
             area.closePath();
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             area.moveTo((float) x, (float) y);
             for (int i = 2; i < this.polygon.length; i += 2) {
                 x = domainAxis.valueToJava2D(this.polygon[i], dataArea,
@@ -245,7 +242,7 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
                 area.lineTo((float) x, (float) y);
             }
             area.closePath();
-       }
+        }
 
 
         if (this.fillPaint != null) {
@@ -265,8 +262,7 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
     /**
      * Tests this annotation for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -321,7 +317,6 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * Returns a clone.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException not thrown by this class, but may be
      *                                    by subclasses.
      */
@@ -333,8 +328,7 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream ({@code null} not permitted).
-     *
+     * @param stream the output stream ({@code null} not permitted).
      * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
@@ -347,10 +341,9 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream ({@code null} not permitted).
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream ({@code null} not permitted).
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {

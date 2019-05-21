@@ -21,18 +21,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.ui;
 
-import java.awt.Component;
-import java.text.NumberFormat;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
+import java.text.NumberFormat;
 
 /**
  * A table cell renderer that formats numbers with right alignment in each cell.
@@ -40,7 +39,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class NumberCellRenderer extends DefaultTableCellRenderer {
 
     /**
-     * Default constructor - builds a renderer that right justifies the 
+     * Default constructor - builds a renderer that right justifies the
      * contents of a table cell.
      */
     public NumberCellRenderer() {
@@ -51,28 +50,27 @@ public class NumberCellRenderer extends DefaultTableCellRenderer {
     /**
      * Returns itself as the renderer. Supports the TableCellRenderer interface.
      *
-     * @param table  the table.
-     * @param value  the data to be rendered.
-     * @param isSelected  a boolean that indicates whether or not the cell is 
-     *                    selected.
-     * @param hasFocus  a boolean that indicates whether or not the cell has 
-     *                  the focus.
-     * @param row  the (zero-based) row index.
-     * @param column  the (zero-based) column index.
-     *
+     * @param table      the table.
+     * @param value      the data to be rendered.
+     * @param isSelected a boolean that indicates whether or not the cell is
+     *                   selected.
+     * @param hasFocus   a boolean that indicates whether or not the cell has
+     *                   the focus.
+     * @param row        the (zero-based) row index.
+     * @param column     the (zero-based) column index.
      * @return the component that can render the contents of the cell.
      */
     @Override
-    public Component getTableCellRendererComponent(JTable table, 
-            Object value, boolean isSelected, 
-            boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(JTable table,
+                                                   Object value, boolean isSelected,
+                                                   boolean hasFocus, int row, int column) {
 
         setFont(null);
         NumberFormat nf = NumberFormat.getNumberInstance();
         if (value != null) {
-          setText(nf.format(value));
+            setText(nf.format(value));
         } else {
-          setText("");
+            setText("");
         }
         if (isSelected) {
             setBackground(table.getSelectionBackground());

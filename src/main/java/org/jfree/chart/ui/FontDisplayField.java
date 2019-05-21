@@ -21,17 +21,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.ui;
 
-import java.awt.Font;
-import java.util.ResourceBundle;
-import javax.swing.JTextField;
 import org.jfree.chart.util.ResourceBundleWrapper;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ResourceBundle;
 
 /**
  * A field for displaying a font selection.  The display field itself is
@@ -40,18 +41,21 @@ import org.jfree.chart.util.ResourceBundleWrapper;
  */
 public class FontDisplayField extends JTextField {
 
-    /** The current font. */
-    private Font displayFont;
-
-    /** The resourceBundle for the localization. */
+    /**
+     * The resourceBundle for the localization.
+     */
     protected static final ResourceBundle localizationResources =
             ResourceBundleWrapper.getBundle("org.jfree.chart.ui.LocalizationBundle");
+    /**
+     * The current font.
+     */
+    private Font displayFont;
 
     /**
      * Standard constructor - builds a FontDescriptionField initialised with
      * the specified font.
      *
-     * @param font  the font.
+     * @param font the font.
      */
     public FontDisplayField(Font font) {
         super("");
@@ -71,7 +75,7 @@ public class FontDisplayField extends JTextField {
     /**
      * Sets the font.
      *
-     * @param font  the font.
+     * @param font the font.
      */
     public void setDisplayFont(Font font) {
         this.displayFont = font;
@@ -81,15 +85,13 @@ public class FontDisplayField extends JTextField {
     /**
      * Returns a string representation of the specified font.
      *
-     * @param font  the font.
-     *
+     * @param font the font.
      * @return a string describing the font.
      */
     private String fontToString(Font font) {
         if (font != null) {
             return font.getFontName() + ", " + font.getSize();
-        }
-        else {
+        } else {
             return localizationResources.getString("No_Font_Selected");
         }
     }

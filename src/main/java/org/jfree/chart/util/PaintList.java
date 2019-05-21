@@ -21,14 +21,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.util;
 
-import java.awt.Paint;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -51,7 +51,6 @@ public class PaintList extends AbstractObjectList {
      * Returns a {@link Paint} object from the list.
      *
      * @param index the index (zero-based).
-     *
      * @return The object.
      */
     public Paint getPaint(int index) {
@@ -61,8 +60,8 @@ public class PaintList extends AbstractObjectList {
     /**
      * Sets the {@link Paint} for an item in the list.  The list is expanded if necessary.
      *
-     * @param index  the index (zero-based).
-     * @param paint  the {@link Paint}.
+     * @param index the index (zero-based).
+     * @param paint the {@link Paint}.
      */
     public void setPaint(int index, Paint paint) {
         set(index, paint);
@@ -71,8 +70,7 @@ public class PaintList extends AbstractObjectList {
     /**
      * Tests the list for equality with another object (typically also a list).
      *
-     * @param obj  the other object ({@code null} permitted).
-     *
+     * @param obj the other object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -89,9 +87,9 @@ public class PaintList extends AbstractObjectList {
         PaintList that = (PaintList) obj;
         int listSize = size();
         for (int i = 0; i < listSize; i++) {
-           if (!PaintUtils.equal(getPaint(i), that.getPaint(i))) {
-               return false;
-           }
+            if (!PaintUtils.equal(getPaint(i), that.getPaint(i))) {
+                return false;
+            }
         }
         return true;
     }
@@ -109,9 +107,8 @@ public class PaintList extends AbstractObjectList {
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
 
@@ -123,21 +120,19 @@ public class PaintList extends AbstractObjectList {
             if (paint != null) {
                 stream.writeInt(i);
                 SerialUtils.writePaint(paint, stream);
-            }
-            else {
+            } else {
                 stream.writeInt(-1);
             }
         }
 
     }
-    
+
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 
@@ -149,7 +144,7 @@ public class PaintList extends AbstractObjectList {
                 setPaint(index, SerialUtils.readPaint(stream));
             }
         }
-        
+
     }
 
 }

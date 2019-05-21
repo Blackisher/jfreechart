@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------
@@ -40,19 +40,13 @@
 
 package org.jfree.chart.plot;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Rectangle2D;
-
 import org.jfree.chart.TestUtils;
 import org.junit.Test;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DefaultDrawingSupplier} class.
@@ -70,39 +64,39 @@ public class DefaultDrawingSupplierTest {
         assertTrue(r2.equals(r1));
 
         // set up some objects...
-        Paint[] ps1A = new Paint[] {Color.RED, Color.BLUE};
-        Paint[] ps2A = new Paint[] {Color.GREEN, Color.YELLOW, Color.WHITE};
-        Paint[] ops1A = new Paint[] {Color.LIGHT_GRAY, Color.BLUE};
-        Paint[] ops2A = new Paint[] {Color.BLACK, Color.YELLOW, Color.CYAN};
-        Stroke[] ss1A = new Stroke[] {new BasicStroke(1.1f)};
+        Paint[] ps1A = new Paint[]{Color.RED, Color.BLUE};
+        Paint[] ps2A = new Paint[]{Color.GREEN, Color.YELLOW, Color.WHITE};
+        Paint[] ops1A = new Paint[]{Color.LIGHT_GRAY, Color.BLUE};
+        Paint[] ops2A = new Paint[]{Color.BLACK, Color.YELLOW, Color.CYAN};
+        Stroke[] ss1A = new Stroke[]{new BasicStroke(1.1f)};
         Stroke[] ss2A
-            = new Stroke[] {new BasicStroke(2.2f), new BasicStroke(3.3f)};
-        Stroke[] oss1A = new Stroke[] {new BasicStroke(4.4f)};
+                = new Stroke[]{new BasicStroke(2.2f), new BasicStroke(3.3f)};
+        Stroke[] oss1A = new Stroke[]{new BasicStroke(4.4f)};
         Stroke[] oss2A
-            = new Stroke[] {new BasicStroke(5.5f), new BasicStroke(6.6f)};
-        Shape[] shapes1A = new Shape[] {
-            new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0)
+                = new Stroke[]{new BasicStroke(5.5f), new BasicStroke(6.6f)};
+        Shape[] shapes1A = new Shape[]{
+                new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0)
         };
-        Shape[] shapes2A = new Shape[] {
-            new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0),
-            new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0)
+        Shape[] shapes2A = new Shape[]{
+                new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0),
+                new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0)
         };
-        Paint[] ps1B = new Paint[] {Color.RED, Color.BLUE};
-        Paint[] ps2B = new Paint[] {Color.GREEN, Color.YELLOW, Color.WHITE};
-        Paint[] ops1B = new Paint[] {Color.LIGHT_GRAY, Color.BLUE};
-        Paint[] ops2B = new Paint[] {Color.BLACK, Color.YELLOW, Color.CYAN};
-        Stroke[] ss1B = new Stroke[] {new BasicStroke(1.1f)};
+        Paint[] ps1B = new Paint[]{Color.RED, Color.BLUE};
+        Paint[] ps2B = new Paint[]{Color.GREEN, Color.YELLOW, Color.WHITE};
+        Paint[] ops1B = new Paint[]{Color.LIGHT_GRAY, Color.BLUE};
+        Paint[] ops2B = new Paint[]{Color.BLACK, Color.YELLOW, Color.CYAN};
+        Stroke[] ss1B = new Stroke[]{new BasicStroke(1.1f)};
         Stroke[] ss2B
-            = new Stroke[] {new BasicStroke(2.2f), new BasicStroke(3.3f)};
-        Stroke[] oss1B = new Stroke[] {new BasicStroke(4.4f)};
+                = new Stroke[]{new BasicStroke(2.2f), new BasicStroke(3.3f)};
+        Stroke[] oss1B = new Stroke[]{new BasicStroke(4.4f)};
         Stroke[] oss2B
-            = new Stroke[] {new BasicStroke(5.5f), new BasicStroke(6.6f)};
-        Shape[] shapes1B = new Shape[] {
-            new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0)
+                = new Stroke[]{new BasicStroke(5.5f), new BasicStroke(6.6f)};
+        Shape[] shapes1B = new Shape[]{
+                new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0)
         };
-        Shape[] shapes2B = new Shape[] {
-            new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0),
-            new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0)
+        Shape[] shapes2B = new Shape[]{
+                new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0),
+                new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0)
         };
 
         r1 = new DefaultDrawingSupplier(ps1A, ops1A, ss1A, oss1A, shapes1A);
@@ -184,7 +178,7 @@ public class DefaultDrawingSupplierTest {
     @Test
     public void testSerialization() {
         DefaultDrawingSupplier r1 = new DefaultDrawingSupplier();
-        DefaultDrawingSupplier r2 = (DefaultDrawingSupplier) 
+        DefaultDrawingSupplier r2 = (DefaultDrawingSupplier)
                 TestUtils.serialised(r1);
         assertEquals(r1, r2);
     }

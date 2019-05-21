@@ -48,10 +48,14 @@ package org.jfree.data;
  */
 public enum KeyedValueComparatorType {
 
-    /** An object representing 'by key' sorting. */
+    /**
+     * An object representing 'by key' sorting.
+     */
     BY_KEY,
 
-    /** An object representing 'by value' sorting. */
+    /**
+     * An object representing 'by value' sorting.
+     */
     BY_VALUE
 }
 

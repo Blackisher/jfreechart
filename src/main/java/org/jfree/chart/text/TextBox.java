@@ -21,60 +21,74 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
 
 package org.jfree.chart.text;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Stroke;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.SerialUtils;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 /**
  * A box containing a text block.
  */
 public class TextBox implements Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 3360220213180203706L;
 
-    /** The outline paint. */
+    /**
+     * The outline paint.
+     */
     private transient Paint outlinePaint;
 
-    /** The outline stroke. */
+    /**
+     * The outline stroke.
+     */
     private transient Stroke outlineStroke;
 
-    /** The interior space. */
+    /**
+     * The interior space.
+     */
     private RectangleInsets interiorGap;
 
-    /** The background paint. */
+    /**
+     * The background paint.
+     */
     private transient Paint backgroundPaint;
 
-    /** The shadow paint. */
+    /**
+     * The shadow paint.
+     */
     private transient Paint shadowPaint;
 
-    /** The shadow x-offset. */
+    /**
+     * The shadow x-offset.
+     */
     private double shadowXOffset = 2.0;
 
-    /** The shadow y-offset. */
+    /**
+     * The shadow y-offset.
+     */
     private double shadowYOffset = 2.0;
 
-    /** The text block. */
+    /**
+     * The text block.
+     */
     private TextBlock textBlock;
 
     /**
@@ -87,7 +101,7 @@ public class TextBox implements Serializable {
     /**
      * Creates a text box.
      *
-     * @param text  the text.
+     * @param text the text.
      */
     public TextBox(String text) {
         this((TextBlock) null);
@@ -101,7 +115,7 @@ public class TextBox implements Serializable {
     /**
      * Creates a new text box.
      *
-     * @param block  the text block.
+     * @param block the text block.
      */
     public TextBox(TextBlock block) {
         this.outlinePaint = Color.BLACK;
@@ -126,7 +140,7 @@ public class TextBox implements Serializable {
     /**
      * Sets the outline paint.
      *
-     * @param paint  the paint.
+     * @param paint the paint.
      */
     public void setOutlinePaint(Paint paint) {
         this.outlinePaint = paint;
@@ -144,7 +158,7 @@ public class TextBox implements Serializable {
     /**
      * Sets the outline stroke.
      *
-     * @param stroke  the stroke.
+     * @param stroke the stroke.
      */
     public void setOutlineStroke(Stroke stroke) {
         this.outlineStroke = stroke;
@@ -162,7 +176,7 @@ public class TextBox implements Serializable {
     /**
      * Sets the interior gap.
      *
-     * @param gap  the gap.
+     * @param gap the gap.
      */
     public void setInteriorGap(RectangleInsets gap) {
         this.interiorGap = gap;
@@ -180,7 +194,7 @@ public class TextBox implements Serializable {
     /**
      * Sets the background paint.
      *
-     * @param paint  the paint.
+     * @param paint the paint.
      */
     public void setBackgroundPaint(Paint paint) {
         this.backgroundPaint = paint;
@@ -198,7 +212,7 @@ public class TextBox implements Serializable {
     /**
      * Sets the shadow paint.
      *
-     * @param paint  the paint.
+     * @param paint the paint.
      */
     public void setShadowPaint(Paint paint) {
         this.shadowPaint = paint;
@@ -216,7 +230,7 @@ public class TextBox implements Serializable {
     /**
      * Sets the x-offset for the shadow effect.
      *
-     * @param offset  the offset (in Java2D units).
+     * @param offset the offset (in Java2D units).
      */
     public void setShadowXOffset(double offset) {
         this.shadowXOffset = offset;
@@ -234,7 +248,7 @@ public class TextBox implements Serializable {
     /**
      * Sets the y-offset for the shadow effect.
      *
-     * @param offset  the offset (in Java2D units).
+     * @param offset the offset (in Java2D units).
      */
     public void setShadowYOffset(double offset) {
         this.shadowYOffset = offset;
@@ -252,7 +266,7 @@ public class TextBox implements Serializable {
     /**
      * Sets the text block.
      *
-     * @param block  the block.
+     * @param block the block.
      */
     public void setTextBlock(TextBlock block) {
         this.textBlock = block;
@@ -261,10 +275,10 @@ public class TextBox implements Serializable {
     /**
      * Draws the text box.
      *
-     * @param g2  the graphics device.
-     * @param x  the x-coordinate.
-     * @param y  the y-coordinate.
-     * @param anchor  the anchor point.
+     * @param g2     the graphics device.
+     * @param x      the x-coordinate.
+     * @param y      the y-coordinate.
+     * @param anchor the anchor point.
      */
     public void draw(Graphics2D g2, float x, float y, RectangleAnchor anchor) {
         final Size2D d1 = this.textBlock.calculateDimensions(g2);
@@ -278,8 +292,8 @@ public class TextBox implements Serializable {
 
         if (this.shadowPaint != null) {
             final Rectangle2D shadow = new Rectangle2D.Double(
-                xx + this.shadowXOffset, yy + this.shadowYOffset,
-                bounds.getWidth(), bounds.getHeight());
+                    xx + this.shadowXOffset, yy + this.shadowYOffset,
+                    bounds.getWidth(), bounds.getHeight());
             g2.setPaint(this.shadowPaint);
             g2.fill(shadow);
         }
@@ -304,8 +318,7 @@ public class TextBox implements Serializable {
     /**
      * Returns the height of the text box.
      *
-     * @param g2  the graphics device.
-     *
+     * @param g2 the graphics device.
      * @return The height (in Java2D units).
      */
     public double getHeight(Graphics2D g2) {
@@ -316,8 +329,7 @@ public class TextBox implements Serializable {
     /**
      * Tests this object for equality with an arbitrary object.
      *
-     * @param obj  the object to test against ({@code null} permitted).
-     *
+     * @param obj the object to test against ({@code null} permitted).
      * @return A boolean.
      */
     public boolean equals(Object obj) {
@@ -388,9 +400,8 @@ public class TextBox implements Serializable {
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -403,12 +414,11 @@ public class TextBox implements Serializable {
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
-    private void readObject(ObjectInputStream stream) throws IOException, 
+    private void readObject(ObjectInputStream stream) throws IOException,
             ClassNotFoundException {
         stream.defaultReadObject();
         this.outlinePaint = SerialUtils.readPaint(stream);

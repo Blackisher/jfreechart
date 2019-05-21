@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -49,15 +49,6 @@
 
 package org.jfree.chart.annotations;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.Plot;
@@ -66,29 +57,45 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.Args;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * An annotation that allows an image to be placed at some location on
  * an {@link XYPlot}.
- *
+ * <p>
  * TODO:  implement serialization properly (image is not serializable).
  */
 public class XYImageAnnotation extends AbstractXYAnnotation
         implements Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -4364694501921559958L;
 
-    /** The x-coordinate (in data space). */
+    /**
+     * The x-coordinate (in data space).
+     */
     private double x;
 
-    /** The y-coordinate (in data space). */
+    /**
+     * The y-coordinate (in data space).
+     */
     private double y;
 
-    /** The image. */
+    /**
+     * The image.
+     */
     private transient Image image;
 
     /**
@@ -102,9 +109,9 @@ public class XYImageAnnotation extends AbstractXYAnnotation
      * Creates a new annotation to be displayed at the specified (x, y)
      * location.
      *
-     * @param x  the x-coordinate (in data space).
-     * @param y  the y-coordinate (in data space).
-     * @param image  the image ({@code null} not permitted).
+     * @param x     the x-coordinate (in data space).
+     * @param y     the y-coordinate (in data space).
+     * @param image the image ({@code null} not permitted).
      */
     public XYImageAnnotation(double x, double y, Image image) {
         this(x, y, image, RectangleAnchor.CENTER);
@@ -114,15 +121,14 @@ public class XYImageAnnotation extends AbstractXYAnnotation
      * Creates a new annotation to be displayed at the specified (x, y)
      * location.
      *
-     * @param x  the x-coordinate (in data space).
-     * @param y  the y-coordinate (in data space).
+     * @param x      the x-coordinate (in data space).
+     * @param y      the y-coordinate (in data space).
      * @param image  the image ({@code null} not permitted).
-     * @param anchor  the image anchor ({@code null} not permitted).
-     *
+     * @param anchor the image anchor ({@code null} not permitted).
      * @since 1.0.4
      */
     public XYImageAnnotation(double x, double y, Image image,
-            RectangleAnchor anchor) {
+                             RectangleAnchor anchor) {
         super();
         Args.nullNotPermitted(image, "image");
         Args.nullNotPermitted(anchor, "anchor");
@@ -136,7 +142,6 @@ public class XYImageAnnotation extends AbstractXYAnnotation
      * Returns the x-coordinate (in data space) for the annotation.
      *
      * @return The x-coordinate.
-     *
      * @since 1.0.4
      */
     public double getX() {
@@ -147,7 +152,6 @@ public class XYImageAnnotation extends AbstractXYAnnotation
      * Returns the y-coordinate (in data space) for the annotation.
      *
      * @return The y-coordinate.
-     *
      * @since 1.0.4
      */
     public double getY() {
@@ -158,7 +162,6 @@ public class XYImageAnnotation extends AbstractXYAnnotation
      * Returns the image for the annotation.
      *
      * @return The image.
-     *
      * @since 1.0.4
      */
     public Image getImage() {
@@ -169,7 +172,6 @@ public class XYImageAnnotation extends AbstractXYAnnotation
      * Returns the image anchor for the annotation.
      *
      * @return The image anchor.
-     *
      * @since 1.0.4
      */
     public RectangleAnchor getImageAnchor() {
@@ -181,14 +183,14 @@ public class XYImageAnnotation extends AbstractXYAnnotation
      * {@link XYPlot} class, you don't normally need to call this method
      * directly.
      *
-     * @param g2  the graphics device.
-     * @param plot  the plot.
-     * @param dataArea  the data area.
-     * @param domainAxis  the domain axis.
-     * @param rangeAxis  the range axis.
-     * @param rendererIndex  the renderer index.
-     * @param info  if supplied, this info object will be populated with
-     *              entity information.
+     * @param g2            the graphics device.
+     * @param plot          the plot.
+     * @param dataArea      the data area.
+     * @param domainAxis    the domain axis.
+     * @param rangeAxis     the range axis.
+     * @param rendererIndex the renderer index.
+     * @param info          if supplied, this info object will be populated with
+     *                      entity information.
      */
     @Override
     public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
@@ -200,20 +202,19 @@ public class XYImageAnnotation extends AbstractXYAnnotation
         AxisLocation domainAxisLocation = plot.getDomainAxisLocation();
         AxisLocation rangeAxisLocation = plot.getRangeAxisLocation();
         RectangleEdge domainEdge
-            = Plot.resolveDomainAxisLocation(domainAxisLocation, orientation);
+                = Plot.resolveDomainAxisLocation(domainAxisLocation, orientation);
         RectangleEdge rangeEdge
-            = Plot.resolveRangeAxisLocation(rangeAxisLocation, orientation);
+                = Plot.resolveRangeAxisLocation(rangeAxisLocation, orientation);
         float j2DX
-            = (float) domainAxis.valueToJava2D(this.x, dataArea, domainEdge);
+                = (float) domainAxis.valueToJava2D(this.x, dataArea, domainEdge);
         float j2DY
-            = (float) rangeAxis.valueToJava2D(this.y, dataArea, rangeEdge);
+                = (float) rangeAxis.valueToJava2D(this.y, dataArea, rangeEdge);
         float xx = 0.0f;
         float yy = 0.0f;
         if (orientation == PlotOrientation.HORIZONTAL) {
             xx = j2DY;
             yy = j2DX;
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             xx = j2DX;
             yy = j2DY;
         }
@@ -237,8 +238,7 @@ public class XYImageAnnotation extends AbstractXYAnnotation
     /**
      * Tests this object for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -284,8 +284,7 @@ public class XYImageAnnotation extends AbstractXYAnnotation
      * Returns a clone of the annotation.
      *
      * @return A clone.
-     *
-     * @throws CloneNotSupportedException  if the annotation can't be cloned.
+     * @throws CloneNotSupportedException if the annotation can't be cloned.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -295,9 +294,8 @@ public class XYImageAnnotation extends AbstractXYAnnotation
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -307,13 +305,12 @@ public class XYImageAnnotation extends AbstractXYAnnotation
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         //this.image = SerialUtils.readImage(stream);
     }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -45,11 +45,12 @@
 
 package org.jfree.chart.block;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.io.Serializable;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.util.PublicCloneable;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 
 /**
  * An empty block with a fixed size.
@@ -57,14 +58,16 @@ import org.jfree.chart.util.PublicCloneable;
 public class EmptyBlock extends AbstractBlock
         implements Block, Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -4083197869412648579L;
 
     /**
      * Creates a new block with the specified width and height.
      *
      * @param width  the width.
-     * @param height  the height.
+     * @param height the height.
      */
     public EmptyBlock(double width, double height) {
         setWidth(width);
@@ -75,9 +78,8 @@ public class EmptyBlock extends AbstractBlock
      * Arranges the contents of the block, within the given constraints, and
      * returns the block size.
      *
-     * @param g2  the graphics device.
-     * @param constraint  the constraint ({@code null} not permitted).
-     *
+     * @param g2         the graphics device.
+     * @param constraint the constraint ({@code null} not permitted).
      * @return The block size (in Java2D units, never {@code null}).
      */
     @Override
@@ -91,8 +93,8 @@ public class EmptyBlock extends AbstractBlock
      * Draws the block.  Since the block is empty, there is nothing to draw
      * except the optional border.
      *
-     * @param g2  the graphics device.
-     * @param area  the area.
+     * @param g2   the graphics device.
+     * @param area the area.
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area) {
@@ -103,10 +105,9 @@ public class EmptyBlock extends AbstractBlock
      * Draws the block within the specified area.  Since the block is empty,
      * there is nothing to draw except the optional border.
      *
-     * @param g2  the graphics device.
-     * @param area  the area.
-     * @param params  ignored ({@code null} permitted).
-     *
+     * @param g2     the graphics device.
+     * @param area   the area.
+     * @param params ignored ({@code null} permitted).
      * @return Always {@code null}.
      */
     @Override
@@ -120,7 +121,6 @@ public class EmptyBlock extends AbstractBlock
      * Returns a clone of the block.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override

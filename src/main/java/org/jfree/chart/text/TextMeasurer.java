@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
@@ -34,16 +34,15 @@ package org.jfree.chart.text;
 public interface TextMeasurer {
 
     /**
-     * Calculates the width of a {@code String} in the current 
+     * Calculates the width of a {@code String} in the current
      * {@code Graphics} context.
      *
      * @param text  the text.
-     * @param start  the start position of the substring to be measured.
-     * @param end  the position of the last character to be measured.
-     *
+     * @param start the start position of the substring to be measured.
+     * @param end   the position of the last character to be measured.
      * @return The width of the string in Java2D units.
      */
     public float getStringWidth(String text, int start, int end);
-    
+
 }
 

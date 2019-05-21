@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -41,7 +41,11 @@
 
 package org.jfree.chart;
 
-import java.awt.Stroke;
+import org.jfree.chart.util.Args;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.SerialUtils;
+
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -50,9 +54,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.SerialUtils;
 
 /**
  * A storage structure that maps {@code Comparable} instances with
@@ -66,10 +67,14 @@ import org.jfree.chart.util.SerialUtils;
  */
 public class StrokeMap implements Cloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     static final long serialVersionUID = -8148916785963525169L;
 
-    /** Storage for the keys and values. */
+    /**
+     * Storage for the keys and values.
+     */
     private transient Map store;
 
     /**
@@ -83,12 +88,10 @@ public class StrokeMap implements Cloneable, Serializable {
      * Returns the stroke associated with the specified key, or
      * {@code null}.
      *
-     * @param key  the key ({@code null} not permitted).
-     *
+     * @param key the key ({@code null} not permitted).
      * @return The stroke, or {@code null}.
-     *
      * @throws IllegalArgumentException if {@code key} is
-     *     {@code null}.
+     *                                  {@code null}.
      */
     public Stroke getStroke(Comparable key) {
         Args.nullNotPermitted(key, "key");
@@ -99,8 +102,7 @@ public class StrokeMap implements Cloneable, Serializable {
      * Returns {@code true} if the map contains the specified key, and
      * {@code false} otherwise.
      *
-     * @param key  the key.
-     *
+     * @param key the key.
      * @return {@code true} if the map contains the specified key, and
      * {@code false} otherwise.
      */
@@ -112,8 +114,8 @@ public class StrokeMap implements Cloneable, Serializable {
      * Adds a mapping between the specified {@code key} and
      * {@code stroke} values.
      *
-     * @param key  the key ({@code null} not permitted).
-     * @param stroke  the stroke.
+     * @param key    the key ({@code null} not permitted).
+     * @param stroke the stroke.
      */
     public void put(Comparable key, Stroke stroke) {
         Args.nullNotPermitted(key, "key");
@@ -130,8 +132,7 @@ public class StrokeMap implements Cloneable, Serializable {
     /**
      * Tests this map for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -163,7 +164,6 @@ public class StrokeMap implements Cloneable, Serializable {
      * Returns a clone of this {@code StrokeMap}.
      *
      * @return A clone of this instance.
-     *
      * @throws CloneNotSupportedException if any key is not cloneable.
      */
     @Override
@@ -179,9 +179,8 @@ public class StrokeMap implements Cloneable, Serializable {
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -199,10 +198,9 @@ public class StrokeMap implements Cloneable, Serializable {
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {

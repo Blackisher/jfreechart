@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -51,17 +51,6 @@
 
 package org.jfree.chart.block;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.text.TextBlock;
@@ -69,11 +58,14 @@ import org.jfree.chart.text.TextBlockAnchor;
 import org.jfree.chart.text.TextUtils;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtils;
+import org.jfree.chart.util.*;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * A block containing a label.
@@ -81,31 +73,38 @@ import org.jfree.chart.util.SerialUtils;
 public class LabelBlock extends AbstractBlock
         implements Block, PublicCloneable {
 
-    /** For serialization. */
+    /**
+     * The default color.
+     */
+    public static final Paint DEFAULT_PAINT = Color.BLACK;
+    /**
+     * For serialization.
+     */
     static final long serialVersionUID = 249626098864178017L;
-
     /**
      * The text for the label - retained in case the label needs
      * regenerating (for example, to change the font).
      */
     private String text;
-
-    /** The label. */
+    /**
+     * The label.
+     */
     private TextBlock label;
-
-    /** The font. */
+    /**
+     * The font.
+     */
     private Font font;
-
-    /** The tool tip text (can be {@code null}). */
+    /**
+     * The tool tip text (can be {@code null}).
+     */
     private String toolTipText;
-
-    /** The URL text (can be {@code null}). */
+    /**
+     * The URL text (can be {@code null}).
+     */
     private String urlText;
-
-    /** The default color. */
-    public static final Paint DEFAULT_PAINT = Color.BLACK;
-
-    /** The paint. */
+    /**
+     * The paint.
+     */
     private transient Paint paint;
 
     /**
@@ -125,7 +124,7 @@ public class LabelBlock extends AbstractBlock
     /**
      * Creates a new label block.
      *
-     * @param label  the label ({@code null} not permitted).
+     * @param label the label ({@code null} not permitted).
      */
     public LabelBlock(String label) {
         this(label, new Font("SansSerif", Font.PLAIN, 10), DEFAULT_PAINT);
@@ -134,8 +133,8 @@ public class LabelBlock extends AbstractBlock
     /**
      * Creates a new label block.
      *
-     * @param text  the text for the label ({@code null} not permitted).
-     * @param font  the font ({@code null} not permitted).
+     * @param text the text for the label ({@code null} not permitted).
+     * @param font the font ({@code null} not permitted).
      */
     public LabelBlock(String text, Font font) {
         this(text, font, DEFAULT_PAINT);
@@ -163,7 +162,6 @@ public class LabelBlock extends AbstractBlock
      * Returns the font.
      *
      * @return The font (never {@code null}).
-     *
      * @see #setFont(Font)
      */
     public Font getFont() {
@@ -173,8 +171,7 @@ public class LabelBlock extends AbstractBlock
     /**
      * Sets the font and regenerates the label.
      *
-     * @param font  the font ({@code null} not permitted).
-     *
+     * @param font the font ({@code null} not permitted).
      * @see #getFont()
      */
     public void setFont(Font font) {
@@ -187,7 +184,6 @@ public class LabelBlock extends AbstractBlock
      * Returns the paint.
      *
      * @return The paint (never {@code null}).
-     *
      * @see #setPaint(Paint)
      */
     public Paint getPaint() {
@@ -197,8 +193,7 @@ public class LabelBlock extends AbstractBlock
     /**
      * Sets the paint and regenerates the label.
      *
-     * @param paint  the paint ({@code null} not permitted).
-     *
+     * @param paint the paint ({@code null} not permitted).
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
@@ -212,7 +207,6 @@ public class LabelBlock extends AbstractBlock
      * Returns the tool tip text.
      *
      * @return The tool tip text (possibly {@code null}).
-     *
      * @see #setToolTipText(String)
      */
     public String getToolTipText() {
@@ -222,8 +216,7 @@ public class LabelBlock extends AbstractBlock
     /**
      * Sets the tool tip text.
      *
-     * @param text  the text ({@code null} permitted).
-     *
+     * @param text the text ({@code null} permitted).
      * @see #getToolTipText()
      */
     public void setToolTipText(String text) {
@@ -234,7 +227,6 @@ public class LabelBlock extends AbstractBlock
      * Returns the URL text.
      *
      * @return The URL text (possibly {@code null}).
-     *
      * @see #setURLText(String)
      */
     public String getURLText() {
@@ -244,8 +236,7 @@ public class LabelBlock extends AbstractBlock
     /**
      * Sets the URL text.
      *
-     * @param text  the text ({@code null} permitted).
-     *
+     * @param text the text ({@code null} permitted).
      * @see #getURLText()
      */
     public void setURLText(String text) {
@@ -256,7 +247,6 @@ public class LabelBlock extends AbstractBlock
      * Returns the content alignment point.
      *
      * @return The content alignment point (never {@code null}).
-     *
      * @since 1.0.13
      */
     public TextBlockAnchor getContentAlignmentPoint() {
@@ -266,9 +256,8 @@ public class LabelBlock extends AbstractBlock
     /**
      * Sets the content alignment point.
      *
-     * @param anchor  the anchor used to determine the alignment point (never
-     *         {@code null}).
-     *
+     * @param anchor the anchor used to determine the alignment point (never
+     *               {@code null}).
      * @since 1.0.13
      */
     public void setContentAlignmentPoint(TextBlockAnchor anchor) {
@@ -280,7 +269,6 @@ public class LabelBlock extends AbstractBlock
      * Returns the text anchor (never {@code null}).
      *
      * @return The text anchor.
-     *
      * @since 1.0.13
      */
     public RectangleAnchor getTextAnchor() {
@@ -290,8 +278,7 @@ public class LabelBlock extends AbstractBlock
     /**
      * Sets the text anchor.
      *
-     * @param anchor  the anchor ({@code null} not permitted).
-     *
+     * @param anchor the anchor ({@code null} not permitted).
      * @since 1.0.13
      */
     public void setTextAnchor(RectangleAnchor anchor) {
@@ -302,9 +289,8 @@ public class LabelBlock extends AbstractBlock
      * Arranges the contents of the block, within the given constraints, and
      * returns the block size.
      *
-     * @param g2  the graphics device.
-     * @param constraint  the constraint ({@code null} not permitted).
-     *
+     * @param g2         the graphics device.
+     * @param constraint the constraint ({@code null} not permitted).
      * @return The block size (in Java2D units, never {@code null}).
      */
     @Override
@@ -318,8 +304,8 @@ public class LabelBlock extends AbstractBlock
     /**
      * Draws the block.
      *
-     * @param g2  the graphics device.
-     * @param area  the area.
+     * @param g2   the graphics device.
+     * @param area the area.
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area) {
@@ -329,10 +315,9 @@ public class LabelBlock extends AbstractBlock
     /**
      * Draws the block within the specified area.
      *
-     * @param g2  the graphics device.
-     * @param area  the area.
-     * @param params  ignored ({@code null} permitted).
-     *
+     * @param g2     the graphics device.
+     * @param area   the area.
+     * @param params ignored ({@code null} permitted).
      * @return Always {@code null}.
      */
     @Override
@@ -374,8 +359,7 @@ public class LabelBlock extends AbstractBlock
     /**
      * Tests this {@code LabelBlock} for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -412,7 +396,6 @@ public class LabelBlock extends AbstractBlock
      * Returns a clone of this {@code LabelBlock} instance.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
@@ -423,8 +406,7 @@ public class LabelBlock extends AbstractBlock
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
+     * @param stream the output stream.
      * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
@@ -435,13 +417,12 @@ public class LabelBlock extends AbstractBlock
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.paint = SerialUtils.readPaint(stream);
     }

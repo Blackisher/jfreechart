@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  */
@@ -57,8 +57,7 @@ public final class ObjectUtils {
         }
         if (o1 != null) {
             return o1.equals(o2);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -69,7 +68,7 @@ public final class ObjectUtils {
      *
      * @param object the object ({@code null} permitted).
      * @return The object's hash code (or zero if the object is
-     *         {@code null}).
+     * {@code null}).
      */
     public static int hashCode(Object object) {
         int result = 0;
@@ -86,11 +85,10 @@ public final class ObjectUtils {
      * @param object the object to clone ({@code null} not permitted).
      * @return A clone of the specified object.
      * @throws CloneNotSupportedException if the object cannot be cloned.
-     * 
      * @deprecated Use CloneUtils#clone(Object).
      */
     public static Object clone(Object object)
-        throws CloneNotSupportedException {
+            throws CloneNotSupportedException {
         if (object == null) {
             throw new IllegalArgumentException("Null 'object' argument.");
         }
@@ -103,7 +101,7 @@ public final class ObjectUtils {
      *
      * @param collection the collection ({@code null} not permitted).
      * @return A new collection containing clones of all the items in the
-     *         specified collection.
+     * specified collection.
      * @throws CloneNotSupportedException if any of the items in the collection
      *                                    cannot be cloned.
      */

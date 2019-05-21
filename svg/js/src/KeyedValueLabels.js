@@ -12,9 +12,9 @@ if (!jfc) jfc = {};
  * Constructor for a new KeyedValueLabels instance
  * @constructor
  */
-jfc.KeyedValueLabels = function() {
+jfc.KeyedValueLabels = function () {
     if (!(this instanceof orsoncharts.KeyedValueLabels)) {
-	return new orsoncharts.KeyedValueLabels();
+        return new orsoncharts.KeyedValueLabels();
     }
     this.format = "{K} = {V}";
     this.valueDP = 2;
@@ -22,8 +22,8 @@ jfc.KeyedValueLabels = function() {
 };
 
 // Generates a label for an item in a KeyedValuesDataset.
-jfc.KeyedValueLabels.prototype.itemLabel = function(keyedValues, itemIndex) {
-    var labelStr = new String(this.format);
+jfc.KeyedValueLabels.prototype.itemLabel = function (keyedValues, itemIndex) {
+    var labelStr = String(this.format);
     var keyStr = keyedValues.key(itemIndex);
     var value = keyedValues.valueByIndex(itemIndex);
     var valueStr = value.toFixed(this.valueDP);

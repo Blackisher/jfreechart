@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -45,23 +45,17 @@
 
 package org.jfree.chart;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
+import org.jfree.chart.ui.GradientPaintTransformType;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedString;
-import org.jfree.chart.ui.GradientPaintTransformType;
-import org.jfree.chart.ui.StandardGradientPaintTransformer;
 
-
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.*;
 
 
 /**
@@ -249,8 +243,8 @@ public class LegendItemTest {
         item1 = new LegendItem("Label2", "Description2", "ToolTip", "URL",
                 false, new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0), false,
                 Color.BLACK, false, Color.YELLOW, new BasicStroke(2.1f), false,
-            new Line2D.Double(4.0, 3.0, 2.0, 1.0), new BasicStroke(3.3f),
-            Color.WHITE
+                new Line2D.Double(4.0, 3.0, 2.0, 1.0), new BasicStroke(3.3f),
+                Color.WHITE
         );
         assertFalse(item1.equals(item2));
         item2 = new LegendItem("Label2", "Description2", "ToolTip",
@@ -314,7 +308,7 @@ public class LegendItemTest {
         LegendItem item1 = new LegendItem("Item", "Description",
                 "ToolTip", "URL",
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), new GradientPaint(
-                        5.0f, 6.0f, Color.BLUE, 7.0f, 8.0f, Color.GRAY));
+                5.0f, 6.0f, Color.BLUE, 7.0f, 8.0f, Color.GRAY));
         item1.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.YELLOW));
         item1.setOutlinePaint(new GradientPaint(4.0f, 3.0f, Color.GREEN, 2.0f,

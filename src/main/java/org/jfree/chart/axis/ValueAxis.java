@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -114,12 +114,15 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.text.TextUtils;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.*;
+import org.jfree.data.Range;
+
+import java.awt.*;
 import java.awt.font.LineMetrics;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
@@ -131,18 +134,6 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.text.TextUtils;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.AttrStringUtils;
-import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.Args;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtils;
-import org.jfree.data.Range;
-
 /**
  * The base class for axes that display value data, where values are measured
  * using the {@code double} primitive.  The two key subclasses are
@@ -151,33 +142,42 @@ import org.jfree.data.Range;
 public abstract class ValueAxis extends Axis
         implements Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
-    private static final long serialVersionUID = 3698345477322391456L;
-
-    /** The default axis range. */
+    /**
+     * The default axis range.
+     */
     public static final Range DEFAULT_RANGE = new Range(0.0, 1.0);
-
-    /** The default auto-range value. */
+    /**
+     * The default auto-range value.
+     */
     public static final boolean DEFAULT_AUTO_RANGE = true;
-
-    /** The default inverted flag setting. */
+    /**
+     * The default inverted flag setting.
+     */
     public static final boolean DEFAULT_INVERTED = false;
-
-    /** The default minimum auto range. */
+    /**
+     * The default minimum auto range.
+     */
     public static final double DEFAULT_AUTO_RANGE_MINIMUM_SIZE = 0.00000001;
-
-    /** The default value for the lower margin (0.05 = 5%). */
+    /**
+     * The default value for the lower margin (0.05 = 5%).
+     */
     public static final double DEFAULT_LOWER_MARGIN = 0.05;
-
-    /** The default value for the upper margin (0.05 = 5%). */
+    /**
+     * The default value for the upper margin (0.05 = 5%).
+     */
     public static final double DEFAULT_UPPER_MARGIN = 0.05;
-
-    /** The default auto-tick-unit-selection value. */
+    /**
+     * The default auto-tick-unit-selection value.
+     */
     public static final boolean DEFAULT_AUTO_TICK_UNIT_SELECTION = true;
-
-    /** The maximum tick count. */
+    /**
+     * The maximum tick count.
+     */
     public static final int MAXIMUM_TICK_COUNT = 500;
-
+    /**
+     * For serialization.
+     */
+    private static final long serialVersionUID = 3698345477322391456L;
     /**
      * A flag that controls whether an arrow is drawn at the positive end of
      * the axis line.
@@ -190,22 +190,34 @@ public abstract class ValueAxis extends Axis
      */
     private boolean negativeArrowVisible;
 
-    /** The shape used for an up arrow. */
+    /**
+     * The shape used for an up arrow.
+     */
     private transient Shape upArrow;
 
-    /** The shape used for a down arrow. */
+    /**
+     * The shape used for a down arrow.
+     */
     private transient Shape downArrow;
 
-    /** The shape used for a left arrow. */
+    /**
+     * The shape used for a left arrow.
+     */
     private transient Shape leftArrow;
 
-    /** The shape used for a right arrow. */
+    /**
+     * The shape used for a right arrow.
+     */
     private transient Shape rightArrow;
 
-    /** A flag that affects the orientation of the values on the axis. */
+    /**
+     * A flag that affects the orientation of the values on the axis.
+     */
     private boolean inverted;
 
-    /** The axis range. */
+    /**
+     * The axis range.
+     */
     private Range range;
 
     /**
@@ -214,7 +226,9 @@ public abstract class ValueAxis extends Axis
      */
     private boolean autoRange;
 
-    /** The minimum size for the 'auto' axis range (excluding margins). */
+    /**
+     * The minimum size for the 'auto' axis range (excluding margins).
+     */
     private double autoRangeMinimumSize;
 
     /**
@@ -252,10 +266,14 @@ public abstract class ValueAxis extends Axis
      */
     private boolean autoTickUnitSelection;
 
-    /** The standard tick units for the axis. */
+    /**
+     * The standard tick units for the axis.
+     */
     private TickUnitSource standardTickUnits;
 
-    /** An index into an array of standard tick values. */
+    /**
+     * An index into an array of standard tick values.
+     */
     private int autoTickIndex;
 
     /**
@@ -265,15 +283,17 @@ public abstract class ValueAxis extends Axis
      */
     private int minorTickCount;
 
-    /** A flag indicating whether or not tick labels are rotated to vertical. */
+    /**
+     * A flag indicating whether or not tick labels are rotated to vertical.
+     */
     private boolean verticalTickLabels;
 
     /**
      * Constructs a value axis.
      *
-     * @param label  the axis label ({@code null} permitted).
-     * @param standardTickUnits  the source for standard tick units
-     *                           ({@code null} permitted).
+     * @param label             the axis label ({@code null} permitted).
+     * @param standardTickUnits the source for standard tick units
+     *                          ({@code null} permitted).
      */
     protected ValueAxis(String label, TickUnitSource standardTickUnits) {
 
@@ -335,7 +355,6 @@ public abstract class ValueAxis extends Axis
      * vertical), and {@code false} otherwise.
      *
      * @return {@code true} or {@code false}.
-     *
      * @see #setVerticalTickLabels(boolean)
      */
     public boolean isVerticalTickLabels() {
@@ -348,8 +367,7 @@ public abstract class ValueAxis extends Axis
      * is changed, an {@link AxisChangeEvent} is sent to all registered
      * listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #isVerticalTickLabels()
      */
     public void setVerticalTickLabels(boolean flag) {
@@ -364,7 +382,6 @@ public abstract class ValueAxis extends Axis
      * drawn that points in the positive direction for the axis.
      *
      * @return A boolean.
-     *
      * @see #setPositiveArrowVisible(boolean)
      */
     public boolean isPositiveArrowVisible() {
@@ -376,8 +393,7 @@ public abstract class ValueAxis extends Axis
      * drawn that points in the positive direction for the axis, and sends an
      * {@link AxisChangeEvent} to all registered listeners.
      *
-     * @param visible  the flag.
-     *
+     * @param visible the flag.
      * @see #isPositiveArrowVisible()
      */
     public void setPositiveArrowVisible(boolean visible) {
@@ -390,7 +406,6 @@ public abstract class ValueAxis extends Axis
      * drawn that points in the negative direction for the axis.
      *
      * @return A boolean.
-     *
      * @see #setNegativeArrowVisible(boolean)
      */
     public boolean isNegativeArrowVisible() {
@@ -402,8 +417,7 @@ public abstract class ValueAxis extends Axis
      * drawn that points in the negative direction for the axis, and sends an
      * {@link AxisChangeEvent} to all registered listeners.
      *
-     * @param visible  the flag.
-     *
+     * @param visible the flag.
      * @see #setNegativeArrowVisible(boolean)
      */
     public void setNegativeArrowVisible(boolean visible) {
@@ -416,7 +430,6 @@ public abstract class ValueAxis extends Axis
      * the end of an axis line.
      *
      * @return A shape (never {@code null}).
-     *
      * @see #setUpArrow(Shape)
      */
     public Shape getUpArrow() {
@@ -428,8 +441,7 @@ public abstract class ValueAxis extends Axis
      * the end of an axis line and sends an {@link AxisChangeEvent} to all
      * registered listeners.
      *
-     * @param arrow  the arrow shape ({@code null} not permitted).
-     *
+     * @param arrow the arrow shape ({@code null} not permitted).
      * @see #getUpArrow()
      */
     public void setUpArrow(Shape arrow) {
@@ -443,7 +455,6 @@ public abstract class ValueAxis extends Axis
      * the end of an axis line.
      *
      * @return A shape (never {@code null}).
-     *
      * @see #setDownArrow(Shape)
      */
     public Shape getDownArrow() {
@@ -455,8 +466,7 @@ public abstract class ValueAxis extends Axis
      * the end of an axis line and sends an {@link AxisChangeEvent} to all
      * registered listeners.
      *
-     * @param arrow  the arrow shape ({@code null} not permitted).
-     *
+     * @param arrow the arrow shape ({@code null} not permitted).
      * @see #getDownArrow()
      */
     public void setDownArrow(Shape arrow) {
@@ -470,7 +480,6 @@ public abstract class ValueAxis extends Axis
      * end of an axis line.
      *
      * @return A shape (never {@code null}).
-     *
      * @see #setLeftArrow(Shape)
      */
     public Shape getLeftArrow() {
@@ -482,8 +491,7 @@ public abstract class ValueAxis extends Axis
      * end of an axis line and sends an {@link AxisChangeEvent} to all
      * registered listeners.
      *
-     * @param arrow  the arrow shape ({@code null} not permitted).
-     *
+     * @param arrow the arrow shape ({@code null} not permitted).
      * @see #getLeftArrow()
      */
     public void setLeftArrow(Shape arrow) {
@@ -497,7 +505,6 @@ public abstract class ValueAxis extends Axis
      * end of an axis line.
      *
      * @return A shape (never {@code null}).
-     *
      * @see #setRightArrow(Shape)
      */
     public Shape getRightArrow() {
@@ -509,8 +516,7 @@ public abstract class ValueAxis extends Axis
      * the end of an axis line and sends an {@link AxisChangeEvent} to all
      * registered listeners.
      *
-     * @param arrow  the arrow shape ({@code null} not permitted).
-     *
+     * @param arrow the arrow shape ({@code null} not permitted).
      * @see #getRightArrow()
      */
     public void setRightArrow(Shape arrow) {
@@ -522,14 +528,14 @@ public abstract class ValueAxis extends Axis
     /**
      * Draws an axis line at the current cursor position and edge.
      *
-     * @param g2  the graphics device ({@code null} not permitted).
-     * @param cursor  the cursor position.
-     * @param dataArea  the data area.
-     * @param edge  the edge.
+     * @param g2       the graphics device ({@code null} not permitted).
+     * @param cursor   the cursor position.
+     * @param dataArea the data area.
+     * @param edge     the edge.
      */
     @Override
     protected void drawAxisLine(Graphics2D g2, double cursor,
-            Rectangle2D dataArea, RectangleEdge edge) {
+                                Rectangle2D dataArea, RectangleEdge edge) {
         Line2D axisLine = null;
         double c = cursor;
         if (edge == RectangleEdge.TOP) {
@@ -539,7 +545,7 @@ public abstract class ValueAxis extends Axis
             axisLine = new Line2D.Double(dataArea.getX(), c, dataArea.getMaxX(),
                     c);
         } else if (edge == RectangleEdge.LEFT) {
-            axisLine = new Line2D.Double(c, dataArea.getY(), c, 
+            axisLine = new Line2D.Double(c, dataArea.getY(), c,
                     dataArea.getMaxY());
         } else if (edge == RectangleEdge.RIGHT) {
             axisLine = new Line2D.Double(c, dataArea.getY(), c,
@@ -548,7 +554,7 @@ public abstract class ValueAxis extends Axis
         g2.setPaint(getAxisLinePaint());
         g2.setStroke(getAxisLineStroke());
         Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
-        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
                 RenderingHints.VALUE_STROKE_NORMALIZE);
         g2.draw(axisLine);
         g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
@@ -558,8 +564,7 @@ public abstract class ValueAxis extends Axis
         if (this.positiveArrowVisible) {
             if (this.inverted) {
                 drawDownOrLeft = true;
-            }
-            else {
+            } else {
                 drawUpOrRight = true;
             }
         }
@@ -621,31 +626,27 @@ public abstract class ValueAxis extends Axis
     /**
      * Calculates the anchor point for a tick label.
      *
-     * @param tick  the tick.
-     * @param cursor  the cursor.
-     * @param dataArea  the data area.
-     * @param edge  the edge on which the axis is drawn.
-     *
+     * @param tick     the tick.
+     * @param cursor   the cursor.
+     * @param dataArea the data area.
+     * @param edge     the edge on which the axis is drawn.
      * @return The x and y coordinates of the anchor point.
      */
     protected float[] calculateAnchorPoint(ValueTick tick, double cursor,
-            Rectangle2D dataArea, RectangleEdge edge) {
+                                           Rectangle2D dataArea, RectangleEdge edge) {
 
         RectangleInsets insets = getTickLabelInsets();
         float[] result = new float[2];
         if (edge == RectangleEdge.TOP) {
             result[0] = (float) valueToJava2D(tick.getValue(), dataArea, edge);
             result[1] = (float) (cursor - insets.getBottom() - 2.0);
-        }
-        else if (edge == RectangleEdge.BOTTOM) {
+        } else if (edge == RectangleEdge.BOTTOM) {
             result[0] = (float) valueToJava2D(tick.getValue(), dataArea, edge);
             result[1] = (float) (cursor + insets.getTop() + 2.0);
-        }
-        else if (edge == RectangleEdge.LEFT) {
+        } else if (edge == RectangleEdge.LEFT) {
             result[0] = (float) (cursor - insets.getLeft() - 2.0);
             result[1] = (float) valueToJava2D(tick.getValue(), dataArea, edge);
-        }
-        else if (edge == RectangleEdge.RIGHT) {
+        } else if (edge == RectangleEdge.RIGHT) {
             result[0] = (float) (cursor + insets.getRight() + 2.0);
             result[1] = (float) valueToJava2D(tick.getValue(), dataArea, edge);
         }
@@ -655,18 +656,17 @@ public abstract class ValueAxis extends Axis
     /**
      * Draws the axis line, tick marks and tick mark labels.
      *
-     * @param g2  the graphics device ({@code null} not permitted).
-     * @param cursor  the cursor.
-     * @param plotArea  the plot area ({@code null} not permitted).
-     * @param dataArea  the data area ({@code null} not permitted).
-     * @param edge  the edge that the axis is aligned with ({@code null} 
-     *     not permitted).
-     *
+     * @param g2       the graphics device ({@code null} not permitted).
+     * @param cursor   the cursor.
+     * @param plotArea the plot area ({@code null} not permitted).
+     * @param dataArea the data area ({@code null} not permitted).
+     * @param edge     the edge that the axis is aligned with ({@code null}
+     *                 not permitted).
      * @return The width or height used to draw the axis.
      */
     protected AxisState drawTickMarksAndLabels(Graphics2D g2,
-            double cursor, Rectangle2D plotArea, Rectangle2D dataArea,
-            RectangleEdge edge) {
+                                               double cursor, Rectangle2D plotArea, Rectangle2D dataArea,
+                                               RectangleEdge edge) {
 
         AxisState state = new AxisState(cursor);
         if (isAxisLineVisible()) {
@@ -676,7 +676,7 @@ public abstract class ValueAxis extends Axis
         state.setTicks(ticks);
         g2.setFont(getTickLabelFont());
         Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
-        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
                 RenderingHints.VALUE_STROKE_NORMALIZE);
         Iterator iterator = ticks.iterator();
         while (iterator.hasNext()) {
@@ -690,17 +690,17 @@ public abstract class ValueAxis extends Axis
                     if (lt.getAttributedLabel() == null) {
                         continue;
                     }
-                    AttrStringUtils.drawRotatedString(lt.getAttributedLabel(), 
-                            g2, anchorPoint[0], anchorPoint[1], 
-                            tick.getTextAnchor(), tick.getAngle(), 
+                    AttrStringUtils.drawRotatedString(lt.getAttributedLabel(),
+                            g2, anchorPoint[0], anchorPoint[1],
+                            tick.getTextAnchor(), tick.getAngle(),
                             tick.getRotationAnchor());
                 } else {
                     if (tick.getText() == null) {
                         continue;
                     }
                     TextUtils.drawRotatedString(tick.getText(), g2,
-                            anchorPoint[0], anchorPoint[1], 
-                            tick.getTextAnchor(), tick.getAngle(), 
+                            anchorPoint[0], anchorPoint[1],
+                            tick.getTextAnchor(), tick.getAngle(),
                             tick.getRotationAnchor());
                 }
             }
@@ -709,11 +709,11 @@ public abstract class ValueAxis extends Axis
                     TickType.MAJOR)) || (isMinorTickMarksVisible()
                     && tick.getTickType().equals(TickType.MINOR))) {
 
-                double ol = (tick.getTickType().equals(TickType.MINOR)) 
+                double ol = (tick.getTickType().equals(TickType.MINOR))
                         ? getMinorTickMarkOutsideLength()
                         : getTickMarkOutsideLength();
 
-                double il = (tick.getTickType().equals(TickType.MINOR)) 
+                double il = (tick.getTickType().equals(TickType.MINOR))
                         ? getMinorTickMarkInsideLength()
                         : getTickMarkInsideLength();
 
@@ -724,21 +724,18 @@ public abstract class ValueAxis extends Axis
                 g2.setPaint(getTickMarkPaint());
                 if (edge == RectangleEdge.LEFT) {
                     mark = new Line2D.Double(cursor - ol, xx, cursor + il, xx);
-                }
-                else if (edge == RectangleEdge.RIGHT) {
+                } else if (edge == RectangleEdge.RIGHT) {
                     mark = new Line2D.Double(cursor + ol, xx, cursor - il, xx);
-                }
-                else if (edge == RectangleEdge.TOP) {
+                } else if (edge == RectangleEdge.TOP) {
                     mark = new Line2D.Double(xx, cursor - ol, xx, cursor + il);
-                }
-                else if (edge == RectangleEdge.BOTTOM) {
+                } else if (edge == RectangleEdge.BOTTOM) {
                     mark = new Line2D.Double(xx, cursor + ol, xx, cursor - il);
                 }
                 g2.draw(mark);
             }
         }
         g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
-        
+
         // need to work out the space used by the tick labels...
         // so we can update the cursor...
         double used = 0.0;
@@ -768,18 +765,17 @@ public abstract class ValueAxis extends Axis
     /**
      * Returns the space required to draw the axis.
      *
-     * @param g2  the graphics device.
-     * @param plot  the plot that the axis belongs to.
-     * @param plotArea  the area within which the plot should be drawn.
-     * @param edge  the axis location.
-     * @param space  the space already reserved (for other axes).
-     *
+     * @param g2       the graphics device.
+     * @param plot     the plot that the axis belongs to.
+     * @param plotArea the area within which the plot should be drawn.
+     * @param edge     the axis location.
+     * @param space    the space already reserved (for other axes).
      * @return The space required to draw the axis (including pre-reserved
-     *         space).
+     * space).
      */
     @Override
-    public AxisSpace reserveSpace(Graphics2D g2, Plot plot, 
-            Rectangle2D plotArea, RectangleEdge edge, AxisSpace space) {
+    public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
+                                  Rectangle2D plotArea, RectangleEdge edge, AxisSpace space) {
 
         // create a new space object if one wasn't supplied...
         if (space == null) {
@@ -807,8 +803,7 @@ public abstract class ValueAxis extends Axis
             if (RectangleEdge.isTopOrBottom(edge)) {
                 tickLabelHeight = findMaximumTickLabelHeight(ticks, g2,
                         plotArea, isVerticalTickLabels());
-            }
-            else if (RectangleEdge.isLeftOrRight(edge)) {
+            } else if (RectangleEdge.isLeftOrRight(edge)) {
                 tickLabelWidth = findMaximumTickLabelWidth(ticks, g2, plotArea,
                         isVerticalTickLabels());
             }
@@ -819,8 +814,7 @@ public abstract class ValueAxis extends Axis
         if (RectangleEdge.isTopOrBottom(edge)) {
             double labelHeight = labelEnclosure.getHeight();
             space.add(labelHeight + tickLabelHeight, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             double labelWidth = labelEnclosure.getWidth();
             space.add(labelWidth + tickLabelWidth, edge);
         }
@@ -832,16 +826,15 @@ public abstract class ValueAxis extends Axis
     /**
      * A utility method for determining the height of the tallest tick label.
      *
-     * @param ticks  the ticks.
-     * @param g2  the graphics device.
-     * @param drawArea  the area within which the plot and axes should be drawn.
-     * @param vertical  a flag that indicates whether or not the tick labels
-     *                  are 'vertical'.
-     *
+     * @param ticks    the ticks.
+     * @param g2       the graphics device.
+     * @param drawArea the area within which the plot and axes should be drawn.
+     * @param vertical a flag that indicates whether or not the tick labels
+     *                 are 'vertical'.
      * @return The height of the tallest tick label.
      */
     protected double findMaximumTickLabelHeight(List ticks, Graphics2D g2,
-            Rectangle2D drawArea, boolean vertical) {
+                                                Rectangle2D drawArea, boolean vertical) {
 
         RectangleInsets insets = getTickLabelInsets();
         Font font = getTickLabelFont();
@@ -863,17 +856,17 @@ public abstract class ValueAxis extends Axis
                     labelBounds = TextUtils.getTextBounds(
                             tick.getText(), g2, fm);
                 }
-                if (labelBounds != null && labelBounds.getWidth() 
+                if (labelBounds != null && labelBounds.getWidth()
                         + insets.getTop() + insets.getBottom() > maxHeight) {
                     maxHeight = labelBounds.getWidth()
-                                + insets.getTop() + insets.getBottom();
+                            + insets.getTop() + insets.getBottom();
                 }
             }
         } else {
             LineMetrics metrics = font.getLineMetrics("ABCxyz",
                     g2.getFontRenderContext());
             maxHeight = metrics.getHeight()
-                        + insets.getTop() + insets.getBottom();
+                    + insets.getTop() + insets.getBottom();
         }
         return maxHeight;
 
@@ -882,16 +875,15 @@ public abstract class ValueAxis extends Axis
     /**
      * A utility method for determining the width of the widest tick label.
      *
-     * @param ticks  the ticks.
-     * @param g2  the graphics device.
-     * @param drawArea  the area within which the plot and axes should be drawn.
-     * @param vertical  a flag that indicates whether or not the tick labels
-     *                  are 'vertical'.
-     *
+     * @param ticks    the ticks.
+     * @param g2       the graphics device.
+     * @param drawArea the area within which the plot and axes should be drawn.
+     * @param vertical a flag that indicates whether or not the tick labels
+     *                 are 'vertical'.
      * @return The width of the tallest tick label.
      */
     protected double findMaximumTickLabelWidth(List ticks, Graphics2D g2,
-            Rectangle2D drawArea, boolean vertical) {
+                                               Rectangle2D drawArea, boolean vertical) {
 
         RectangleInsets insets = getTickLabelInsets();
         Font font = getTickLabelFont();
@@ -909,21 +901,21 @@ public abstract class ValueAxis extends Axis
                                 lt.getAttributedLabel(), g2);
                     }
                 } else if (tick.getText() != null) {
-                    labelBounds = TextUtils.getTextBounds(tick.getText(), 
+                    labelBounds = TextUtils.getTextBounds(tick.getText(),
                             g2, fm);
                 }
-                if (labelBounds != null 
+                if (labelBounds != null
                         && labelBounds.getWidth() + insets.getLeft()
                         + insets.getRight() > maxWidth) {
                     maxWidth = labelBounds.getWidth()
-                               + insets.getLeft() + insets.getRight();
+                            + insets.getLeft() + insets.getRight();
                 }
             }
         } else {
             LineMetrics metrics = font.getLineMetrics("ABCxyz",
                     g2.getFontRenderContext());
             maxWidth = metrics.getHeight()
-                       + insets.getTop() + insets.getBottom();
+                    + insets.getTop() + insets.getBottom();
         }
         return maxWidth;
 
@@ -931,13 +923,12 @@ public abstract class ValueAxis extends Axis
 
     /**
      * Returns a flag that controls the direction of values on the axis.
-     * <P>
+     * <p>
      * For a regular axis, values increase from left to right (for a horizontal
      * axis) and bottom to top (for a vertical axis).  When the axis is
      * 'inverted', the values increase in the opposite direction.
      *
      * @return The flag.
-     *
      * @see #setInverted(boolean)
      */
     public boolean isInverted() {
@@ -948,8 +939,7 @@ public abstract class ValueAxis extends Axis
      * Sets a flag that controls the direction of values on the axis, and
      * notifies registered listeners that the axis has changed.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #isInverted()
      */
     public void setInverted(boolean flag) {
@@ -964,7 +954,6 @@ public abstract class ValueAxis extends Axis
      * automatically adjusted to fit the data values.
      *
      * @return The flag.
-     *
      * @see #setAutoRange(boolean)
      */
     public boolean isAutoRange() {
@@ -976,8 +965,7 @@ public abstract class ValueAxis extends Axis
      * automatically adjusted to fit the data, and notifies registered
      * listeners that the axis has been modified.
      *
-     * @param auto  the new value of the flag.
-     *
+     * @param auto the new value of the flag.
      * @see #isAutoRange()
      */
     public void setAutoRange(boolean auto) {
@@ -988,9 +976,8 @@ public abstract class ValueAxis extends Axis
      * Sets the auto range attribute.  If the {@code notify} flag is set,
      * an {@link AxisChangeEvent} is sent to registered listeners.
      *
-     * @param auto  the flag.
-     * @param notify  notify listeners?
-     *
+     * @param auto   the flag.
+     * @param notify notify listeners?
      * @see #isAutoRange()
      */
     protected void setAutoRange(boolean auto, boolean notify) {
@@ -1008,7 +995,6 @@ public abstract class ValueAxis extends Axis
      * automatically calculated.
      *
      * @return The minimum range.
-     *
      * @see #setAutoRangeMinimumSize(double)
      */
     public double getAutoRangeMinimumSize() {
@@ -1019,8 +1005,7 @@ public abstract class ValueAxis extends Axis
      * Sets the auto range minimum size and sends an {@link AxisChangeEvent}
      * to all registered listeners.
      *
-     * @param size  the size.
-     *
+     * @param size the size.
      * @see #getAutoRangeMinimumSize()
      */
     public void setAutoRangeMinimumSize(double size) {
@@ -1034,13 +1019,13 @@ public abstract class ValueAxis extends Axis
      * If requested, an {@link AxisChangeEvent} is forwarded to all registered
      * listeners.
      *
-     * @param size  the new minimum.
-     * @param notify  notify listeners?
+     * @param size   the new minimum.
+     * @param notify notify listeners?
      */
     public void setAutoRangeMinimumSize(double size, boolean notify) {
         if (size <= 0.0) {
             throw new IllegalArgumentException(
-                "NumberAxis.setAutoRangeMinimumSize(double): must be > 0.0.");
+                    "NumberAxis.setAutoRangeMinimumSize(double): must be > 0.0.");
         }
         if (this.autoRangeMinimumSize != size) {
             this.autoRangeMinimumSize = size;
@@ -1058,9 +1043,7 @@ public abstract class ValueAxis extends Axis
      * Returns the default auto range.
      *
      * @return The default auto range (never {@code null}).
-     *
      * @see #setDefaultAutoRange(Range)
-     *
      * @since 1.0.5
      */
     public Range getDefaultAutoRange() {
@@ -1071,10 +1054,8 @@ public abstract class ValueAxis extends Axis
      * Sets the default auto range and sends an {@link AxisChangeEvent} to all
      * registered listeners.
      *
-     * @param range  the range ({@code null} not permitted).
-     *
+     * @param range the range ({@code null} not permitted).
      * @see #getDefaultAutoRange()
-     *
      * @since 1.0.5
      */
     public void setDefaultAutoRange(Range range) {
@@ -1090,7 +1071,6 @@ public abstract class ValueAxis extends Axis
      * axis range is set explicitly). The default value is 0.05 (five percent).
      *
      * @return The lower margin.
-     *
      * @see #setLowerMargin(double)
      */
     public double getLowerMargin() {
@@ -1103,8 +1083,7 @@ public abstract class ValueAxis extends Axis
      * margin is added only when the axis range is auto-calculated - if you set
      * the axis range manually, the margin is ignored.
      *
-     * @param margin  the margin percentage (for example, 0.05 is five percent).
-     *
+     * @param margin the margin percentage (for example, 0.05 is five percent).
      * @see #getLowerMargin()
      * @see #setUpperMargin(double)
      */
@@ -1123,7 +1102,6 @@ public abstract class ValueAxis extends Axis
      * axis range is set explicitly). The default value is 0.05 (five percent).
      *
      * @return The upper margin.
-     *
      * @see #setUpperMargin(double)
      */
     public double getUpperMargin() {
@@ -1136,8 +1114,7 @@ public abstract class ValueAxis extends Axis
      * margin is added only when the axis range is auto-calculated - if you set
      * the axis range manually, the margin is ignored.
      *
-     * @param margin  the margin percentage (for example, 0.05 is five percent).
-     *
+     * @param margin the margin percentage (for example, 0.05 is five percent).
      * @see #getLowerMargin()
      * @see #setLowerMargin(double)
      */
@@ -1153,7 +1130,6 @@ public abstract class ValueAxis extends Axis
      * Returns the fixed auto range.
      *
      * @return The length.
-     *
      * @see #setFixedAutoRange(double)
      */
     public double getFixedAutoRange() {
@@ -1163,8 +1139,7 @@ public abstract class ValueAxis extends Axis
     /**
      * Sets the fixed auto range for the axis.
      *
-     * @param length  the range length.
-     *
+     * @param length the range length.
      * @see #getFixedAutoRange()
      */
     public void setFixedAutoRange(double length) {
@@ -1179,7 +1154,6 @@ public abstract class ValueAxis extends Axis
      * Returns the lower bound of the axis range.
      *
      * @return The lower bound.
-     *
      * @see #setLowerBound(double)
      */
     public double getLowerBound() {
@@ -1190,15 +1164,13 @@ public abstract class ValueAxis extends Axis
      * Sets the lower bound for the axis range.  An {@link AxisChangeEvent} is
      * sent to all registered listeners.
      *
-     * @param min  the new minimum.
-     *
+     * @param min the new minimum.
      * @see #getLowerBound()
      */
     public void setLowerBound(double min) {
         if (this.range.getUpperBound() > min) {
             setRange(new Range(min, this.range.getUpperBound()));
-        }
-        else {
+        } else {
             setRange(new Range(min, min + 1.0));
         }
     }
@@ -1207,7 +1179,6 @@ public abstract class ValueAxis extends Axis
      * Returns the upper bound for the axis range.
      *
      * @return The upper bound.
-     *
      * @see #setUpperBound(double)
      */
     public double getUpperBound() {
@@ -1218,15 +1189,13 @@ public abstract class ValueAxis extends Axis
      * Sets the upper bound for the axis range, and sends an
      * {@link AxisChangeEvent} to all registered listeners.
      *
-     * @param max  the new maximum.
-     *
+     * @param max the new maximum.
      * @see #getUpperBound()
      */
     public void setUpperBound(double max) {
         if (this.range.getLowerBound() < max) {
             setRange(new Range(this.range.getLowerBound(), max));
-        }
-        else {
+        } else {
             setRange(max - 1.0, max);
         }
     }
@@ -1235,7 +1204,6 @@ public abstract class ValueAxis extends Axis
      * Returns the range for the axis.
      *
      * @return The axis range (never {@code null}).
-     *
      * @see #setRange(Range)
      */
     public Range getRange() {
@@ -1243,12 +1211,11 @@ public abstract class ValueAxis extends Axis
     }
 
     /**
-     * Sets the range for the axis and sends a change event to all registered 
+     * Sets the range for the axis and sends a change event to all registered
      * listeners.  As a side-effect, the auto-range flag is set to
      * {@code false}.
      *
-     * @param range  the range ({@code null} not permitted).
-     *
+     * @param range the range ({@code null} not permitted).
      * @see #getRange()
      */
     public void setRange(Range range) {
@@ -1257,22 +1224,21 @@ public abstract class ValueAxis extends Axis
     }
 
     /**
-     * Sets the range for the axis and, if requested, sends a change event to 
+     * Sets the range for the axis and, if requested, sends a change event to
      * all registered listeners.  Furthermore, if {@code turnOffAutoRange}
-     * is {@code true}, the auto-range flag is set to {@code false} 
+     * is {@code true}, the auto-range flag is set to {@code false}
      * (normally when setting the axis range manually the caller expects that
      * range to remain in force).
      *
-     * @param range  the range ({@code null} not permitted).
-     * @param turnOffAutoRange  a flag that controls whether or not the auto
-     *                          range is turned off.
-     * @param notify  a flag that controls whether or not listeners are
-     *                notified.
-     *
+     * @param range            the range ({@code null} not permitted).
+     * @param turnOffAutoRange a flag that controls whether or not the auto
+     *                         range is turned off.
+     * @param notify           a flag that controls whether or not listeners are
+     *                         notified.
      * @see #getRange()
      */
-    public void setRange(Range range, boolean turnOffAutoRange, 
-            boolean notify) {
+    public void setRange(Range range, boolean turnOffAutoRange,
+                         boolean notify) {
         Args.nullNotPermitted(range, "range");
         if (range.getLength() <= 0.0) {
             throw new IllegalArgumentException(
@@ -1288,13 +1254,12 @@ public abstract class ValueAxis extends Axis
     }
 
     /**
-     * Sets the range for the axis and sends a change event to all registered 
+     * Sets the range for the axis and sends a change event to all registered
      * listeners.  As a side-effect, the auto-range flag is set to
      * {@code false}.
      *
-     * @param lower  the lower axis limit.
-     * @param upper  the upper axis limit.
-     *
+     * @param lower the lower axis limit.
+     * @param upper the upper axis limit.
      * @see #getRange()
      * @see #setRange(Range)
      */
@@ -1307,7 +1272,7 @@ public abstract class ValueAxis extends Axis
      * the specified range) and sends an {@link AxisChangeEvent} to all
      * registered listeners.
      *
-     * @param range  the range ({@code null} not permitted).
+     * @param range the range ({@code null} not permitted).
      */
     public void setRangeWithMargins(Range range) {
         setRangeWithMargins(range, true, true);
@@ -1319,12 +1284,12 @@ public abstract class ValueAxis extends Axis
      * registered listeners.  As a side-effect, the auto-range flag is set to
      * {@code false} (optional).
      *
-     * @param range  the range (excluding margins, {@code null} not
-     *               permitted).
-     * @param turnOffAutoRange  a flag that controls whether or not the auto
-     *                          range is turned off.
-     * @param notify  a flag that controls whether or not listeners are
-     *                notified.
+     * @param range            the range (excluding margins, {@code null} not
+     *                         permitted).
+     * @param turnOffAutoRange a flag that controls whether or not the auto
+     *                         range is turned off.
+     * @param notify           a flag that controls whether or not listeners are
+     *                         notified.
      */
     public void setRangeWithMargins(Range range, boolean turnOffAutoRange,
                                     boolean notify) {
@@ -1338,8 +1303,8 @@ public abstract class ValueAxis extends Axis
      * range) and sends an {@link AxisChangeEvent} to all registered listeners.
      * As a side-effect, the auto-range flag is set to {@code false}.
      *
-     * @param lower  the lower axis limit.
-     * @param upper  the upper axis limit.
+     * @param lower the lower axis limit.
+     * @param upper the upper axis limit.
      */
     public void setRangeWithMargins(double lower, double upper) {
         setRangeWithMargins(new Range(lower, upper));
@@ -1350,7 +1315,7 @@ public abstract class ValueAxis extends Axis
      * centered on 'value'.
      *
      * @param value  the central value.
-     * @param length  the range length.
+     * @param length the range length.
      */
     public void setRangeAboutValue(double value, double length) {
         setRange(new Range(value - length / 2, value + length / 2));
@@ -1361,8 +1326,7 @@ public abstract class ValueAxis extends Axis
      * selected from a range of standard tick units.
      *
      * @return A flag indicating whether or not the tick unit is automatically
-     *         selected.
-     *
+     * selected.
      * @see #setAutoTickUnitSelection(boolean)
      */
     public boolean isAutoTickUnitSelection() {
@@ -1374,8 +1338,7 @@ public abstract class ValueAxis extends Axis
      * selected from a range of standard tick units.  If the flag is changed,
      * registered listeners are notified that the chart has changed.
      *
-     * @param flag  the new value of the flag.
-     *
+     * @param flag the new value of the flag.
      * @see #isAutoTickUnitSelection()
      */
     public void setAutoTickUnitSelection(boolean flag) {
@@ -1386,9 +1349,8 @@ public abstract class ValueAxis extends Axis
      * Sets a flag indicating whether or not the tick unit is automatically
      * selected from a range of standard tick units.
      *
-     * @param flag  the new value of the flag.
-     * @param notify  notify listeners?
-     *
+     * @param flag   the new value of the flag.
+     * @param notify notify listeners?
      * @see #isAutoTickUnitSelection()
      */
     public void setAutoTickUnitSelection(boolean flag, boolean notify) {
@@ -1405,7 +1367,6 @@ public abstract class ValueAxis extends Axis
      * Returns the source for obtaining standard tick units for the axis.
      *
      * @return The source (possibly {@code null}).
-     *
      * @see #setStandardTickUnits(TickUnitSource)
      */
     public TickUnitSource getStandardTickUnits() {
@@ -1419,9 +1380,8 @@ public abstract class ValueAxis extends Axis
      * the tick labels to overlap (see also the
      * {@link #setAutoTickUnitSelection(boolean)} method.
      *
-     * @param source  the source for standard tick units ({@code null}
-     *                permitted).
-     *
+     * @param source the source for standard tick units ({@code null}
+     *               permitted).
      * @see #getStandardTickUnits()
      */
     public void setStandardTickUnits(TickUnitSource source) {
@@ -1433,9 +1393,7 @@ public abstract class ValueAxis extends Axis
      * Returns the number of minor tick marks to display.
      *
      * @return The number of minor tick marks to display.
-     *
      * @see #setMinorTickCount(int)
-     *
      * @since 1.0.12
      */
     public int getMinorTickCount() {
@@ -1446,10 +1404,8 @@ public abstract class ValueAxis extends Axis
      * Sets the number of minor tick marks to display, and sends an
      * {@link AxisChangeEvent} to all registered listeners.
      *
-     * @param count  the count.
-     *
+     * @param count the count.
      * @see #getMinorTickCount()
-     *
      * @since 1.0.12
      */
     public void setMinorTickCount(int count) {
@@ -1463,12 +1419,10 @@ public abstract class ValueAxis extends Axis
      * <p>
      * Note that it is possible for the coordinate to fall outside the area.
      *
-     * @param value  the data value.
+     * @param value the data value.
      * @param area  the area for plotting the data.
      * @param edge  the edge along which the axis lies.
-     *
      * @return The Java2D coordinate.
-     *
      * @see #java2DToValue(double, Rectangle2D, RectangleEdge)
      */
     public abstract double valueToJava2D(double value, Rectangle2D area,
@@ -1478,10 +1432,9 @@ public abstract class ValueAxis extends Axis
      * Converts a length in data coordinates into the corresponding length in
      * Java2D coordinates.
      *
-     * @param length  the length.
-     * @param area  the plot area.
-     * @param edge  the edge along which the axis lies.
-     *
+     * @param length the length.
+     * @param area   the plot area.
+     * @param edge   the edge along which the axis lies.
      * @return The length in Java2D coordinates.
      */
     public double lengthToJava2D(double length, Rectangle2D area,
@@ -1495,16 +1448,14 @@ public abstract class ValueAxis extends Axis
      * Converts a coordinate in Java2D space to the corresponding data value,
      * assuming that the axis runs along one edge of the specified dataArea.
      *
-     * @param java2DValue  the coordinate in Java2D space.
-     * @param area  the area in which the data is plotted.
-     * @param edge  the edge along which the axis lies.
-     *
+     * @param java2DValue the coordinate in Java2D space.
+     * @param area        the area in which the data is plotted.
+     * @param edge        the edge along which the axis lies.
      * @return The data value.
-     *
      * @see #valueToJava2D(double, Rectangle2D, RectangleEdge)
      */
-    public abstract double java2DToValue(double java2DValue, Rectangle2D area, 
-            RectangleEdge edge);
+    public abstract double java2DToValue(double java2DValue, Rectangle2D area,
+                                         RectangleEdge edge);
 
     /**
      * Automatically sets the axis range to fit the range of values in the
@@ -1518,7 +1469,7 @@ public abstract class ValueAxis extends Axis
      * Centers the axis range about the specified value and sends an
      * {@link AxisChangeEvent} to all registered listeners.
      *
-     * @param value  the center value.
+     * @param value the center value.
      */
     public void centerRange(double value) {
         double central = this.range.getCentralValue();
@@ -1531,12 +1482,11 @@ public abstract class ValueAxis extends Axis
      * Increases or decreases the axis range by the specified percentage about
      * the central value and sends an {@link AxisChangeEvent} to all registered
      * listeners.
-     * <P>
+     * <p>
      * To double the length of the axis range, use 200% (2.0).
      * To halve the length of the axis range, use 50% (0.5).
      *
-     * @param percent  the resize factor.
-     *
+     * @param percent the resize factor.
      * @see #resizeRange(double, double)
      */
     public void resizeRange(double percent) {
@@ -1547,13 +1497,12 @@ public abstract class ValueAxis extends Axis
      * Increases or decreases the axis range by the specified percentage about
      * the specified anchor value and sends an {@link AxisChangeEvent} to all
      * registered listeners.
-     * <P>
+     * <p>
      * To double the length of the axis range, use 200% (2.0).
      * To halve the length of the axis range, use 50% (0.5).
      *
-     * @param percent  the resize factor.
-     * @param anchorValue  the new central value after the resize.
-     *
+     * @param percent     the resize factor.
+     * @param anchorValue the new central value after the resize.
      * @see #resizeRange(double)
      */
     public void resizeRange(double percent, double anchorValue) {
@@ -1562,8 +1511,7 @@ public abstract class ValueAxis extends Axis
             Range adjusted = new Range(anchorValue - halfLength,
                     anchorValue + halfLength);
             setRange(adjusted);
-        }
-        else {
+        } else {
             setAutoRange(true);
         }
     }
@@ -1572,15 +1520,13 @@ public abstract class ValueAxis extends Axis
      * Increases or decreases the axis range by the specified percentage about
      * the specified anchor value and sends an {@link AxisChangeEvent} to all
      * registered listeners.
-     * <P>
+     * <p>
      * To double the length of the axis range, use 200% (2.0).
      * To halve the length of the axis range, use 50% (0.5).
      *
-     * @param percent  the resize factor.
-     * @param anchorValue  the new central value after the resize.
-     *
+     * @param percent     the resize factor.
+     * @param anchorValue the new central value after the resize.
      * @see #resizeRange(double)
-     *
      * @since 1.0.13
      */
     public void resizeRange2(double percent, double anchorValue) {
@@ -1590,8 +1536,7 @@ public abstract class ValueAxis extends Axis
             Range adjusted = new Range(anchorValue - left * percent,
                     anchorValue + right * percent);
             setRange(adjusted);
-        }
-        else {
+        } else {
             setAutoRange(true);
         }
     }
@@ -1599,8 +1544,8 @@ public abstract class ValueAxis extends Axis
     /**
      * Zooms in on the current range.
      *
-     * @param lowerPercent  the new lower bound.
-     * @param upperPercent  the new upper bound.
+     * @param lowerPercent the new lower bound.
+     * @param upperPercent the new upper bound.
      */
     public void zoomRange(double lowerPercent, double upperPercent) {
         double start = this.range.getLowerBound();
@@ -1609,8 +1554,7 @@ public abstract class ValueAxis extends Axis
         if (isInverted()) {
             r0 = start + (length * (1 - upperPercent));
             r1 = start + (length * (1 - lowerPercent));
-        }
-        else {
+        } else {
             r0 = start + length * lowerPercent;
             r1 = start + length * upperPercent;
         }
@@ -1622,8 +1566,7 @@ public abstract class ValueAxis extends Axis
     /**
      * Slides the axis range by the specified percentage.
      *
-     * @param percent  the percentage.
-     *
+     * @param percent the percentage.
      * @since 1.0.13
      */
     public void pan(double percent) {
@@ -1639,7 +1582,6 @@ public abstract class ValueAxis extends Axis
      * Returns the auto tick index.
      *
      * @return The auto tick index.
-     *
      * @see #setAutoTickIndex(int)
      */
     protected int getAutoTickIndex() {
@@ -1649,8 +1591,7 @@ public abstract class ValueAxis extends Axis
     /**
      * Sets the auto tick index.
      *
-     * @param index  the new value.
-     *
+     * @param index the new value.
      * @see #getAutoTickIndex()
      */
     protected void setAutoTickIndex(int index) {
@@ -1660,8 +1601,7 @@ public abstract class ValueAxis extends Axis
     /**
      * Tests the axis for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return {@code true} or {@code false}.
      */
     @Override
@@ -1724,9 +1664,8 @@ public abstract class ValueAxis extends Axis
      * Returns a clone of the object.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if some component of the axis does
-     *         not support cloning.
+     *                                    not support cloning.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -1737,9 +1676,8 @@ public abstract class ValueAxis extends Axis
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -1752,10 +1690,9 @@ public abstract class ValueAxis extends Axis
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {

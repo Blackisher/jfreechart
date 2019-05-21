@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -35,11 +35,6 @@
  */
 
 package org.jfree.chart.renderer.xy;
-
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.geom.Rectangle2D;
-import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
@@ -57,6 +52,10 @@ import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtils;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 
 /**
  * A renderer that represents data from an {@link XYZDataset} by drawing a
@@ -89,16 +88,24 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      */
     private RectangleAnchor blockAnchor = RectangleAnchor.CENTER;
 
-    /** Temporary storage for the x-offset used to align the block anchor. */
+    /**
+     * Temporary storage for the x-offset used to align the block anchor.
+     */
     private double xOffset;
 
-    /** Temporary storage for the y-offset used to align the block anchor. */
+    /**
+     * Temporary storage for the y-offset used to align the block anchor.
+     */
     private double yOffset;
 
-    /** The paint scale. */
+    /**
+     * The paint scale.
+     */
     private PaintScale paintScale;
-    
-    /** A flag that controls whether outlines are drawn for blocks. */
+
+    /**
+     * A flag that controls whether outlines are drawn for blocks.
+     */
     private boolean drawOutlines;
 
     /**
@@ -122,7 +129,6 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Returns the block width, in data/axis units.
      *
      * @return The block width.
-     *
      * @see #setBlockWidth(double)
      */
     public double getBlockWidth() {
@@ -133,8 +139,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Sets the width of the blocks used to represent each data item and
      * sends a {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param width  the new width, in data/axis units (must be &gt; 0.0).
-     *
+     * @param width the new width, in data/axis units (must be &gt; 0.0).
      * @see #getBlockWidth()
      */
     public void setBlockWidth(double width) {
@@ -151,7 +156,6 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Returns the block height, in data/axis units.
      *
      * @return The block height.
-     *
      * @see #setBlockHeight(double)
      */
     public double getBlockHeight() {
@@ -162,8 +166,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Sets the height of the blocks used to represent each data item and
      * sends a {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param height  the new height, in data/axis units (must be &gt; 0.0).
-     *
+     * @param height the new height, in data/axis units (must be &gt; 0.0).
      * @see #getBlockHeight()
      */
     public void setBlockHeight(double height) {
@@ -181,7 +184,6 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * The default values is {@link RectangleAnchor#CENTER}.
      *
      * @return The anchor point (never {@code null}).
-     *
      * @see #setBlockAnchor(RectangleAnchor)
      */
     public RectangleAnchor getBlockAnchor() {
@@ -192,8 +194,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Sets the anchor point used to align a block at its (x, y) location and
      * sends a {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param anchor  the anchor.
-     *
+     * @param anchor the anchor.
      * @see #getBlockAnchor()
      */
     public void setBlockAnchor(RectangleAnchor anchor) {
@@ -210,7 +211,6 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Returns the paint scale used by the renderer.
      *
      * @return The paint scale (never {@code null}).
-     *
      * @see #setPaintScale(PaintScale)
      * @since 1.0.4
      */
@@ -222,8 +222,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Sets the paint scale used by the renderer and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param scale  the scale ({@code null} not permitted).
-     *
+     * @param scale the scale ({@code null} not permitted).
      * @see #getPaintScale()
      * @since 1.0.4
      */
@@ -238,7 +237,6 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * {@code false} otherwise.  The default value is {@code true}.
      *
      * @return A boolean.
-     *
      * @see #setDrawOutlines(boolean)
      */
     public boolean getDrawOutlines() {
@@ -250,8 +248,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * blocks, and sends a {@link RendererChangeEvent} to all registered
      * listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getDrawOutlines()
      */
     public void setDrawOutlines(boolean flag) {
@@ -265,7 +262,6 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * use the regular item paint.
      *
      * @return A boolean.
-     *
      * @see #setUseOutlinePaint(boolean)
      */
     public boolean getUseOutlinePaint() {
@@ -277,8 +273,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * block outlines, and sends a {@link RendererChangeEvent} to all
      * registered listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getUseOutlinePaint()
      */
     public void setUseOutlinePaint(boolean flag) {
@@ -294,36 +289,28 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
         if (this.blockAnchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
             this.xOffset = 0.0;
             this.yOffset = 0.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.BOTTOM)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.BOTTOM)) {
             this.xOffset = -this.blockWidth / 2.0;
             this.yOffset = 0.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
             this.xOffset = -this.blockWidth;
             this.yOffset = 0.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.LEFT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.LEFT)) {
             this.xOffset = 0.0;
             this.yOffset = -this.blockHeight / 2.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.CENTER)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.CENTER)) {
             this.xOffset = -this.blockWidth / 2.0;
             this.yOffset = -this.blockHeight / 2.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.RIGHT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.RIGHT)) {
             this.xOffset = -this.blockWidth;
             this.yOffset = -this.blockHeight / 2.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.TOP_LEFT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.TOP_LEFT)) {
             this.xOffset = 0.0;
             this.yOffset = -this.blockHeight;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.TOP)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.TOP)) {
             this.xOffset = -this.blockWidth / 2.0;
             this.yOffset = -this.blockHeight;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.TOP_RIGHT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.TOP_RIGHT)) {
             this.xOffset = -this.blockWidth;
             this.yOffset = -this.blockHeight;
         }
@@ -333,11 +320,9 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Returns the lower and upper bounds (range) of the x-values in the
      * specified dataset.
      *
-     * @param dataset  the dataset ({@code null} permitted).
-     *
+     * @param dataset the dataset ({@code null} permitted).
      * @return The range ({@code null} if the dataset is {@code null}
-     *         or empty).
-     *
+     * or empty).
      * @see #findRangeBounds(XYDataset)
      */
     @Override
@@ -350,18 +335,16 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
             return null;
         }
         return new Range(r.getLowerBound() + this.xOffset,
-                         r.getUpperBound() + this.blockWidth + this.xOffset);
+                r.getUpperBound() + this.blockWidth + this.xOffset);
     }
 
     /**
      * Returns the range of values the renderer requires to display all the
      * items from the specified dataset.
      *
-     * @param dataset  the dataset ({@code null} permitted).
-     *
+     * @param dataset the dataset ({@code null} permitted).
      * @return The range ({@code null} if the dataset is {@code null}
-     *         or empty).
-     *
+     * or empty).
      * @see #findDomainBounds(XYDataset)
      */
     @Override
@@ -370,13 +353,11 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
             Range r = DatasetUtils.findRangeBounds(dataset, false);
             if (r == null) {
                 return null;
-            }
-            else {
+            } else {
                 return new Range(r.getLowerBound() + this.yOffset,
                         r.getUpperBound() + this.blockHeight + this.yOffset);
             }
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -384,24 +365,24 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
     /**
      * Draws the block representing the specified item.
      *
-     * @param g2  the graphics device.
-     * @param state  the state.
-     * @param dataArea  the data area.
-     * @param info  the plot rendering info.
-     * @param plot  the plot.
-     * @param domainAxis  the x-axis.
-     * @param rangeAxis  the y-axis.
-     * @param dataset  the dataset.
-     * @param series  the series index.
-     * @param item  the item index.
-     * @param crosshairState  the crosshair state.
-     * @param pass  the pass index.
+     * @param g2             the graphics device.
+     * @param state          the state.
+     * @param dataArea       the data area.
+     * @param info           the plot rendering info.
+     * @param plot           the plot.
+     * @param domainAxis     the x-axis.
+     * @param rangeAxis      the y-axis.
+     * @param dataset        the dataset.
+     * @param series         the series index.
+     * @param item           the item index.
+     * @param crosshairState the crosshair state.
+     * @param pass           the pass index.
      */
     @Override
     public void drawItem(Graphics2D g2, XYItemRendererState state,
-            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
-            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
-            int series, int item, CrosshairState crosshairState, int pass) {
+                         Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+                         ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+                         int series, int item, CrosshairState crosshairState, int pass) {
 
         double x = dataset.getXValue(series, item);
         double y = dataset.getYValue(series, item);
@@ -425,8 +406,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
             block = new Rectangle2D.Double(Math.min(yy0, yy1),
                     Math.min(xx0, xx1), Math.abs(yy1 - yy0),
                     Math.abs(xx0 - xx1));
-        }
-        else {
+        } else {
             block = new Rectangle2D.Double(Math.min(xx0, xx1),
                     Math.min(yy0, yy1), Math.abs(xx1 - xx0),
                     Math.abs(yy1 - yy0));
@@ -442,7 +422,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
         }
 
         if (isItemLabelVisible(series, item)) {
-            drawItemLabel(g2, orientation, dataset, series, item, 
+            drawItemLabel(g2, orientation, dataset, series, item,
                     block.getCenterX(), block.getCenterY(), y < 0.0);
         }
 
@@ -450,13 +430,13 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
         double transX = domainAxis.valueToJava2D(x, dataArea,
                 plot.getDomainAxisEdge());
         double transY = rangeAxis.valueToJava2D(y, dataArea,
-                plot.getRangeAxisEdge());        
+                plot.getRangeAxisEdge());
         updateCrosshairValues(crosshairState, x, y, datasetIndex,
                 transX, transY, orientation);
 
         EntityCollection entities = state.getEntityCollection();
         if (entities != null) {
-            addEntity(entities, block, dataset, series, item, 
+            addEntity(entities, block, dataset, series, item,
                     block.getCenterX(), block.getCenterY());
         }
 
@@ -467,13 +447,12 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * object.  This method returns {@code true} if and only if:
      * <ul>
      * <li>{@code obj} is an instance of {@code XYBlockRenderer} (not
-     *     {@code null});</li>
+     * {@code null});</li>
      * <li>{@code obj} has the same field values as this
-     *     {@code XYBlockRenderer};</li>
+     * {@code XYBlockRenderer};</li>
      * </ul>
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -510,9 +489,8 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Returns a clone of this renderer.
      *
      * @return A clone of this renderer.
-     *
      * @throws CloneNotSupportedException if there is a problem creating the
-     *     clone.
+     *                                    clone.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
